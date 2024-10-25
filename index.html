@@ -1,5 +1,111 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tidale Game Company</title>
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #836f31 url('booklet.png') no-repeat center center fixed;
+            background-size: cover;
+            color: #f4f4f4;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        /* Logo and header */
+        .header {
+            margin-top: 50px;
+        }
+        
+        .logo {
+            width: 100px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        
+        .title {
+            font-size: 2.5em;
+            letter-spacing: 3px;
+            font-weight: bold;
+            color: #ffc107;
+            text-shadow: 2px 2px #333;
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            color: #1a1a1a;
+            margin-bottom: 50px;
+        }
+
+        /* Button styling */
+        .game-buttons {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+        }
+        
+        .game-button {
+            background-color: #343894;
+            border: none;
+            padding: 20px 40px;
+            color: #f4f4f4;
+            font-size: 1.5em;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 3px 3px 5px rgba(162, 164, 168, 0.3);
+            max-width: 500px;
+            width: 100%;
+            margin: 0 auto;
+            text-decoration: none;
+        }
+        
+        .game-button:hover {
+            background-color: #002049;
+        }
+
+        /* Footer */
+        footer {
+            position: absolute;
+            bottom: 10px;
+            font-size: 0.8em;
+            color: #ccc;
+        }
+    </style>
+</head>
 <body>
-    <h1>Tidale</h1>
+    <!-- Logo and Title Section -->
+    <div class="header">
+        <h1 class="title"><img src="tidale-logo.png" alt="Tidale Logo" class="logo"></h1>
+        <p class="subtitle">Adventure Awaits on the High Seas</p>
+    </div>
+
+    <!-- Game Buttons -->
+    <div class="game-buttons">
+        <a href="https://batiste.github.io/deckhand/" 
+        class="game-button">DeckHand<br>
+            <img src="deckhand.jpg" width="200px" /></a>
+        <a class="game-button">DeckHand: Race to Infamy<br>
+            <img src="deckhand-2.jpg" width="300px" />
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2024 Tidale. All rights reserved.
+    </footer>
 </body>
 </html>
