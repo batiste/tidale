@@ -17,9 +17,9 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            background: #836f31 url('booklet.png') no-repeat center center fixed;
+            background: #e3d1ab url('back.jpg') no-repeat center center fixed;
             background-size: cover;
-            color: #f4f4f4;
+            color: #000000;
             min-height: 100vh;
             text-align: center;
             padding: 20px;
@@ -58,19 +58,33 @@
         }
         
         .game-button {
-            background-color: #343894;
+            background-color: #4b5c91;
             border: none;
-            padding: 20px 40px;
+            padding: 0;
             color: #f4f4f4;
             font-size: 1.5em;
             border-radius: 8px;
             cursor: pointer;
             transition: background-color 0.3s ease;
             box-shadow: 3px 3px 5px rgba(162, 164, 168, 0.3);
-            max-width: 500px;
+            max-width: 600px;
             width: 100%;
             margin: 0 auto;
             text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .game-button img {
+            /* padding-top: 1em; */
+            margin:0;
+            height: 340px;
+        }
+
+        .game-button span {
+            display: inline-block;
+            padding: 1em;
         }
         
         .game-button:hover {
@@ -81,8 +95,8 @@
         footer {
             position: absolute;
             bottom: 10px;
-            font-size: 0.8em;
-            color: #ccc;
+            font-size: 1em;
+            /* color: #ccc; */
         }
     </style>
 </head>
@@ -96,10 +110,11 @@
     <!-- Game Buttons -->
     <div class="game-buttons">
         <a href="https://batiste.github.io/deckhand/" 
-        class="game-button">DeckHand<br>
-            <img src="deckhand.jpg" width="200px" /></a>
-        <a href="https://screentop.gg/@Bibi/DeckHand-Infamy" class="game-button">DeckHand: Race to Infamy<br>
-            <img src="deckhand-2.jpg" width="300px" />
+        class="game-button"><span>DeckHand</span>
+            <div><img src="deckhand.jpg" /></div></a>
+        <a href="https://screentop.gg/@Bibi/DeckHand-Infamy" class="game-button">
+            <span>DeckHand: Race to Infamy</span>
+            <div><img src="deckhand-2.jpg" /></div>
         </a>
     </div>
 
