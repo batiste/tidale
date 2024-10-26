@@ -10,7 +10,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+            font-family: sans-serif;
         }
         
         body {
@@ -22,18 +22,19 @@
             color: #000000;
             min-height: 100vh;
             text-align: center;
-            padding: 20px;
+            padding: 10px;
         }
         
         /* Logo and header */
         .header {
-            margin-top: 50px;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
         }
         
         .logo {
-            width: 100px;
-            height: auto;
-            margin-bottom: 20px;
+            width: 110px;
+            margin-right: 20px;
         }
         
         .title {
@@ -47,7 +48,6 @@
         .subtitle {
             font-size: 1.2em;
             color: #1a1a1a;
-            margin-bottom: 50px;
         }
 
         /* Button styling */
@@ -62,7 +62,6 @@
             border: none;
             padding: 0;
             color: #f4f4f4;
-            font-size: 1.5em;
             border-radius: 8px;
             cursor: pointer;
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
@@ -82,9 +81,16 @@
             height: 340px;
         }
 
-        .game-button span {
+        .game-button .game-title {
             display: inline-block;
-            padding: 1em;
+            font-size: 1.4em;
+            padding: 10px 5px;
+        }
+    
+        .game-button .game-sub {
+            display: inline-block;
+            padding-bottom: 10px;
+            padding: 5px 5px;
         }
         
         .game-button:hover {
@@ -100,8 +106,7 @@
 
         /* Footer */
         footer {
-            position: absolute;
-            bottom: 10px;
+            margin: 2em;
             font-size: 1em;
             /* color: #ccc; */
         }
@@ -111,17 +116,20 @@
     <!-- Logo and Title Section -->
     <div class="header">
         <h1 class="title"><img src="tidale-logo.png" alt="Tidale Logo" class="logo"></h1>
-        <p class="subtitle">Adventure Awaits on the High Seas</p>
+        <p class="subtitle">Portable & Elegant Card Games</p>
     </div>
 
     <!-- Game Buttons -->
     <div class="game-buttons">
         <a href="https://screentop.gg/@Bibi/DeckHand-Infamy" class="game-button">
-            <span>DeckHand: Race to Infamy</span>
+            <span class="game-title">DeckHand: Race to Infamy</span>
+            <!-- <span class="game-sub">Simultaneous actions up to 5 players</span> -->
             <div><img src="deckhand-2.jpg" /></div>
         </a>
         <a href="https://batiste.github.io/deckhand/" 
-        class="game-button"><span>DeckHand</span>
+        class="game-button">
+            <span class="game-title">DeckHand</span>
+            <!-- <span class="game-sub">Deck building up to 4 players</span> -->
             <div><img src="deckhand.jpg" /></div>
         </a>
     </div>
