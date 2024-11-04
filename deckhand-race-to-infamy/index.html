@@ -28,6 +28,7 @@
             color: #000000;
             min-height: 100vh;
             padding: 10px;
+            justify-content: center;
         }
         
         /* Logo and header */
@@ -120,9 +121,15 @@
             /* color: #ccc; */
         }
 
+
+        .container {
+            display: flex;
+            justify-content: center;
+        }
+
         .cards-display {
-            max-width: 90%;
-            max-width: 960px;
+            width: 90%;
+            max-width: 1100px;
         }
 
 
@@ -139,10 +146,11 @@
         <p class="subtitle">A battle of wits in a vibrant world of adventure, for up to 5 players.</p>
     </div>
 
-    <div><img src="card-display.png" class="cards-display"></div>
+    <div class="container">
+        <img src="card-display.png" class="cards-display"></div>
 
 
-    <div style="max-width: 800px; margin: 2em">
+    <div style="max-width: 800px; margin: 1em">
         <p>
             In DeckHand — Race to Infamy, players become apprentice pirates, where each decision could lead to 
             fame or defeat. Over six rounds, players will strategically draft from a pool of 95 carefully 
@@ -154,15 +162,16 @@
             timing, and bold choices.
         </p>
         <p>
-            As the game unfolds, players engage in simultaneous actions, where quick decisions 
-            can shift the tides of fortune. With each card built, players enhance their
+            As the game unfolds, players engage in simultaneous actions. With each card built, 
+            players enhance their
              tableau and unlock opportunities for scoring Infamy points at the end of the game. 
              Competing for limited Infamy cards adds tension, requiring you to anticipate your
               opponents’ moves and adapt your strategies. Will you become the most infamous pirate, 
-              or will you be left behind? In this fast-paced game of strategy and deception,
-               every action counts, and only the most cunning pirates will succeed!
+              or will you be left behind?
         </p>
+    </div>
 
+    <div style="max-width: 800px; margin: 1em">
         <a href="https://screentop.gg/@Bibi/DeckHand-Infamy" class="game-button">
             <span class="game-title">Try the game on Screentop.gg</span>
             <img src="screentop.gg.jpg" class="screentop-img"/>
