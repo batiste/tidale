@@ -8,6 +8,13 @@
         p {
             margin: 1em 0;
         }
+
+        a:visited, a:link {
+            color: rgb(69, 69, 69);
+        }
+        a:link {
+            color: rgb(0, 0, 0);
+        }
         
         body {
             display: flex;
@@ -75,6 +82,20 @@
             flex-direction: column;
             justify-content: space-between;
             padding-bottom: 5px;
+        }
+
+        a.game-button:link {
+            color: #f4f4f4;
+        }
+        a.game-button:visited {
+            color: #f4f4f4;
+        }
+
+        .link-list {
+            display: flex;
+        }
+        .link-list li {
+            margin: 1em;
         }
 
         .game-button img {

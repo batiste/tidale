@@ -125,7 +125,23 @@
         </p>
 
         <p>Illustrators: Vitor Henrique Silveira, Mauri, Riccardo Zoppello, Daniel Cunha, Datuna Toloma and Batiste Bieler</p>
+
+        <ul class="link-list">
+            <li><a href="..">Back to the main page</a></li>
+            <li><a href="https://discord.gg/MaWz2cgW6k">Join the Discord Server</a></li>
+            <li><a href="#" id="ml">Join the Mailing List</a></li>
+        </ul>
     </div>
+
+    <script>
+        document.getElementById('ml').onclick = () => {
+            document.getElementById('popup1').style['display'] = 'block';
+            return false
+        }
+        document.getElementById('closeP').onclick = () => {
+            document.getElementById('popup1').style['display'] = 'none';
+        }
+    </script> 
 
     
 
