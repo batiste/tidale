@@ -6,164 +6,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
     <title>DeckHand — Race to Infamy</title>
     <style>
-        /* Basic reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: sans-serif;
-        }
-        p {
-            margin: 1em 0;
-        }
-        
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background: #e3d1ab url(back.jpg) repeat-y center center;
-            background-size: cover;
-            color: #000000;
-            min-height: 100vh;
-            padding: 10px;
-            justify-content: center;
-        }
-        
-        /* Logo and header */
-        .header {
-            margin-top: 20px;
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-        }
-        
-        .logo {
-            width: 110px;
-            margin-right: 20px;
-        }
-        
-        .title {
-            font-size: 35px;
-            font-weight: bold;
-            color: #000;
-            /* text-shadow: 1px 1px 2px #ffe389c7; */
-            font-family: "Berkshire Swash", cursive;
-            font-weight: normal;
-        }
-        
-        .subtitle {
-            font-size: 1.2em;
-            color: #1a1a1a;
-        }
-
-        /* Button styling */
-        .game-buttons {
-            display: flex;
-            flex-direction: row;
-            gap: 20px;
-        }
-        
-        .game-button {
-            text-align: center;
-            background-color: #4b5c91;
-            border: none;
-            padding: 0;
-            color: #f4f4f4;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 3px 3px 10px rgba(39, 51, 78, 0.913);
-            max-width: 500px;
-            margin: 0 auto;
-            text-decoration: none;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding-bottom: 5px;
-        }
-
-        .game-button img {
-            /* padding-top: 1em; */
-            margin:0;
-            width: 100%;
-            max-height: 310px;
-        }
-
-        .game-button .game-title {
-            display: inline-block;
-            font-size: 1.4em;
-            padding: 10px 5px;
-        }
-    
-        .game-button .game-sub {
-            display: inline-block;
-            padding-bottom: 10px;
-            padding: 5px 5px;
-        }
-        
-        .game-button:hover {
-            background-color: #002049;
-            box-shadow: 1px 1px 1px rgba(39, 51, 78, 0.913);
-        }
-
-        @media only screen and (max-width: 800px) {
-            .game-buttons {
-                flex-direction: column;
-            }
-        }
-
-        /* Footer */
-        footer {
-            margin: 2em;
-            font-size: 1em;
-            /* color: #ccc; */
-        }
-
-
-        .container {
-            display: flex;
-            justify-content: center;
-        }
-
-        .cards-display {
-            width: 90%;
-            max-width: 1100px;
-        }
-
-
-
-        .game-button {
-            justify-content: center;
-        }
-
-        .features {
-            column-count: 4;
-            padding: 0;
-
-        }
-        .features li {
-            margin: 0;
-            padding: 0;
-            padding-bottom: 0.8em;
-            line-height: 1.7;
-            /* font-weight: bold; */
-            list-style: none;
-            background-image: url("bolt.png");
-            background-repeat: no-repeat;
-            background-position: left top;
-            background-size: 21px;
-            padding-left: 26px;
-
-        }
     </style>
 </head>
 <body>
     <!-- Logo and Title Section -->
     <div class="header">
         <h1 class="title">DeckHand — Race for Infamy</h1>
-        <p class="subtitle">Trade, Tame, and Triumph Among Legends!</p>
+        <p class="subtitle">Trade, Tame, and Triumph!</p>
     </div>
 
     <div style="max-width: 900px;">
@@ -184,7 +36,29 @@
     </div>
 
     <div class="container">
-        <img src="card-display-s.webp" class="cards-display"></div>
+        <img src="card-display-s.webp" class="cards-display">
+    </div>
+
+
+    <a class="button" id="pre-order">Be First to Board!</a>
+
+    <div id="popup1" class="overlay">
+        <div class="popup">
+            <a id="closeP" class="close"  href="#close">×</a>
+            <iframe width="100%" height="680px" src="https://forms.office.com/r/HtesDacvgh?embed=true" frameborder="0" marginwidth="0" marginheight="0" style="border: none; max-width:750px; max-height:100vh" allowfullscreen webkitallowfullscreen mozallowfullscreen msallowfullscreen> </iframe>
+        </div>
+    </div>
+    
+
+    
+    <script>
+        document.getElementById('pre-order').onclick = () => {
+            document.getElementById('popup1').style['display'] = 'block';
+        }
+        document.getElementById('closeP').onclick = () => {
+            document.getElementById('popup1').style['display'] = 'none';
+        }
+    </script> 
 
 
     <div style="max-width: 800px; margin: 1em">
@@ -213,7 +87,8 @@
     <div class="container">
         <img src="board.png" class="cards-display"></div>
 
-    <div style="max-width: 800px; margin: 1em">        
+    <div style="max-width: 960px; margin: 1em">
+        <img src="player-side.png" style="float: right; max-width: 550px"  />
         <p>
             With each card built, players enhance their tableau, 
             unlocking new opportunities, expanding their influence, 
