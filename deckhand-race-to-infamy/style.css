@@ -19,6 +19,7 @@
             min-height: 100vh;
             padding: 10px;
             justify-content: center;
+            text-shadow: 1px 1px #fff2;
         }
         
         /* Logo and header */
