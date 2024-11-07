@@ -159,6 +159,11 @@
             padding: 0;
         }
 
+        .features-3 {
+            column-count: 3;
+            padding: 0;
+        }
+
 
         @media only screen and (max-width: 800px) {
             .features {
