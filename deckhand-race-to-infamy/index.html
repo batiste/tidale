@@ -32,26 +32,75 @@
         <img src="card-display-s.webp" class="cards-display">
     </div>
 
+    <!-- <link href="https://ems.nautilusmail.com/core/css/embedded.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"> -->
+    <style>
+        .subscribe-embedded-form {
+            /* color: #000000;
+            background-color: transparent; */
+            display: flex;
+        }
+        .subscribe-embedded-form form {
+            display: flex;
+        }
+        .subscribe-embedded-form label {
+            color: #000000
+        }
+        .subscribe-embedded-form .form-control {
+            font-size: 18px;
+            padding: 12px 20px;
+            height: auto;
+            display: block;
+            width: 15em;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+    </style>
 
-    <a class="button" id="pre-order">Get Notified On Launch!</a>
 
-    <div id="popup1" class="overlay">
+    <h2>Get Notified On Launch!</h2>
+    <div style="max-width: 800px; margin: 1em">
+        <div class="subscribe-embedded-form">
+            <form action="https://ems.nautilusmail.com/lists/673df4187caa9/embedded-form-subscribe-captcha" 
+                method="POST" class="form-validate-jqueryz">
+                <div class="form-group control-text">
+                    <input id="EMAIL" placeholder="Email" value="" required type="email" name="EMAIL" class="form-control required email:dns,strict,spoof,filter ">
+                </div>
+                <div class="form-button"><button class="button">Subscribe</button></div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- <link href="https://ems.nautilusmail.com/core/css/app.css?v=4.0.24-p351" rel="stylesheet" type="text/css"> -->
+    <!-- <script type="text/javascript" src="https://ems.nautilusmail.com/core/js/jquery-3.6.0.min.js">
+    </script><script type="text/javascript" src="https://ems.nautilusmail.com/core/validate/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="https://ems.nautilusmail.com/core/datetime/anytime.min.js"></script>
+    <script type="text/javascript" src="https://ems.nautilusmail.com/core/datetime/moment.min.js"></script>
+    <script type="text/javascript" src="https://ems.nautilusmail.com/core/datetime/pickadate/picker.js"></script>
+    <script type="text/javascript" src="https://ems.nautilusmail.com/core/datetime/pickadate/picker.date.js"></script>
+    <script type="text/javascript" src="https://ems.nautilusmail.com/core/js/functions.js"></script>
+    <script>var DATATABLE_TRANSLATE_URL = 'https://ems.nautilusmail.com/datatable_locale';var JVALIDATE_TRANSLATE_URL = 'https://ems.nautilusmail.com/jquery_validate_locale';var APP_URL = 'https://ems.nautilusmail.com';var LANG_OK = 'OK';var LANG_CONFIRM = 'Confirm';var LANG_YES = 'Yes';var LANG_NO = 'No';var LANG_ARE_YOU_SURE = 'Are you sure?';var LANG_CANCEL = 'Cancel';var LANG_DELETE_VALIDATE = 'Please enter the text exactly as it is displayed to confirm deletion.';var LANG_DATE_FORMAT = 'yyyy-mm-dd';var LANG_ANY_DATETIME_FORMAT = '%Z-%m-%d, %H:%i';var LANG_J_DATE_FORMAT = 'messages.j_date_format';var CSRF_TOKEN = "yCyWnHgPGvEo0hxnsj4VUM187FRpqv7gfW9f5nsA";var LANG_SUCCESS = 'Success';var LANG_ALERT = 'Alert';var LANG_ERROR = 'Error';var LANG_CONFIRMATION = 'Confirmation';var LANG_NOTIFY = {'success': 'Success','error': 'Error','notice': 'Notice'};var LOADING_WAIT = 'Loading, please wait...';// current controller actionvar CONTROLLER = 'MailListController';var ACTION = 'embeddedForm';</script><script>jQuery( document ).ready(function( $ ) {$(".subscribe-embedded-form form").validate({rules: {EMAIL: {required: true,email: true,remote: "https://ems.nautilusmail.com/lists/673df4187caa9/check-email"}}});initJs($('.subscribe-embedded-form'));});</script>
+ -->
+
+    <!-- <a class="button" id="pre-order">Get Notified On Launch!</a> -->
+
+    <!-- <div id="popup1" class="overlay">
         <div class="popup">
             <a id="closeP" class="close"  href="#close">×</a>
             <iframe width="100%" height="680px" src="https://forms.office.com/r/HtesDacvgh?embed=true" frameborder="0" marginwidth="0" marginheight="0" style="border: none; max-width:750px; max-height:100vh" allowfullscreen webkitallowfullscreen mozallowfullscreen msallowfullscreen> </iframe>
         </div>
-    </div>
+    </div> -->
     
 
     
-    <script>
+    <!-- <script>
         document.getElementById('pre-order').onclick = () => {
             document.getElementById('popup1').style['display'] = 'block';
         }
         document.getElementById('closeP').onclick = () => {
             document.getElementById('popup1').style['display'] = 'none';
         }
-    </script> 
+    </script>  -->
 
 
     <div class="container margin">
@@ -75,7 +124,7 @@
     <div class="container">
         <ul class="features">
             <li>Age: 14+</li>
-            <li>Resource tree</li>
+            <li>Tableau building</li>
             <li>Moderate interaction</li>
             <li>Draft manipulation</li>
             <!-- <li>Medium complexity</li>
@@ -101,12 +150,8 @@
 
     <div class="container-flex">
         <ul class="features">
-            <!-- <li>Age: 14+</li>
-            <li>Resource tree</li>
-            <li>Moderate interaction</li>
-            <li>Draft manipulation</li> -->
             <li>Medium complexity</li>
-            <li>Tableau building</li>
+            <li>Resource tree</li>  
             <li>Set collection</li>
             <li>108 Poker cards</li>
         </ul>
@@ -139,6 +184,7 @@
 
         <p>Illustrators: Vitor Henrique Silveira, Mauri, Riccardo Zoppello, Daniel Cunha, Datuna Toloma and Batiste Bieler</p>
 
+
         <ul class="link-list">
             <li><a href="..">Back to the main page</a></li>
             <li><a href="https://discord.gg/MaWz2cgW6k">Join the Discord Server</a></li>
@@ -146,7 +192,20 @@
         </ul>
     </div>
 
-    <script>
+    <!-- <div style="max-width: 800px; margin: 1em"> 
+        <h2>Get Notified On Launch!</h2>
+        <div class="subscribe-embedded-form">
+            <form action="https://ems.nautilusmail.com/lists/673df4187caa9/embedded-form-subscribe-captcha" 
+                method="POST" class="form-validate-jqueryz" novalidate="novalidate">
+                <div class="form-group control-text">
+                    <input id="EMAIL" placeholder="Email" value="" type="text" name="EMAIL" class="form-control required email:dns,strict,spoof,filter ">
+                </div>
+                <div class="form-button"><button class="button">Subscribe</button></div>
+            </form>
+        </div>
+    </div> -->
+
+    <!-- <script>
         document.getElementById('ml').onclick = () => {
             document.getElementById('popup1').style['display'] = 'block';
             return false
@@ -154,8 +213,21 @@
         document.getElementById('closeP').onclick = () => {
             document.getElementById('popup1').style['display'] = 'none';
         }
-    </script> 
+    </script>  -->
 
+
+    <h2>Get Notified On Launch!</h2>
+    <div style="max-width: 800px; margin: 1em">
+        <div class="subscribe-embedded-form">
+            <form action="https://ems.nautilusmail.com/lists/673df4187caa9/embedded-form-subscribe-captcha" 
+                method="POST" class="form-validate-jqueryz">
+                <div class="form-group control-text">
+                    <input id="EMAIL" placeholder="Email" value="" required type="email" name="EMAIL" class="form-control required email:dns,strict,spoof,filter ">
+                </div>
+                <div class="form-button"><button class="button">Subscribe</button></div>
+            </form>
+        </div>
+    </div>
     
 
     <!-- Footer -->
