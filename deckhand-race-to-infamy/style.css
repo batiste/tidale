@@ -27,6 +27,7 @@ body {
     padding: 10px;
     justify-content: center;
     text-shadow: 1px 1px #fff2;
+    text-align: center;
 }
 
 /* Logo and header */
@@ -141,10 +142,12 @@ footer {
     justify-content: center;
     align-items: center;
     max-width: 960px;
+    text-align: left;
 }
 
 .container {
     max-width: 960px;
+    text-align: left;
 }
 
 .margin {
@@ -166,6 +169,7 @@ footer {
 
 .features {
     display: flex;
+    justify-content: center;
 }
 
 
@@ -266,4 +270,14 @@ footer {
     width: 15em;
     border: 1px solid #ddd;
     border-radius: 6px 0px 0px 6px;
+}
+
+
+@media only screen and (max-width: 450px) {
+    .subscribe-embedded-form .form-control {
+        border-radius: 6px;
+    }
+    .button {
+        border-radius: 6px;
+    }
 }
