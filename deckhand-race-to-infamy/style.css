@@ -200,6 +200,9 @@ footer {
     ul {
         flex-wrap: wrap;
     }
+    .dh-logo {
+        width: 100%;
+    }
 }
 
 
