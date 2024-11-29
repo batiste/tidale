@@ -35,7 +35,7 @@ body {
     margin-top: 20px;
     display: flex;
     align-items: center;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 .dh-logo {
@@ -190,6 +190,7 @@ footer {
 .features {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 
