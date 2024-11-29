@@ -223,25 +223,36 @@
   
     // Function to track form submit
     document.getElementById("form1").addEventListener("submit", function (event) {
-    //   event.preventDefault(); // Prevent actual form submission for demo purposes
-      ga("send", "event", {
-        eventCategory: "Form Interaction",
-        eventAction: "click",
-        eventLabel: "Submit Button 1",
-      });
-      // Optional: Proceed with form submission
-      // this.submit();
+        event.preventDefault(); // Prevent actual form submission for demo purposes
+        this.querySelector("button").textContent = "Loading...";
+        this.querySelector("input").disabled = true;
+        this.querySelector("button").disabled = true;
+        ga("send", "event", {
+            eventCategory: "Form Interaction",
+            eventAction: "click",
+            eventLabel: "Submit Button 1",
+        });
+        this.classList.add("submitted");
+        // Delay the form submission slightly
+        setTimeout(() => {
+            this.submit(); // Continue with the default form submission
+        }, 50); // 100ms is usually enough
     });
 
     document.getElementById("form2").addEventListener("submit", function (event) {
-    //   event.preventDefault(); // Prevent actual form submission for demo purposes
-      ga("send", "event", {
-        eventCategory: "Form Interaction",
-        eventAction: "click",
-        eventLabel: "Submit Button 2",
-      });
-      // Optional: Proceed with form submission
-      // this.submit();
+        event.preventDefault(); // Prevent actual form submission for demo purposes
+        this.querySelector("button").textContent = "Loading...";
+        this.querySelector("input").disabled = true;
+        this.querySelector("button").disabled = true;
+        ga("send", "event", {
+            eventCategory: "Form Interaction",
+            eventAction: "click",
+            eventLabel: "Submit Button 2",
+        });
+        // Delay the form submission slightly
+        setTimeout(() => {
+            this.submit(); // Continue with the default form submission
+        }, 50); // 100ms is usually enough
     });
 
     document.getElementById("screentop").addEventListener("click", function () {
