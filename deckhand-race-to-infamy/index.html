@@ -160,7 +160,7 @@
                 <div class="form-group control-text">
                     <input id="email2" placeholder="Email" value="" required type="email" name="EMAIL" class="form-control required email:dns,strict,spoof,filter ">
                 </div>
-                <div class="form-button"><button id="button1 class="button">Subscribe</button></div>
+                <div class="form-button"><button id="button1" class="button">Subscribe</button></div>
             </form>
         </div>
     </div>
@@ -206,51 +206,57 @@
 <script>
     // Function to track input click
     document.getElementById("email1").addEventListener("click", function () {
-      gtag("event", "email1_click", {
-        event_category: "Form Interaction",
-        event_label: "Email field",
+      ga("send", "event", {
+        eventCategory: "Form Interaction",
+        eventAction: "click",
+        eventLabel: "Email field 1",
       });
     });
 
     document.getElementById("email2").addEventListener("click", function () {
-      gtag("event", "email_2_click", {
-        event_category: "Form Interaction",
-        event_label: "Email field",
+      ga("send", "event", {
+        eventCategory: "Form Interaction",
+        eventAction: "click",
+        eventLabel: "Email field 2",
       });
     });
   
     // Function to track form submit
     document.getElementById("form1").addEventListener("submit", function (event) {
-      event.preventDefault(); // Prevent actual form submission for demo purposes
-      gtag("event", "form1_submit", {
-        event_category: "Form Interaction",
-        event_label: "Submit Button",
+    //   event.preventDefault(); // Prevent actual form submission for demo purposes
+      ga("send", "event", {
+        eventCategory: "Form Interaction",
+        eventAction: "click",
+        eventLabel: "Submit Button 1",
       });
       // Optional: Proceed with form submission
       // this.submit();
     });
 
     document.getElementById("form2").addEventListener("submit", function (event) {
-      event.preventDefault(); // Prevent actual form submission for demo purposes
-      gtag("event", "form2_submit", {
-        event_category: "Form Interaction",
-        event_label: "Submit Button",
+    //   event.preventDefault(); // Prevent actual form submission for demo purposes
+      ga("send", "event", {
+        eventCategory: "Form Interaction",
+        eventAction: "click",
+        eventLabel: "Submit Button 2",
       });
       // Optional: Proceed with form submission
       // this.submit();
     });
 
     document.getElementById("screentop").addEventListener("click", function () {
-      gtag("event", "screentop_click", {
-        event_category: "Game Button",
-        event_label: "Screentop.gg",
+      ga("send", "event", {
+        eventCategory: "Game Button",
+        eventAction: "click",
+        eventLabel: "Screentop.gg",
       });
     });
 
     document.getElementById("how-to").addEventListener("click", function () {
-      gtag("event", "howto_click", {
-        event_category: "Game Button",
-        event_label: "How to Play",
+      ga("send", "event", {
+        eventCategory: "Game Button",
+        eventAction: "click",
+        eventLabel: "How to Play",
       });
     });
   </script>
