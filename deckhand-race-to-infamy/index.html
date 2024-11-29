@@ -43,11 +43,11 @@
     <div style="max-width: 800px; padding: 1em">
         <div class="subscribe-embedded-form">
             <form action="https://ems.nautilusmail.com/lists/673df4187caa9/embedded-form-subscribe-captcha" 
-                method="POST" class="form-validate-jqueryz">
+                method="POST" class="form-validate-jqueryz" id="form1">
                 <div class="form-group control-text">
-                    <input id="EMAIL" placeholder="Email" value="" required type="email" name="EMAIL" class="form-control required email:dns,strict,spoof,filter ">
+                    <input id="email1" placeholder="Email" value="" required type="email" name="EMAIL" class="form-control required email:dns,strict,spoof,filter ">
                 </div>
-                <div class="form-button"><button class="button">Subscribe</button></div>
+                <div class="form-button"><button id="button1" class="button">Subscribe</button></div>
             </form>
         </div>
     </div>
@@ -119,12 +119,12 @@
     </div>
 
     <div class="game-buttons">
-        <a href="https://screentop.gg/@Bibi/DeckHand-Infamy" class="game-button">
+        <a href="https://screentop.gg/@Bibi/DeckHand-Infamy" class="game-button" id="screentop">
             <span class="game-title">Try the game on Screentop.gg</span>
             <img src="screentop.gg.jpg" class="screentop-img"/>
         </a>
 
-        <a href="https://www.youtube.com/watch?v=kpfeeDPeSjQ" class="game-button">
+        <a href="https://www.youtube.com/watch?v=kpfeeDPeSjQ" class="game-button" id="how-to">
             <span class="game-title">How to Play</span>
             <iframe src="https://www.youtube.com/embed/kpfeeDPeSjQ?si=T-am-z32gbQVEnZa" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </a>
@@ -156,11 +156,11 @@
     <div style="max-width: 800px; padding: 1em">
         <div class="subscribe-embedded-form">
             <form action="https://ems.nautilusmail.com/lists/673df4187caa9/embedded-form-subscribe-captcha" 
-                method="POST" class="form-validate-jqueryz">
+                method="POST" class="form-validate-jqueryz" id="form2">
                 <div class="form-group control-text">
-                    <input id="EMAIL" placeholder="Email" value="" required type="email" name="EMAIL" class="form-control required email:dns,strict,spoof,filter ">
+                    <input id="email2" placeholder="Email" value="" required type="email" name="EMAIL" class="form-control required email:dns,strict,spoof,filter ">
                 </div>
-                <div class="form-button"><button class="button">Subscribe</button></div>
+                <div class="form-button"><button id="button1 class="button">Subscribe</button></div>
             </form>
         </div>
     </div>
@@ -201,5 +201,58 @@
     src="https://www.facebook.com/tr?id=195495916889807&ev=PageView&noscript=1"
     /></noscript>
 <!-- End Meta Pixel Code -->
+
+
+<script>
+    // Function to track input click
+    document.getElementById("email1").addEventListener("click", function () {
+      gtag("event", "email1_click", {
+        event_category: "Form Interaction",
+        event_label: "Email field",
+      });
+    });
+
+    document.getElementById("email2").addEventListener("click", function () {
+      gtag("event", "email_2_click", {
+        event_category: "Form Interaction",
+        event_label: "Email field",
+      });
+    });
+  
+    // Function to track form submit
+    document.getElementById("form1").addEventListener("submit", function (event) {
+      event.preventDefault(); // Prevent actual form submission for demo purposes
+      gtag("event", "form1_submit", {
+        event_category: "Form Interaction",
+        event_label: "Submit Button",
+      });
+      // Optional: Proceed with form submission
+      // this.submit();
+    });
+
+    document.getElementById("form2").addEventListener("submit", function (event) {
+      event.preventDefault(); // Prevent actual form submission for demo purposes
+      gtag("event", "form2_submit", {
+        event_category: "Form Interaction",
+        event_label: "Submit Button",
+      });
+      // Optional: Proceed with form submission
+      // this.submit();
+    });
+
+    document.getElementById("screentop").addEventListener("click", function () {
+      gtag("event", "screentop_click", {
+        event_category: "Game Button",
+        event_label: "Screentop.gg",
+      });
+    });
+
+    document.getElementById("how-to").addEventListener("click", function () {
+      gtag("event", "howto_click", {
+        event_category: "Game Button",
+        event_label: "How to Play",
+      });
+    });
+  </script>
 
 </html>
