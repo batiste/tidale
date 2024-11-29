@@ -220,6 +220,25 @@
         eventLabel: "Email field 2",
       });
     });
+
+    window.addEventListener("pageshow", function () {
+        var form = document.getElementById("form1");
+        if (form) {
+            const button = form.querySelector("button");
+            const input = form.querySelector("input");
+            if (button) button.textContent = "Submit"; // Reset the button text
+            if (button) button.disabled = false; // Re-enable the button
+            if (input) input.disabled = false; // Re-enable the input
+        }
+        form = document.getElementById("form2");
+        if (form) {
+            const button = form.querySelector("button");
+            const input = form.querySelector("input");
+            if (button) button.textContent = "Submit"; // Reset the button text
+            if (button) button.disabled = false; // Re-enable the button
+            if (input) input.disabled = false; // Re-enable the input
+        }
+    });
   
     // Function to track form submit
     document.getElementById("form1").addEventListener("submit", function (event) {
