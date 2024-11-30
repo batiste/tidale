@@ -219,18 +219,16 @@
 <script>
     // Function to track input click
     document.getElementById("form1").querySelector("#EMAIL").addEventListener("click", function () {
-      ga("send", "event", {
-        eventCategory: "Form Interaction",
-        eventAction: "click",
-        eventLabel: "Email field 1",
+    gtag("event", "input_click", {
+        event_category: "Form Interaction",
+        event_label: "Email field 1",
       });
     });
 
     document.getElementById("form2").querySelector("#EMAIL").addEventListener("click", function () {
-      ga("send", "event", {
-        eventCategory: "Form Interaction",
-        eventAction: "click",
-        eventLabel: "Email field 2",
+    gtag("event", "input_click", {
+        event_category: "Form Interaction",
+        event_label: "Email field 2",
       });
     });
 
@@ -257,17 +255,13 @@
     document.getElementById("form1").addEventListener("submit", function (event) {
         event.preventDefault(); // Prevent actual form submission for demo purposes
         this.querySelector("button").textContent = "Loading...";
-        this.querySelector("input").disabled = true;
         this.querySelector("button").disabled = true;
-        ga("send", "event", {
-            eventCategory: "Form Interaction",
-            eventAction: "click",
-            eventLabel: "Submit Button 1",
+        gtag("event", "form_submit", {
+            event_category: "Form Interaction",
+            event_label: "Submit Button 1",
         });
-        this.classList.add("submitted");
         // Delay the form submission slightly
         setTimeout(() => {
-            this.querySelector("input").disabled = false;
             this.submit(); // Continue with the default form submission
         }, 50); // 100ms is usually enough
     });
@@ -275,34 +269,29 @@
     document.getElementById("form2").addEventListener("submit", function (event) {
         event.preventDefault(); // Prevent actual form submission for demo purposes
         this.querySelector("button").textContent = "Loading...";
-        this.querySelector("input").disabled = true;
         this.querySelector("button").disabled = true;
-        ga("send", "event", {
-            eventCategory: "Form Interaction",
-            eventAction: "click",
-            eventLabel: "Submit Button 2",
+        gtag("event", "form_submit", {
+            event_category: "Form Interaction",
+            event_label: "Submit Button 2",
         });
         // Delay the form submission slightly
         setTimeout(() => {
-            this.querySelector("input").disabled = false;
             this.submit(); // Continue with the default form submission
         }, 50); // 100ms is usually enough
     });
 
     document.getElementById("screentop").addEventListener("click", function () {
-      ga("send", "event", {
-        eventCategory: "Game Button",
-        eventAction: "click",
-        eventLabel: "Screentop.gg",
-      });
+        gtag("event", "button_click", {
+            event_category: "Game Button",
+            event_label: "Screentop.gg",
+        });
     });
 
     document.getElementById("how-to").addEventListener("click", function () {
-      ga("send", "event", {
-        eventCategory: "Game Button",
-        eventAction: "click",
-        eventLabel: "How to Play",
-      });
+        gtag("event", "button_click", {
+            event_category: "Game Button",
+            event_label: "How to Play",
+        });
     });
 
       // Function to check for a specific query parameter
