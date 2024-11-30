@@ -170,6 +170,10 @@
         <a href=".."><img src="../tidale-logo.png" alt="Tidale Logo" class="logo"></a>
         &copy; 2024 Tidale. All rights reserved.
     </footer>
+
+    <div id="thankPopup" style="display: none;">
+        <p>🏴‍☠️ Thank you and welcome aboard! 🎉🏴‍☠️</p>
+      </div>
 </body>
 
 <script>
@@ -300,6 +304,25 @@
         eventLabel: "How to Play",
       });
     });
+
+      // Function to check for a specific query parameter
+  function getQueryParameter(param) {
+    const params = new URLSearchParams(window.location.search);
+    return params.has(param);
+  }
+
+  console.log(getQueryParameter("thanks"));
+
+  // Show the popup if "?thanks" is in the URL
+  if (getQueryParameter("thanks")) {
+    const popup = document.getElementById("thankPopup");
+    popup.style.display = "block"; // Show the popup
+
+    // Automatically hide the popup after 10 seconds
+    setTimeout(() => {
+      popup.style.display = "none";
+    }, 10000);
+  }
   </script>
 
 </html>
