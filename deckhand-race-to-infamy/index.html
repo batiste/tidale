@@ -46,7 +46,7 @@
             <form action="https://ems.nautilusmail.com/lists/673df4187caa9/embedded-form-subscribe-captcha" 
                 method="POST" class="form-validate-jqueryz" id="form1">
                 <div class="form-group control-text">
-                    <input id="email1" placeholder="Email" value="" required type="email" name="EMAIL" class="form-control required email:dns,strict,spoof,filter ">
+                    <input id="EMAIL" placeholder="Email" value="" required type="email" name="EMAIL" class="form-control required email:dns,strict,spoof,filter ">
                 </div>
                 <div class="form-button"><button id="button1" class="button">Subscribe</button></div>
             </form>
@@ -157,7 +157,7 @@
             <form action="https://ems.nautilusmail.com/lists/673df4187caa9/embedded-form-subscribe-captcha" 
                 method="POST" class="form-validate-jqueryz" id="form2">
                 <div class="form-group control-text">
-                    <input id="email2" placeholder="Email" value="" required type="email" name="EMAIL" class="form-control required email:dns,strict,spoof,filter ">
+                    <input id="EMAIL" placeholder="Email" value="" required type="email" name="EMAIL" class="form-control required email:dns,strict,spoof,filter ">
                 </div>
                 <div class="form-button"><button id="button1" class="button">Subscribe</button></div>
             </form>
@@ -204,7 +204,7 @@
 
 <script>
     // Function to track input click
-    document.getElementById("email1").addEventListener("click", function () {
+    document.getElementById("form1").querySelector("#EMAIL").addEventListener("click", function () {
       ga("send", "event", {
         eventCategory: "Form Interaction",
         eventAction: "click",
@@ -212,7 +212,7 @@
       });
     });
 
-    document.getElementById("email2").addEventListener("click", function () {
+    document.getElementById("form2").querySelector("#EMAIL").addEventListener("click", function () {
       ga("send", "event", {
         eventCategory: "Form Interaction",
         eventAction: "click",
