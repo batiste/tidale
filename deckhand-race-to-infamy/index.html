@@ -253,6 +253,7 @@
         this.classList.add("submitted");
         // Delay the form submission slightly
         setTimeout(() => {
+            this.querySelector("input").disabled = false;
             this.submit(); // Continue with the default form submission
         }, 50); // 100ms is usually enough
     });
@@ -269,6 +270,7 @@
         });
         // Delay the form submission slightly
         setTimeout(() => {
+            this.querySelector("input").disabled = false;
             this.submit(); // Continue with the default form submission
         }, 50); // 100ms is usually enough
     });
