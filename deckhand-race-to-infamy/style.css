@@ -16,6 +16,27 @@ a:link {
     color: rgb(0, 0, 0);
 }
 
+.tagline {
+    color: #ffd633;
+    font-size: 22px;
+    letter-spacing: 1px;
+    text-shadow: 
+        2px 2px 2px #3c3403, 
+        0px 0px 2px #3c3403,
+        0px 0px 3px #000000;
+}
+
+
+#preview {
+    border-top: 8px solid #241e02e5;
+    border-bottom: 8px solid #201b02;
+    background-image: url(texture.jpg);
+    background-size: cover;
+    width:100%;
+    padding: 10px; 
+    margin-bottom: 30px;
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -24,7 +45,7 @@ body {
     background-size: cover;
     color: #000000;
     min-height: 100vh;
-    padding: 10px;
+    padding: 0;
     justify-content: center;
     text-shadow: 1px 1px #fff2;
     text-align: center;
