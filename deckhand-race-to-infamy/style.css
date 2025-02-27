@@ -298,17 +298,18 @@ footer {
 
 .button {
     color: #ffffff;
-    background-color: #a83121;
+    background-color: #1baa64;
     border: none;
-    border-radius: 0px 6px 6px 0px;
-    padding: 12px 20px;
+    border-radius: 26px;
+    padding: 14px 22px;
     font-size: 18px;
     font-weight: 500;
     line-height: 22px;
     display: flex;
     align-items: center;
     text-decoration: none;
-    box-shadow: 2px 7px 50px -2px rgb(209, 54, 11);
+    box-shadow: 2px 7px 50px -2px rgb(3, 61, 11);
+    margin: 1em 2em 2em 2em;
 }
 
 .button:hover {
