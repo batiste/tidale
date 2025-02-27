@@ -312,6 +312,10 @@ footer {
     margin: 1em 2em 2em 2em;
 }
 
+a.button:link, a.button:visited {
+    color: #fff;
+}
+
 .button:hover {
     box-shadow: none;
     cursor: pointer;
