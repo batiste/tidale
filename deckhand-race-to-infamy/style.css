@@ -5,6 +5,7 @@
     box-sizing: border-box;
     font-family: sans-serif;
 }
+
 p {
     margin: 1em 0;
 }
@@ -17,13 +18,9 @@ a:link {
 }
 
 .tagline {
-    color: #ffd633;
-    font-size: 22px;
-    letter-spacing: 1px;
-    text-shadow: 
-        2px 2px 2px #3c3403, 
-        0px 0px 2px #3c3403,
-        0px 0px 3px #000000;
+    font-size: 24px;
+    color: #000000;
+    font-weight: bold;
 }
 
 
@@ -38,17 +35,19 @@ a:link {
 }
 
 body {
+    font-size: 18px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: #e3d1ab url(back.jpg) repeat-y center center;
+    /* background: #e3d1ab url(back.jpg) repeat-y center center; */
+    background: #fff;
     background-size: cover;
     color: #000000;
     min-height: 100vh;
-    padding: 0;
     justify-content: center;
     text-shadow: 1px 1px #fff2;
     text-align: center;
+    padding: 16px;
 }
 
 /* Logo and header */
@@ -215,27 +214,6 @@ footer {
     margin-top: 10px;
 }
 
-#thankPopup {
-    position: fixed;
-    top: 20%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #fff5c8;
-    padding: 20px 30px;
-    border: 2px solid #000000;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    font-family: Arial, sans-serif;
-    z-index: 1000;
-  }
-
-  #thankPopup p {
-    margin: 0;
-    font-size: 18px;
-    color: #333;
-  }
-
 
 @media only screen and (max-width: 800px) {
     .container-flex {
@@ -257,45 +235,6 @@ footer {
 }
 
 
-.features li {
-    margin: 0 20px 0 0;
-    padding: 0;
-    padding-bottom: 0.8em;
-    line-height: 1.7;
-    /* font-weight: bold; */
-    list-style: none;
-    background-image: url("bolt.png");
-    background-repeat: no-repeat;
-    background-position: left top;
-    background-size: 21px;
-    padding-left: 26px;
-
-}
-
-.overlay {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.7);
-    transition: opacity 500ms;
-    visibility: visible;
-    opacity: 1;
-    display:none;
-}
-.popup { 
-    position: relative;
-    margin: auto;
-    max-width: 750px;
-    background-color: #000;
-    top: 50px;
-}
-
-.popup .close       { position: absolute; top: 0; right: 55px; 
-                    font-size: 50px; font-weight: bold; text-decoration: none; color: #c0c0c0; }
-.popup .close:hover { color: rgb(0, 0, 0); }
-
 .button {
     color: #ffffff;
     background-color: #1baa64;
@@ -308,7 +247,7 @@ footer {
     display: flex;
     align-items: center;
     text-decoration: none;
-    box-shadow: 2px 7px 50px -2px rgb(3, 61, 11);
+    box-shadow: 3px 5px 10px -4px rgb(39, 180, 219);
     margin: 1em 2em 2em 2em;
 }
 
@@ -319,38 +258,4 @@ a.button:link, a.button:visited {
 .button:hover {
     box-shadow: none;
     cursor: pointer;
-}
-
-
-.subscribe-embedded-form {
-    /* color: #000000;
-    background-color: transparent; */
-    display: flex;
-}
-.subscribe-embedded-form form {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center
-}
-.subscribe-embedded-form label {
-    color: #000000
-}
-.subscribe-embedded-form .form-control {
-    font-size: 18px;
-    padding: 12px 20px;
-    height: auto;
-    display: block;
-    width: 15em;
-    border: 1px solid #ddd;
-    border-radius: 6px 0px 0px 6px;
-}
-
-
-@media only screen and (max-width: 450px) {
-    .subscribe-embedded-form .form-control {
-        border-radius: 6px;
-    }
-    .button {
-        border-radius: 6px;
-    }
 }
