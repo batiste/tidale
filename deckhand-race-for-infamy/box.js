@@ -83,24 +83,46 @@ const backMat = getMaterial(back)
 const topMat = getMaterial(top)
 const bottomMat = getMaterial(bottom)
 
-const cubeMaterials = [
+const frontMaterial = [
     rightMat, //right side
     leftMat, //left side
     topMat, //top side
     bottomMat, //bottom side
     frontMat, //front side
+    topMat, //back side
+];
+
+const backMaterial = [
+    backMat, //right side
+    backMat, //left side
+    backMat, //top side
+    backMat, //bottom side
+    backMat, //front side
     backMat, //back side
 ];
 
-const textureMaterial = new THREE.MeshBasicMaterial( { color: 0xF0F0F0, envMap: cubeMaterials } );
+// const textureMaterial = new THREE.MeshBasicMaterial( { color: 0xF0F0F0, envMap: cubeMaterials } );
 
-const ratio = 38
+let ratio = 38
 
 const geometry = new THREE.BoxGeometry( 100 / ratio, 150 / ratio, 25 / ratio );
-const cube = new THREE.Mesh( geometry, cubeMaterials ); 
-scene.add( cube );
 
-cube.rotation.y = 0.1
+// ratio = 40
+
+// const geometry2 = new THREE.BoxGeometry( 100 / ratio, 150 / ratio, 25 / ratio );
+
+const cube = new THREE.Mesh( geometry, frontMaterial );
+const internal = new THREE.Mesh( geometry, backMaterial );
+
+// scene.add(internal)
+// internal.position.x += -0.5;
+internal.scale.set(0.98, 0.99, 0.98);
+internal.position.z += -0.03;
+cube.add(internal)
+scene.add(cube);
+
+// cube.rotation.y = 0.1
+// internal.rotation.y = 0.1
 
 function animate() {
 	requestAnimationFrame( animate );
@@ -108,6 +130,7 @@ function animate() {
 	// cube.rotation.x += 0.003;
     if (!noAnim) {
         cube.rotation.y += 0.005;
+        // internal.rotation.y += 0.005;
     }
 
 	renderer.render( scene, camera );
