@@ -18,12 +18,31 @@
         <!-- <p class="subtitle">Trade, Tame, and Triumph!</p> -->
     </div>
 
-    <div class="container-flex tagline" style="margin-top: 1em">
-        <p>A fast-paced engine building game distilled into 108 cards!</p>
+    <div class="container-flex" style="margin-top: 1em">
+        <div id="box"></div>
+        <div >
+            <p class="tagline" >A fast-paced engine building game distilled into 108 cards!</p>
+                    <p>Set sail in this compact card game that plays out over 5 quick rounds: draft cards to shape your 
+            strategy, then build your Fleet to gain momentum.</p>
+
+        <p>Love games where every decision powers you up? This fast-paced pirate adventure delivers that 
+            thrill with just a deck of cards and a quick setup. You'll be ready to play in minutes.</p>
+
+        <p>Balance growing your engine with taking risks to claim powerful Infamy cards. With simultaneous turns,
+            shared objectives, and tough decisions at every step, there’s barely time to shout “Arrr!”</p>
+
+
+        </div>
     </div>
 
     <div class="container">
-        <p>Set sail in this compact card game that plays out over 5 quick rounds: draft cards to shape your 
+
+        <div class="container-flex" style="margin-top: 1em; justify-content: center;">
+            <a id="mailing" class="button" href="https://gamefound.com/en/projects/batiste-bieler/deckhand-race-for-infamy">Follow us on Gamefound!</a>
+            <p style="margin-top:0;">And get notified on launch late 2025 — ~18$</p>
+        </div>
+
+        <!-- <p>Set sail in this compact card game that plays out over 5 quick rounds: draft cards to shape your 
             strategy, then build your Fleet to gain momentum.</p>
 
         <p>Love games where every decision powers you up? This fast-paced pirate adventure delivers that 
@@ -35,7 +54,7 @@
         <div class="container-flex" style="margin-top: 1em; justify-content: center;">
             <a id="mailing" class="button" href="https://gamefound.com/en/projects/batiste-bieler/deckhand-race-for-infamy">Follow us on Gamefound!</a>
             <p style="margin-top:0;">And get notified on launch late 2025 — ~18$</p>
-        </div>
+        </div> -->
     </div>
 
 
@@ -106,6 +125,19 @@
     ga('send', 'pageview');
 
 </script>
+
+<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+
+<script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.153.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.153.0/examples/jsm/"
+    }
+  }
+</script>
+
+<script type="module" src="./box.js"></script>
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-FXJ69Z763R"></script>
