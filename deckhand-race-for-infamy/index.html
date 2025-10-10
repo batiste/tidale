@@ -38,7 +38,7 @@
     <div class="container">
 
         <div class="container-flex" style="margin-top: 1em; justify-content: center;">
-            <a id="mailing" class="button" href="https://gamefound.com/en/projects/batiste-bieler/deckhand-race-for-infamy">Follow us on Gamefound!</a>
+            <a class="button gamefound" href="https://gamefound.com/en/projects/batiste-bieler/deckhand-race-for-infamy">Follow us on Gamefound!</a>
             <p style="margin-top:0;">And get notified on launch late 2025 — ~18$</p>
         </div>
 
@@ -100,7 +100,7 @@
     </div>
 
 
-    <a id="mailing" class="button" href="https://gamefound.com/en/projects/batiste-bieler/deckhand-race-for-infamy">Follow us on Gamefound!</a>
+    <a class="button gamefound" href="https://gamefound.com/en/projects/batiste-bieler/deckhand-race-for-infamy">Follow us on Gamefound!</a>
     <p style="margin-top:0;">And get notified on launch late 2025 — ~18$</p>
 
 
@@ -114,6 +114,7 @@
         <p>🏴‍☠️ Thank you and welcome aboard! 🎉🏴‍☠️</p>
       </div>
 </body>
+
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -166,6 +167,24 @@
     src="https://www.facebook.com/tr?id=195495916889807&ev=PageView&noscript=1"
     /></noscript>
 <!-- End Meta Pixel Code -->
+
+
+<script>
+  document.querySelectorAll('.gamefound').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault(); // Stop immediate navigation
+      const url = this.href;
+
+      // Fire Meta Pixel event
+      fbq('track', 'Lead');
+
+      // Navigate after a tiny delay to ensure tracking
+      setTimeout(() => {
+        window.location.href = url;
+      }, 150); // 150ms is usually enough
+    });
+  });
+</script>
 
 
 <script>
