@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Phases</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; padding: 20px; color: #333; }
+        .controls { display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        
+        /* Language Buttons */
+        .lang-btn { font-size: 16px;cursor: pointer; border: 1px solid #ccc; background: white; padding: 5px 10px; border-radius: 4px; }
+        .lang-btn.active { background: #007bff; color: white; border-color: #0056b3; }
+
+        /* Tabs */
+        .tab-container { display: flex; gap: 10px; }
+        .tab { padding: 10px 20px; cursor: pointer; background: #f4f4f4; border-radius: 8px 8px 0 0; border: 1px solid #ddd; border-bottom: none; }
+        .tab.active { background: white; font-weight: bold; border-bottom: 2px solid white; margin-bottom: -2px; }
+
+        /* Content Area */
+        .content-section { min-height: 200px; }
+        .hidden { display: none; }
+        .placeholder-img { text-align: left; }
+
+        .responsive-img { max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+
+    <div class="controls">
+        <div id="language-picker">
+            <button class="lang-btn" data-lang="en">English</button>
+            <button class="lang-btn" data-lang="de">Deutsch</button>
+            <button class="lang-btn" data-lang="fr">Français</button>
+        </div>
+    </div>
+
+    <div class="tab-container">
+        <div class="tab active" data-target="quick" data-en="Quick Reference" data-de="Kurzreferenz" data-fr="Référence Rapide">Quick Reference</div>
+        <div class="tab" data-target="phases" data-en="Game Phases" data-de="Spielphasen" data-fr="Phases de jeu">Game Phases</div>
+    </div>
+
+    <div id="quick" class="content-section">
+        <div class="placeholder-img">
+            <img src="/deckhand-race-for-infamy/help/quick-en.png" class="responsive-img" data-base="quick" alt="Reference Image">
+        </div>
+    </div>
+
+    <div id="phases" class="content-section hidden">
+        <div class="placeholder-img">
+            <img src="/deckhand-race-for-infamy/help/phases-en.png" class="responsive-img" data-base="phases" alt="Reference Image">
+        </div>
+    </div>
+
+    <script>
+        const tabs = document.querySelectorAll('.tab');
+        const sections = document.querySelectorAll('.content-section');
+        const langBtns = document.querySelectorAll('.lang-btn');
+        const translatable = document.querySelectorAll('[data-en]');
+
+        // --- Tab Switching Logic ---
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                sections.forEach(s => s.classList.add('hidden'));
+                
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.target).classList.remove('hidden');
+            });
+        });
+
+        function setLanguage(lang) {
+            // 1. Update active button styles
+            langBtns.forEach(btn => btn.classList.toggle('active', btn.dataset.lang === lang));
+
+            // 2. Update all text elements
+            translatable.forEach(el => {
+                el.textContent = el.getAttribute(`data-${lang}`);
+            });
+
+            // 3. Update all images
+            const images = document.querySelectorAll('img[data-base]');
+            images.forEach(img => {
+                const baseName = img.getAttribute('data-base');
+                // This constructs the string: "quick" + "-" + "fr" + ".png"
+                img.src = `/deckhand-race-for-infamy/help/${baseName}-${lang}.png`;
+            });
+
+            localStorage.setItem('preferredLang', lang);
+        }
+
+        langBtns.forEach(btn => {
+            btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+        });
+
+        // --- Initialization ---
+        // Check local storage OR browser language, default to English
+        const savedLang = localStorage.getItem('preferredLang');
+        const browserLang = navigator.language.split('-')[0];
+        const supported = ['en', 'de', 'fr'];
+        
+        const finalLang = savedLang || (supported.includes(browserLang) ? browserLang : 'en');
+        
+        setLanguage(finalLang);
+    </script>
+</body>
+</html>
