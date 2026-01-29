@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Phases</title>
     <style>
-        body { font-family: sans-serif; line-height: 1.6; padding: 20px; color: #333; }
+        body { font-family: sans-serif; line-height: 1.6; padding: 10px; color: #333; }
         .controls { display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
         
         /* Language Buttons */
@@ -22,7 +22,11 @@
         .hidden { display: none; }
         .placeholder-img { text-align: left; }
 
-        .responsive-img { max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .responsive-img { width:100%; max-width: 900px; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+
+        @media screen  and (min-width: 1000px)   {
+            .responsive-img { max-width: 500px; float: left; }
+        }
     </style>
 </head>
 <body>
@@ -49,6 +53,9 @@
     <div id="phases" class="content-section hidden">
         <div class="placeholder-img">
             <img src="/deckhand-race-for-infamy/help/phases-en.png" class="responsive-img" data-base="phases" alt="Reference Image">
+        </div>
+        <div class="placeholder-img">
+            <img src="/deckhand-race-for-infamy/help/phases-2-en.png" class="responsive-img" data-base="phases-2" alt="Reference Image">
         </div>
     </div>
 
