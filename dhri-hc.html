@@ -13,9 +13,9 @@
         .lang-btn.active { background: #007bff; color: white; border-color: #0056b3; }
 
         /* Tabs */
-        .tab-container { display: flex; gap: 10px; }
-        .tab { padding: 10px 20px; cursor: pointer; background: #f4f4f4; border-radius: 8px 8px 0 0; border: 1px solid #ddd; border-bottom: none; }
-        .tab.active { background: white; font-weight: bold; border-bottom: 2px solid white; margin-bottom: -2px; }
+        .tab-container { display: flex; gap: 5px; }
+        .tab { padding: 5px 10px; cursor: pointer; background: #f4f4f4; border-radius: 8px 8px 0 0; border: 1px solid #ddd; border-bottom: none; }
+        .tab.active { background: white; font-weight: bold; border-bottom: 2px solid white; }
 
         /* Content Area */
         .content-section { min-height: 200px; }
@@ -26,6 +26,9 @@
 
         @media screen  and (min-width: 1000px)   {
             .responsive-img { max-width: 500px; float: left; }
+        }
+        @media screen  and (max-width: 700px)   {
+            .tab-container { font-size: 13px ;}
         }
     </style>
 </head>
