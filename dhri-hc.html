@@ -66,8 +66,13 @@
     </div>
 
     <div id="quick" class="content-section">
-        <div class="placeholder-img">
-            <img src="/deckhand-race-for-infamy/help/quick-en.png" class="responsive-img" data-base="quick" alt="Reference Image">
+        <div class="placeholder-img" style="display: flex;">
+            <div style="position: relative;display: flex;">
+                                    
+                <a href="deckhand-race-for-infamy/help/quick-ref-en.pdf" style="position: absolute; right:5px; top:5px;" 
+        data-base="quick-ref"><img width="20px" src="print-icon.png" alt="Print"></a>
+                <img src="/deckhand-race-for-infamy/help/quick-en.png" class="responsive-img" data-base="quick" alt="Reference Image">
+            </div>
         </div>
     </div>
 
@@ -134,6 +139,12 @@
                 const baseName = img.getAttribute('data-base');
                 // This constructs the string: "quick" + "-" + "fr" + ".png"
                 img.src = `/deckhand-race-for-infamy/help/${baseName}-${lang}.png`;
+            });
+
+            // 4. Update PDF links if any
+            const pdfLinks = document.querySelectorAll('a[href$=".pdf"]');
+            pdfLinks.forEach(link => {
+                link.href = `/deckhand-race-for-infamy/help/quick-ref-${lang}.pdf`;
             });
 
             localStorage.setItem('preferredLang', lang);
