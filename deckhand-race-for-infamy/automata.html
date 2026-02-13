@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solo Mode — Warden Automa</title>
+    <style>
+        :root {
+            --parchment: #fdf5e6;
+            --ink: #2c3e50;
+            --accent: #8b4513;
+            --border: #d2b48c;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #eaddca;
+            color: var(--ink);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 800px;
+            background-color: var(--parchment);
+            padding: 40px;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            color: var(--accent);
+            text-align: center;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            color: var(--accent);
+            margin-top: 30px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #a0522d;
+        }
+
+        .card-box {
+            background: rgba(139, 69, 19, 0.05);
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 3px solid var(--accent);
+            margin: 15px 0;
+        }
+
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-style: italic;
+            color: #777;
+            font-size: 0.9em;
+        }
+
+        ul {
+            list-style-type: square;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Solo Mode — Warden Automata</h1>
+    <p style="font-style: italic; color: #555; margin-bottom: 20px;">
+        This supplemental solo mode offers a unique challenge, distinct from the 
+        standard solo rules which are closer to a traditional two-player game.
+    </p>
+    <p>You will face the Warden automata in this race for treasure and glory! Set up the game for a single player and play as usual, except where the following rules override standard behavior.</p>
+
+    <section>
+        <h2>Draft Setup</h2>
+        <p>Lay <strong>2 lines of 4 Supply cards</strong>: the first line face up, the second line face down.</p>
+    </section>
+
+    <section>
+        <h2>Draft Loop</h2>
+        <p>Pick 1 card from the first line. Replace it from the Supply deck immediately. Check the cost of the replacement card to determine what the Warden takes:</p>
+        
+        <div class="card-box">
+            <ul>
+                <li><strong>Cost ≤ 3:</strong> Discard the <span class="highlight">leftmost</span> card on the same line.</li>
+                <li><strong>Cost ≥ 4:</strong> Discard the <span class="highlight">rightmost</span> card on the same line.</li>
+            </ul>
+        </div>
+        
+        <p>Discarded cards in the draft form the <strong>Warden’s deck</strong> and are placed on top of it.</p>
+        <p>After finishing a line, reveal the second line. Swap line roles and repeat until you have 5 cards.</p>
+    </section>
+
+    <section>
+        <h2>Special Abilities</h2>
+        <h3>Compass</h3>
+        <p>Once per draft, when replacing a card: Look at the <strong>top 2 Supply cards</strong> instead. Choose one to place on the board and put the other on the top of the Warden’s deck.</p>
+        
+        <h3>Hooks</h3>
+        <ul>
+            <li><strong>Your Hook:</strong> Steal from the top of the Warden's deck. The card you give back goes there as well.</li>
+            <li><strong>Warden Hook:</strong> If the Warden plays a Hook, swap the top of their deck with a card from your hand. You must choose from among your cards with the <strong>highest cost</strong>.</li>
+        </ul>
+
+        <h3>Draw</h3>
+        <p>When the Warden draws a card, ignore the effect.</p>
+    </section>
+
+    <section>
+        <h2>Phase Rules</h2>
+
+        <h3>Build Phase</h3>
+        <p>Every time <strong>you</strong> build:</p>
+        <ul>
+            <li>The Warden builds the top card of his deck for free.</li>
+            <li>Resolve all its effects immediately.</li>
+            <li>Claim <strong>Infamy</strong> for the Warden if they are eligible.</li>
+        </ul>
+        <p><em>Note: If you do not build, the Warden builds at least 1 card per round regardless.</em></p>
+    </section>
+
+    <section>
+        <h2>Victory</h2>
+        <p>At the end of the game, compare your score to the Warden’s. The greater the gap in your favor, the greater your victory!</p>
+
+        <a href="../dhri-hc.html">Back to Quick Reference</a>
+    </section>
+
+    <div class="footer">
+        Prepare your crew. The Warden does not sleep.
+    </div>
+
+</div>
+
+</body>
+</html>
