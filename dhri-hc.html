@@ -62,12 +62,12 @@
 
     <div class="controls">
         <div id="language-picker">
-            <button class="lang-btn" data-lang="en">English</button>
-            <button class="lang-btn" data-lang="de">Deutsch</button>
-            <button class="lang-btn" data-lang="fr">Français</button>
+            <button class="lang-btn" data-lang="en" title="English">🇬🇧</button>
+            <button class="lang-btn" data-lang="de" title="Deutsch">🇩🇪</button>
+            <button class="lang-btn" data-lang="fr" title="Français">🇫🇷</button>
 
             | <a href="deckhand-race-for-infamy/automata.html">Extra Solo Mode</a>
-            | <a href="deckhand-race-for-infamy/draft-variant.html">Open Draft Variant</a>
+            | <a href="deckhand-race-for-infamy/draft-variant.html">Dockside Draft Mode</a>
         </div>
     </div>
 
@@ -84,17 +84,17 @@
                                     
                 <a href="deckhand-race-for-infamy/help/quick-ref-en.pdf" style="position: absolute; right:5px; top:5px;" 
         data-base="quick-ref"><img width="20px" src="print-icon.png" alt="Print"></a>
-                <img src="/deckhand-race-for-infamy/help/quick-en.png" class="responsive-img" data-base="quick" alt="Reference Image">
+                <img src="/deckhand-race-for-infamy/help/quick-en.jpg" class="responsive-img" data-base="quick" alt="Reference Image">
             </div>
         </div>
     </div>
 
     <div id="phases" class="content-section hidden">
         <div class="placeholder-img">
-            <img src="/deckhand-race-for-infamy/help/phases-en.png" class="responsive-img" data-base="phases" alt="Reference Image">
+            <img src="/deckhand-race-for-infamy/help/phases-en.jpg" class="responsive-img" data-base="phases" alt="Reference Image">
         </div>
         <div class="placeholder-img">
-            <img src="/deckhand-race-for-infamy/help/phases-2-en.png" class="responsive-img" data-base="phases-2" alt="Reference Image">
+            <img src="/deckhand-race-for-infamy/help/phases-2-en.jpg" class="responsive-img" data-base="phases-2" alt="Reference Image">
         </div>
     </div>
 
@@ -151,7 +151,7 @@
             images.forEach(img => {
                 const baseName = img.getAttribute('data-base');
                 // This constructs the string: "quick" + "-" + "fr" + ".png"
-                img.src = `/deckhand-race-for-infamy/help/${baseName}-${lang}.png`;
+                img.src = `/deckhand-race-for-infamy/help/${baseName}-${lang}.jpg`;
             });
 
             // 4. Update PDF links if any
