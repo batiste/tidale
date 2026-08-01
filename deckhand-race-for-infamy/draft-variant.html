@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Draft Variant (2–3 Players)</title>
+    <style>
+        :root {
+            --parchment: #fdf5e6;
+            --ink: #2c3e50;
+            --accent: #8b4513;
+            --border: #d2b48c;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #eaddca;
+            color: var(--ink);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 800px;
+            background-color: var(--parchment);
+            padding: 40px;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            color: var(--accent);
+            text-align: center;
+            padding-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            color: var(--accent);
+            margin-top: 30px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #a0522d;
+        }
+
+        .card-box {
+            background: rgba(139, 69, 19, 0.05);
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 3px solid var(--accent);
+            margin: 15px 0;
+        }
+
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-style: italic;
+            color: #777;
+            font-size: 0.9em;
+        }
+
+        ul {
+            list-style-type: square;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Open Draft Variant</h1>
+    <p style="font-style: italic; color: #555; margin-bottom: 20px;">
+        This variant replaces the standard Drafting Hand setup with an open, shared Supply that every player draws from in turn.
+    </p>
+    <p>Set up the game as usual, except where the following rules override standard behavior.</p>
+
+    <section>
+        <h2>Setup</h2>
+        <p>Give the <strong>Starting Player</strong> token to a random player (use a coin or any convenient marker if needed).</p>
+    </section>
+
+    <section>
+        <h2>Draft Loop</h2>
+        <p>During the Draft phase, reveal <strong>6 Supply cards</strong> face up on the table.</p>
+
+        <div class="card-box">
+            <ul>
+                <li>Starting with the player holding the Starting Player token and proceeding <strong>clockwise</strong>, each player selects 1 card from the Supply.</li>
+                <li>After each selection, <strong>replenish the Supply back to 6 cards</strong>, unless at least one player already has 5 cards in their Drafting Hand.</li>
+            </ul>
+        </div>
+
+        <p>Continue until every player has 5 cards. Discard any remaining Supply cards, then pass the Starting Player token to the player on the left.</p>
+    </section>
+
+    <section>
+        <h2>Special Abilities</h2>
+        <h3>Compass</h3>
+        <p>If at least one player has a Compass, only players with 1 or more Compasses may select the <strong>first Draft card</strong> (the top-left card).</p>
+        <p>When you build your second or later Compass, draw a number of cards equal to the number of Compasses you have, choose 1, and discard the rest.</p>
+    </section>
+
+    <div class="footer">
+        <a href="../dhri-hc.html">Back to Quick Reference</a>
+    </div>
+
+</div>
+
+</body>
+</html>
