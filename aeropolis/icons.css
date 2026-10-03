@@ -1,0 +1,177 @@
+/* Shared resource-icon styles: the golden coin and grey cube drawn in CSS
+   (no image assets) and reused in card and location text across deck.html
+   and board.html. Kept in one file so the two pages' icons stay in sync
+   instead of drifting apart. */
+
+.coin {
+  position: relative;
+  display: inline-block;
+  width: 1.43em;
+  height: 1.43em;
+  border-radius: 50%;
+  background: radial-gradient(circle at 36% 30%, #f2d275, #cf9a2a 68%, #a87817);
+  box-shadow: inset 0 0 0 0.055em rgba(96, 64, 8, 0.45);
+  vertical-align: -0.35em;
+}
+
+/* Absolutely positioned so a numbered coin's own baseline still comes from
+   the plain .coin box, matching the bare (no-child) coin exactly. */
+.coin-num {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78em;
+  font-weight: 700;
+  line-height: 1;
+  color: #5c3d0a;
+}
+
+/* Grey cube: same treatment as .coin, for text that grants or uses a cube. */
+.cube-icon {
+  display: inline-block;
+  width: 1.1em;
+  height: 1.1em;
+  border-radius: 0.18em;
+  background: linear-gradient(135deg, #c9cfd4, #8b939a 68%, #6b7278);
+  box-shadow: inset 0 0 0 0.07em rgba(20, 24, 28, 0.45);
+  vertical-align: -0.16em;
+}
+
+/* Rise/Sink: a triangle pointing the direction of travel on the Spire.
+   Colour is not baked in — it reads var(--accent) so the same icon comes out
+   brass on a Citizen card, verdigris on an Outcast card, a location's own
+   colour on the board, etc. The ink-soft fallback covers spots with no
+   --accent in scope. */
+.rise-icon,
+.sink-icon {
+  display: inline-block;
+  width: 1.25em;
+  height: 1.25em;
+  vertical-align: -0.2em;
+  background: linear-gradient(
+    180deg,
+    var(--accent, var(--ink-soft, #666)),
+    color-mix(in srgb, var(--accent, var(--ink-soft, #666)) 75%, black)
+  );
+  /* box-shadow gets clipped away with the shape, so fake a border with two
+     stacked drop-shadows instead — filter runs on the already-clipped
+     triangle and can paint outside it. */
+  filter: drop-shadow(0 0 0.6px #000) drop-shadow(0 0 0.6px #000);
+}
+
+.rise-icon {
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+}
+
+.sink-icon {
+  vertical-align: -0.3em;
+  clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+}
+
+/* Draw: a small card-back, same treatment as .coin/.cube-icon — playing-card
+   proportions (taller than wide) so its silhouette alone reads as "card"
+   next to the circle and square already in use. Blue rather than paper-toned
+   so it doesn't wash out sitting on the card's own cream face. */
+.card-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1.35em;
+  border-radius: 0.16em;
+  background: linear-gradient(135deg, #5b82b8, #2f4d78 68%, #1c3454);
+  box-shadow: inset 0 0 0 0.06em rgba(10, 14, 20, 0.55);
+  vertical-align: -0.28em;
+}
+
+.card-icon + .card-icon {
+  margin-left: 0.12em;
+}
+
+/* Plant into the *other* line: the same cube, plus a ground line drawn over
+   or under it — same reading as the Spire (Citizen above ground, Outcast
+   below). Line above the cube = it's going underground = Outcast. Line
+   below the cube = it's staying above ground = Citizen. Distinct from a
+   plain .cube-icon (same-line Plant, written out — no icon of its own yet).
+   See rules.html Glossary: Plant / Other Line. */
+.plant-other-icon {
+  position: relative;
+  display: inline-block;
+  vertical-align: -0.16em;
+}
+
+.plant-other-icon::after {
+  content: "";
+  position: absolute;
+  left: -0.16em;
+  right: -0.16em;
+  height: 0.16em;
+  border-radius: 0.08em;
+  background: var(--ink, #14181c);
+}
+
+.plant-other-icon.plant-other-outcast::after {
+  top: -0.28em;
+}
+
+.plant-other-icon.plant-other-citizen::after {
+  bottom: -0.28em;
+}
+
+/* Inline Intrigue value: same red circle as the card's own .intrigue-value
+   badge, sized to match .coin so the two sit evenly in running text (e.g. a
+   socket that grants Intrigue directly, distinct from the card's printed
+   Intrigue value). */
+.intrigue-icon {
+  position: relative;
+  display: inline-block;
+  width: 1.43em;
+  height: 1.43em;
+  border-radius: 50%;
+  background: var(--revolution, #8f1d1d);
+  box-shadow: inset 0 0 0 0.055em rgba(0, 0, 0, 0.35);
+  vertical-align: -0.35em;
+}
+
+.intrigue-icon-num {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78em;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--paper, #efe7d8);
+}
+
+/* Refresh: a circular arrow — discard 1 card on offer in the Noodle Shop and
+   replace it with a new one. Same --accent-recolouring convention as
+   .rise-icon/.sink-icon. See rules.html Glossary: Refresh. */
+.refresh-icon {
+  position: relative;
+  display: inline-block;
+  width: 1.1em;
+  height: 1.1em;
+  vertical-align: -0.16em;
+  border-radius: 50%;
+  border: 0.16em solid var(--accent, var(--ink-soft, #666));
+  border-top-color: transparent;
+}
+
+.refresh-icon::after {
+  content: "";
+  position: absolute;
+  top: -0.06em;
+  right: -0.1em;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0.36em 0.24em 0 0.24em;
+  border-color: var(--accent, var(--ink-soft, #666)) transparent transparent transparent;
+  transform: rotate(140deg);
+}
+
+.refresh-icon + .refresh-icon {
+  margin-left: 0.12em;
+}

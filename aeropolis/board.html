@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Aeropolis — Board Draft</title>
+    <link rel="stylesheet" href="common.css" />
+    <link rel="stylesheet" href="icons.css" />
+    <link rel="stylesheet" href="board.css" />
+  </head>
+  <body>
+    <div class="board">
+      <canvas id="board-canvas"></canvas>
+      <header class="board-head">
+        <div>
+          <h1>Aeropolis</h1>
+          <div class="head-right">
+            <a class="nav-link" href="concept.html"><span class="chev">←</span> Concept</a>
+            <a class="nav-link" href="deck.html"><span class="chev">←</span> Cards</a>
+            <a class="nav-link" href="rules.html"><span class="chev">→</span> Rules</a>
+            <a class="nav-link" href="play.html"><span class="chev">→</span> Playtest</a>
+          </div>
+          <p class="tagline">
+            A location is unavailable once its grey cubes
+            are gone. Citizen locations for the Citizen line, Outcast locations for the Outcast 
+            line, and shared locations for either line. The played card may socket the slotted cube
+            to trigger its card effect.
+          </p>
+        </div>
+      </header>
+
+      <div class="board-layout">
+        <div class="board-side">
+          <!--
+          <section class="line-section">
+            <header class="loc-col-head" style="--side: #e9c477">
+              The Line
+              <span class="loc-col-note">Boarding costs 1 action. Disembarking is card play: take the cube from the train, so the current stop may be empty. The train advances 1 stop during Replenish.</span>
+            </header>
+            <div class="line-diagram" id="line-diagram"></div>
+          </section>
+          -->
+
+          <section class="loc-col" style="--side: #d8b45f">
+            <header class="loc-col-head">
+              Citizen locations
+              <span class="loc-col-note">Only for cards played into your Citizen line</span>
+            </header>
+            <div class="loc-list" id="loc-citizen"></div>
+          </section>
+        </div>
+
+        <section class="spire" id="spire"></section>
+
+        <div class="board-side">
+          <section class="loc-col" style="--side: #d59ab9">
+            <header class="loc-col-head" style="--side: #d59ab9">
+              Open to both
+              <span class="loc-col-note">Slot here from either line</span>
+            </header>
+            <div class="loc-list" id="loc-shared"></div>
+          </section>
+
+          <section class="loc-col" style="--side: #7fb2ad">
+            <header class="loc-col-head">
+              Outcast locations
+              <span class="loc-col-note">Only for cards played into your Outcast line</span>
+            </header>
+            <div class="loc-list" id="loc-outcast"></div>
+          </section>
+        </div>
+      </div>
+
+    </div>
+
+    <script src="board-data.js"></script>
+    <script src="icons.js"></script>
+    <script>
+      // Top of the spire down to the bottom.
+      const SPIRE = Array.from({ length: SPIRE_SPACES }, (_, index) =>
+        spireVp(SPIRE_SPACES - index)
+      );
+
+      function unlockMarkup(loc) {
+        if (!loc.unlock) return "";
+        const trackLabel = loc.unlock.track === "citizen" ? "Citizen" : "Outcast";
+        return `<p class="loc-lock">🔒 Requires ${trackLabel} at Spire ${loc.unlock.level}+</p>`;
+      }
+
+      // function railMarkup(loc) {
+      //   if (!loc.rail) return "";
+      //   return `<p class="loc-rail">🚆 Line stop</p>`;
+      // }
+
+      function locationMarkup(loc) {
+        // Only the Noodle Shop carries a row of purchasable cards under its reservoir.
+        const marketRow = loc.marketSlots
+          ? `<div class="market-row">
+               <p class="mini-label">On offer</p>
+               <div class="market-slots">
+                 ${Array.from(
+                   { length: loc.marketSlots },
+                   () => `<span class="market-slot">Card</span>`
+                 ).join("")}
+               </div>
+             </div>`
+          : "";
+
+        return `
+          <article class="location" style="--accent: ${loc.accent}">
+            <div class="loc-head">
+              <div>
+                <h2 class="loc-name">${escapeHtml(loc.name)}</h2>
+                <p class="loc-flavour">${escapeHtml(loc.flavour)}</p>
+                ${unlockMarkup(loc)}
+              </div>
+              <span class="loc-glyph">${loc.glyph}</span>
+            </div>
+            <div class="loc-body">
+              <div class="reservoir">
+                <p class="mini-label">Agents</p>
+                <div class="slots">
+                  ${Array.from({ length: loc.slots || 2 }, () => `<span class="cube-slot">Cube</span>`).join("")}
+                </div>
+              </div>
+              <div class="reward">
+                <p class="mini-label">Reward on Recruit</p>
+                <p class="reward-text">${withIcons(loc.reward)}</p>
+              </div>
+            </div>
+            ${marketRow}
+          </article>
+        `;
+      }
+
+      function spireMarkup() {
+        const total = SPIRE.length;
+        const rows = SPIRE.map((vp, index) => {
+          const spaceNo = total - index;
+          const band = vp >= 20 ? "high" : vp >= 6 ? "mid" : "low";
+          return `
+            <div class="space" data-band="${band}">
+              <span class="space-no">${spaceNo}</span>
+              <span class="space-rung"></span>
+              <span class="space-vp">${vp} VP</span>
+            </div>
+          `;
+        }).join("");
+
+        return `
+          <h2 class="spire-title">The Spire</h2>
+          <p class="spire-sub">VP scored where your two tokens meet</p>
+          <div class="start-marker"><span class="token citizen"></span> Citizen starts here</div>
+          <div class="track">${rows}</div>
+          <div class="start-marker"><span class="token outcast"></span> Outcast starts here</div>
+        `;
+      }
+
+      /* ---------- the line (train loop) ----------
+      // Stops = whichever locations carry `rail: true` above, in array order.
+      // One shared train; a small pool of seats; riders may disembark free of
+      // a stop's usual line/cube restriction, or stay aboard for a small toll.
+
+      const TRAIN_SEATS = 3;
+      const MOCK_RIDERS = ["citizen", "outcast"]; // occupied seats, for illustration
+      const MOCK_CURRENT_STOP = "The Scrapyard"; // where the train sits, for illustration
+
+      function lineMarkup() {
+        const stops = LOCATIONS.filter((loc) => loc.rail);
+        const cx = 350;
+        const cy = 100;
+        const rx = 200;
+        const ry = 66;
+
+        const nodes = stops.map((loc, i) => {
+          const angle = (Math.PI * 2 * i) / stops.length - Math.PI / 2;
+          return {
+            loc,
+            x: cx + rx * Math.cos(angle),
+            y: cy + ry * Math.sin(angle),
+            angle,
+          };
+        });
+
+        const railPath = `M ${nodes.map((n) => `${n.x.toFixed(1)},${n.y.toFixed(1)}`).join(" L ")} Z`;
+
+        const stopMarkup = nodes
+          .map(({ loc, x, y, angle }) => {
+            const isCurrent = loc.name === MOCK_CURRENT_STOP;
+            const above = Math.sin(angle) < -0.2;
+            const below = Math.sin(angle) > 0.2;
+            const labelY = above ? y - 16 : below ? y + 24 : y + 5;
+            const anchor = Math.cos(angle) > 0.3 ? "start" : Math.cos(angle) < -0.3 ? "end" : "middle";
+            const labelX = anchor === "start" ? x + 12 : anchor === "end" ? x - 12 : x;
+            const train = isCurrent
+              ? `<text class="train-glyph" x="${x}" y="${y - 30}" text-anchor="middle">🚆</text>`
+              : "";
+            return `
+              ${train}
+              <circle class="stop-dot${isCurrent ? " current" : ""}" cx="${x}" cy="${y}" r="8"></circle>
+              <text class="stop-label" x="${labelX}" y="${labelY}" text-anchor="${anchor}">${escapeHtml(loc.name)}</text>
+            `;
+          })
+          .join("");
+
+        const seatRow = Array.from({ length: TRAIN_SEATS }, (_, i) => {
+          const rider = MOCK_RIDERS[i];
+          return rider
+            ? `<span class="seat filled ${rider}"></span>`
+            : `<span class="seat"></span>`;
+        }).join("");
+
+        return `
+          <svg class="line-svg" viewBox="0 0 700 200">
+            <path class="rail-outer" d="${railPath}"></path>
+            <path class="rail-ties" d="${railPath}"></path>
+            ${stopMarkup}
+          </svg>
+          <div class="line-footer">
+            <div class="seat-block">
+              <p class="mini-label">Seats aboard (${MOCK_RIDERS.length}/${TRAIN_SEATS})</p>
+              <div class="seat-row">${seatRow}</div>
+            </div>
+            <p class="line-rules">Boarding costs 1 action. Disembarking is card play: take the cube
+              from the train, not the stop. Complete circuits pay each passenger 1 coin.</p>
+          </div>
+        `;
+      }
+      */
+
+      function renderSide(elementId, side) {
+        document.getElementById(elementId).innerHTML = LOCATIONS.filter(
+          (loc) => loc.side === side
+        )
+          .map(locationMarkup)
+          .join("");
+      }
+
+      // ?export renders the board alone, for export-screentop.js. Set before
+      // anything is drawn: it changes the page padding, and so the board width
+      // the tower is drawn to.
+      if (new URLSearchParams(location.search).has("export")) {
+        document.body.className = "board-export";
+      }
+
+      renderSide("loc-citizen", "citizen");
+      renderSide("loc-outcast", "outcast");
+      renderSide("loc-shared", "shared");
+
+      document.getElementById("spire").innerHTML = spireMarkup();
+      // document.getElementById("line-diagram").innerHTML = lineMarkup();
+
+      // ---------- background tower illustration ----------
+      // A schematic art nouveau tower — glass panels between curved metal
+      // ribs, banded floors with whiplash scrollwork, a lattice-orb finial.
+      // Drawn low-opacity gold/teal so the VP track stays readable on top.
+
+      function drawScroll(ctx, x, y, dir, size) {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.scale(dir, 1);
+        ctx.beginPath();
+        const turns = 1.6;
+        const steps = 24;
+        for (let i = 0; i <= steps; i++) {
+          const a = (i / steps) * turns * Math.PI * 2;
+          const r = (i / steps) * size;
+          const px = Math.cos(a) * r;
+          const py = Math.sin(a) * r * 0.7;
+          if (i === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        }
+        ctx.strokeStyle = "rgba(233, 196, 119, 0.14)";
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      function drawFinial(ctx, cx, topY, baseHalf, finialH) {
+        const tipY = topY - finialH;
+        const orbY = tipY + finialH * 0.32;
+        const orbR = Math.max(3, baseHalf * 0.16);
+
+        ctx.beginPath();
+        ctx.moveTo(cx - baseHalf * 0.5, topY);
+        ctx.quadraticCurveTo(cx - baseHalf * 0.12, orbY + orbR, cx, tipY);
+        ctx.quadraticCurveTo(cx + baseHalf * 0.12, orbY + orbR, cx + baseHalf * 0.5, topY);
+        ctx.strokeStyle = "rgba(233, 196, 119, 0.17)";
+        ctx.lineWidth = 1.2;
+        ctx.stroke();
+
+        [1, 0.4].forEach((ry) => {
+          ctx.beginPath();
+          ctx.ellipse(cx, orbY, ry === 1 ? orbR : orbR * ry, ry === 1 ? orbR : orbR, 0, 0, Math.PI * 2);
+          ctx.strokeStyle = "rgba(127, 178, 173, 0.17)";
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        });
+
+        ctx.beginPath();
+        ctx.moveTo(cx, orbY - orbR);
+        ctx.lineTo(cx, tipY - finialH * 0.12);
+        ctx.strokeStyle = "rgba(233, 196, 119, 0.2)";
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        [-1, 1].forEach((s) => {
+          ctx.beginPath();
+          ctx.moveTo(cx, tipY - finialH * 0.05);
+          ctx.lineTo(cx + s * baseHalf * 0.35, tipY - finialH * 0.28);
+          ctx.strokeStyle = "rgba(233, 196, 119, 0.12)";
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+        });
+      }
+
+      function drawBaseFlourish(ctx, cx, baseY, baseHalf) {
+        ctx.beginPath();
+        ctx.moveTo(cx - baseHalf * 1.08, baseY);
+        ctx.lineTo(cx + baseHalf * 1.08, baseY);
+        ctx.strokeStyle = "rgba(233, 196, 119, 0.14)";
+        ctx.lineWidth = 1.4;
+        ctx.stroke();
+
+        [-1, 1].forEach((dir) => {
+          ctx.save();
+          ctx.translate(cx + dir * baseHalf * 1.08, baseY);
+          ctx.scale(dir, 1);
+          ctx.beginPath();
+          ctx.moveTo(0, 0);
+          ctx.quadraticCurveTo(14, 4, 20, -8);
+          ctx.strokeStyle = "rgba(233, 196, 119, 0.14)";
+          ctx.lineWidth = 1;
+          ctx.stroke();
+          ctx.restore();
+        });
+      }
+
+      function drawTower(canvas) {
+        const parent = canvas.parentElement;
+        const dpr = window.devicePixelRatio || 1;
+        const w = parent.clientWidth;
+        const h = parent.clientHeight;
+        if (!w || !h) return;
+
+        canvas.width = w * dpr;
+        canvas.height = h * dpr;
+        canvas.style.width = w + "px";
+        canvas.style.height = h + "px";
+
+        const ctx = canvas.getContext("2d");
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        ctx.clearRect(0, 0, w, h);
+
+        const cx = w / 2;
+        const margin = h * 0.02;
+        const baseY = h - margin;
+        const finialH = h * 0.09;
+        const shaftTopY = margin + finialH;
+        const shaftH = baseY - shaftTopY;
+
+        // Sized off the board's height, not its (much wider) width — the
+        // tower stays a narrow, tall silhouette centered on the page.
+        const baseHalf = h * 0.075;
+        const topHalf = h * 0.018;
+        const flareExtra = h * 0.025;
+
+        function halfWidthAt(t) {
+          const flare = Math.exp(-t * 16) * flareExtra;
+          const taper = baseHalf + (topHalf - baseHalf) * Math.pow(t, 0.8);
+          return taper + flare;
+        }
+
+        const N = 48;
+        const left = [];
+        const right = [];
+        for (let i = 0; i <= N; i++) {
+          const t = i / N;
+          const y = baseY - t * shaftH;
+          const hw = halfWidthAt(t);
+          left.push({ x: cx - hw, y });
+          right.push({ x: cx + hw, y });
+        }
+
+        // silhouette fill (glass) + clipped highlight streaks
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(left[0].x, left[0].y);
+        for (const p of left) ctx.lineTo(p.x, p.y);
+        for (let i = right.length - 1; i >= 0; i--) ctx.lineTo(right[i].x, right[i].y);
+        ctx.closePath();
+
+        const glassGrad = ctx.createLinearGradient(0, baseY, 0, shaftTopY);
+        glassGrad.addColorStop(0, "rgba(127, 178, 173, 0.05)");
+        glassGrad.addColorStop(0.5, "rgba(233, 196, 119, 0.035)");
+        glassGrad.addColorStop(1, "rgba(233, 196, 119, 0.07)");
+        ctx.fillStyle = glassGrad;
+        ctx.fill();
+        ctx.clip();
+
+        [-0.6, 0.1, 0.5].forEach((offset) => {
+          ctx.save();
+          ctx.translate(cx + offset * w * 0.5, 0);
+          ctx.rotate(-0.28);
+          const grad = ctx.createLinearGradient(-8, 0, 8, 0);
+          grad.addColorStop(0, "rgba(255, 255, 255, 0)");
+          grad.addColorStop(0.5, "rgba(255, 255, 255, 0.03)");
+          grad.addColorStop(1, "rgba(255, 255, 255, 0)");
+          ctx.fillStyle = grad;
+          ctx.fillRect(-8, -h, 16, h * 3);
+          ctx.restore();
+        });
+        ctx.restore();
+
+        // outer silhouette edges (metal)
+        ctx.strokeStyle = "rgba(233, 196, 119, 0.16)";
+        ctx.lineWidth = 1.4;
+        [left, right].forEach((side) => {
+          ctx.beginPath();
+          ctx.moveTo(side[0].x, side[0].y);
+          for (const p of side) ctx.lineTo(p.x, p.y);
+          ctx.stroke();
+        });
+
+        // vertical ribs, each with a faint organic wobble
+        [-0.62, -0.32, 0, 0.32, 0.62].forEach((frac, idx) => {
+          ctx.beginPath();
+          for (let i = 0; i <= N; i++) {
+            const t = i / N;
+            const hw = halfWidthAt(t);
+            const wobble = Math.sin(t * Math.PI * 2.4 + idx) * hw * 0.03;
+            const x = cx + frac * hw + wobble;
+            const y = baseY - t * shaftH;
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          }
+          ctx.strokeStyle = frac === 0 ? "rgba(233, 196, 119, 0.1)" : "rgba(233, 196, 119, 0.07)";
+          ctx.lineWidth = frac === 0 ? 1 : 0.8;
+          ctx.stroke();
+        });
+
+        // horizontal floor bands with scrollwork at the edges
+        const bandCount = 7;
+        for (let b = 1; b < bandCount; b++) {
+          const t = b / bandCount;
+          const y = baseY - t * shaftH;
+          const hw = halfWidthAt(t);
+          ctx.beginPath();
+          ctx.moveTo(cx - hw, y);
+          ctx.quadraticCurveTo(cx, y + hw * 0.06, cx + hw, y);
+          ctx.strokeStyle = "rgba(233, 196, 119, 0.12)";
+          ctx.lineWidth = 1;
+          ctx.stroke();
+
+          drawScroll(ctx, cx - hw, y, -1, hw * 0.22);
+          drawScroll(ctx, cx + hw, y, 1, hw * 0.22);
+        }
+
+        drawFinial(ctx, cx, shaftTopY, halfWidthAt(1), finialH);
+        drawBaseFlourish(ctx, cx, baseY, halfWidthAt(0));
+      }
+
+      const boardCanvas = document.getElementById("board-canvas");
+      drawTower(boardCanvas);
+
+      let resizeTimer;
+      window.addEventListener("resize", () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => drawTower(boardCanvas), 120);
+      });
+    </script>
+  </body>
+</html>

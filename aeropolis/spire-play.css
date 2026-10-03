@@ -1,0 +1,19 @@
+/* Spire additions on top of double-life-play.css and undercity-play.css (cards, hand, piles). */
+
+.board svg { position: static; display: block; }
+.hx polygon { stroke: rgba(255, 255, 255, 0.25); stroke-width: 1.5; }
+.hx polygon { fill: rgba(255, 255, 255, 0.05); }
+.hx.named polygon { fill: rgba(47, 125, 116, 0.3); }
+.hx.top polygon { stroke: var(--gold); stroke-dasharray: 4 3; }
+.hx.live { cursor: pointer; }
+.hx.live polygon { stroke: #fff; stroke-width: 3; stroke-dasharray: none; }
+.hx.live:hover polygon { fill: rgba(233, 196, 119, 0.35); }
+.hx text { text-anchor: middle; pointer-events: none; font-family: var(--font-body); }
+.hx-cost { fill: var(--muted); font-size: 9px; font-weight: 700; }
+.hx-name { fill: #f3ede0; font-size: 8.5px; font-weight: 700; }
+.hx-tag { fill: var(--gold); font-size: 8px; }
+.hx-h { fill: var(--muted); font-size: 10px; font-weight: 700; }
+.pawn { stroke: rgba(0, 0, 0, 0.75); stroke-width: 1.5; }
+.pawn.live { cursor: pointer; stroke: #fff; stroke-width: 3; }
+
+.val { margin-left: 4px; padding: 0 5px; border-radius: 3px; background: var(--gold); color: #1b2126; font-family: var(--font-body); font-size: 11px; }

@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Aeropolis — Draft Rules</title>
+    <link rel="stylesheet" href="common.css" />
+    <link rel="stylesheet" href="icons.css" />
+    <link rel="stylesheet" href="rules.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="page-head">
+        <div>
+          <h1>Aeropolis</h1>
+          <p class="tagline">Draft rules for the current playtest version.</p>
+        </div>
+        <nav aria-label="Game pages">
+          <a class="nav-link" href="concept.html">Concept</a>
+          <a class="nav-link" href="deck.html">Cards</a>
+          <a class="nav-link" href="board.html">Board</a>
+          <a class="nav-link" href="play.html">Playtest</a>
+        </nav>
+      </header>
+
+      <p class="callout">
+        Each player manages a Citizen and an Outcast. Play cards into their two lines, slot cubes
+        from the city, and decide when to spend status for resources. This is an early draft: everything is subject to change.
+      </p>
+
+      <section>
+        <h2>Setup</h2>
+        <ol class="steps">
+          <li>Each player get one Citizen character and one Outcast character cards (draft).</li>
+          <li>Each player places their Citizen token at the top of the Spire and their Outcast token at the bottom.</li>
+          <li>Give each player the current example starter deck of 7 cards.</li>
+          <li>Give each player 2 coins.</li>
+          <li>Create a deck of 6 random Conflict cards.</li>
+          <li>Place 1 cube on each board location.</li>
+          <!-- <li>Place the train at its starting stop and make its seats available.</li> -->
+        </ol>
+        <p class="draft-note">The character pool, player count, and exact starting setup are still playtest parameters.</p>
+      </section>
+
+      <section>
+        <h2>Round Structure</h2>
+        <ol class="steps">
+          <li><strong>Draw:</strong> each player draws 4 cards from their deck.</li>
+          <li>
+            <strong>Action:</strong> in turn order, each player takes one turn — Play, Discard, or
+            Intrigue (see Taking An Action) — until every player has discarded and has no committed
+            card left to resolve.
+          </li>
+          <li>
+            <strong>Replenish:</strong> add cubes equal to 2 × the number of players, plus this
+            round's Conflict card's Refill Bonus (see Conflict). Starting at the Conflict card's
+            named location, place them 1 at a time around the locations in board order, looping
+            back and skipping any already at its cap (see Locations and Access), until every cube
+            is placed. <!-- Advance the train by 1 stop. --> Empty every line: discard every card in it,
+            face-up or face-down, and return their cubes to the supply.
+          </li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Taking An Action</h2>
+        <p>Each turn is one of three actions.
+          Each player must take an action, until they have nothing to do.
+
+        </p>
+
+        <h3>Play</h3>
+        <p>
+          Play 1 card into a line (aligned left). Pay that position's play cost, set by the line's
+          character, then <strong>Recruit</strong> 1 cube
+          from an eligible location. Recruiting resolves that location's reward; depending on
+          whether you played the card face up or face down, a second effect also resolves — the
+          player chooses which of the two effects to resolve first:
+        </p>
+        <ul class="steps">
+          <li>
+            <strong>Face up:</strong> Slot the recruit in the card's normal socket and resolve the socket's effect.
+          </li>
+          <li>
+            <strong>Face down (Intrigue):</strong> Sink that line's character 1 as a cost, and place the cube
+            on the top of the card (see Conflict).
+          </li>
+        </ul>
+
+        <p>
+          A card marked <strong>Broker</strong> may be played into either line. A Citizen card
+          belongs in the Citizen line, and an Outcast card belongs in the Outcast line.
+          <!-- Train access overrides this restriction for a passenger who disembarks at the current stop. -->
+        </p>
+
+        <h3>Discard</h3>
+        <p>
+          If you hold any cards, you may spend your turn discarding your remaining hand to resolve each
+          card's Discard effect.
+        </p>
+
+        <h3>Intrigue</h3>
+        <p>
+          When you have no cards in hand, if you have committed face-down cards, spend 1 turn resolving one of
+          them. Choose the rightmost face-down card in your line, flip it face up, and choose where
+          to socket the cube: the card's normal socket, or the intrigue socket.
+        </p>
+
+      </section>
+
+      <section>
+        <h2>Locations and Access</h2>
+        <p>
+          Each location holds up to a set number of cubes — 2 for most locations, 3 for the Noodle
+          Shop. A location is available only while it has at least 1 cube.
+          Citizen locations are eligible when playing into the Citizen line. Outcast locations are
+          eligible when playing into the Outcast line. Shared locations, including the Noodle Shop,
+          are eligible for either line.
+        </p>
+        <p>
+          If no eligible location has a cube, you usually cannot play the card. Recruiting takes
+          the cube from the location and resolves that location's reward; slotting places the
+          recruit in the card's normal socket and resolves the socket's effect — the player
+          chooses which of the two to resolve first.
+          <!-- A passenger who disembarks uses the train's
+          cube instead, so the stop may be empty; the socket's effect still resolves the same way. -->
+        </p>
+      </section>
+
+      <!--
+      <section>
+        <h2>The Train</h2>
+        <p>The train has a limited number of seats.</p>
+
+        <h3>Boarding</h3>
+        <p>
+          To board the train, it must be at a location with a station: play a card in the
+          appropriate line, take your colored cube from your reserve, and place it in the train's
+          socket. If you board you do not pick a cube from that location.
+        </p>
+
+        <h3>Disembarking</h3>
+        <p>
+          To disembark the train, it must be at a location with a station: play a card in the
+          appropriate line, take the cube from the train's socket and place it in the card's
+          socket, then resolve that location's reward. If you disembark you do not pick a cube
+          from that location. A passenger who disembarks may use that stop even when its normal
+          line restriction does not match their card, such as playing an Outcast card into the
+          Citizen line.
+        </p>
+
+        <p>
+          The train advances 1 stop during Replenish. When it completes a full circuit, each
+          passenger gains 1 coin. Additional train interactions and bonuses remain open for
+          playtesting.
+        </p>
+      </section>
+      -->
+
+      <section>
+        <h2>Conflict</h2>
+        <p>
+          Each new round a new conflict is revealed and placed on the board. It sets that round's
+          Reward, Condition, and Refill Bonus — a named board location where this round's
+          Replenish starts, plus 0–2 extra cubes (see Round Structure — Replenish).
+        </p>
+        <p>
+          A player typically commits to the conflict with a face-down (see Taking An Action).
+        </p>
+        <p>
+          Once everybody has passed, it is time to resolve the conflict. A player's total
+          for the conflict is the sum of the Intrigue values of their
+          cards. The highest total wins and claims the reward. In case of a tie, the Citizen and the Outcast position are used as a tiebreaker, in this order. If still tied, the reward is discarded.
+        </p>
+      </section>
+
+      <section>
+        <h2>The Revolution</h2>
+        <p>
+          The Revolution begins immediately when one of those 2 conditions is met:</p>
+        <ul class="steps">
+          <li>A player's Citizen and Outcast meet on the Spire: this players raises his Citizen and Outcast by 2.</li>
+          <li>The Conflict deck is exhausted.</li>
+        </ul>
+        <p>
+          Replace the Conflict pile with a pile of 3 random Revolution Conflict cards (playtest:
+          replace the current conflict) — stronger versions of the normal Conflict cards, same
+          Reward/Condition/Refill Bonus shape (see Conflict).
+        </p>
+      </section>
+
+      <section>
+        <h2>Glossary</h2>
+        <div class="grid">
+          <article class="term">
+            <h3>Recruit</h3>
+            <p>Take 1 grey cube (a  recruit) from an eligible location and place it in your card's socket.
+              You then can take the location's effect, and card's socket effect, in either order.
+            </p>
+          </article>
+          <article class="term">
+            <h3>Plant <span class="cube-icon" role="img" aria-label="cube"></span></h3>
+            <p>Take a cube from the supply, and place it in any empty slot in this line: another card's socket, or the character anchoring it.
+              Some cards name a different line to plant into instead — follow the card's text, shown with its own icon (see Other Line).
+            </p>
+          </article>
+          <article class="term">
+            <h3>Rise <span class="rise-icon" role="img" aria-label="Rise"></span></h3>
+            <p>Move the named character 1 space upward the Spire track.</p>
+          </article>
+          <article class="term">
+            <h3>Sink <span class="sink-icon" role="img" aria-label="Sink"></span></h3>
+            <p>Move the named character 1 space downward the Spire track.</p>
+          </article>
+          <article class="term">
+            <h3>Other Line</h3>
+            <p>The line opposite the one a card is played into: the Outcast line for a Citizen card, the Citizen
+              line for an Outcast card. For a Broker card, whichever line it was not played into.
+            </p>
+          </article>
+          <article class="term">
+            <h3>Refresh <span class="refresh-icon" role="img" aria-label="Refresh"></span></h3>
+            <p>Discard 1 card on offer in the Noodle Shop and replace it with a new one from the market deck.</p>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <h2>End Of The Game</h2>
+        <p>
+           The game ends after 3 Revolution rounds have been resolved. Players score Victory Points
+           from their lowest position on the Spire, plus any other scoring effects.
+        </p>
+        <p>
+           If a player manage to have their Citizen and Outcast meet 
+           at the top of the Spire, they win immediately and the game is over.
+        </p>
+      </section>
+
+      <footer>
+        <a class="nav-link" href="concept.html">Concept</a>
+        <a class="nav-link" href="deck.html">Cards</a>
+        <a class="nav-link" href="board.html">Board</a>
+        <a class="nav-link" href="play.html">Playtest</a>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+/* Undercity additions on top of double-life-play.css (shared board, spire, prompt, dialog). */
+
+.market { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 16px; }
+
+.card {
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--brass);
+  border-radius: 6px;
+  background: var(--surface);
+}
+.card h3 { display: flex; justify-content: space-between; gap: 6px; color: #f3ede0; font-size: 13px; margin-bottom: 3px; }
+.card p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.35; }
+.card .cost { color: var(--gold); font-family: var(--font-body); }
+.card.live { cursor: pointer; border-top-color: var(--gold); box-shadow: 0 0 0 1px var(--gold); }
+.card.live:hover { background: #33404a; }
+
+.hand { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px; margin-top: 8px; }
+.tok.moved { outline: 2px solid #fff; outline-offset: 1px; animation: tok-pulse 0.9s ease-out 2; }
+.delta { font-size: 10px; font-weight: 800; margin-right: 3px; }
+@keyframes tok-pulse { 50% { transform: scale(1.6); } }
+.tok.O.moved { animation-name: tok-pulse-o; }
+@keyframes tok-pulse-o { 0%, 100% { transform: rotate(45deg) scale(0.85); } 50% { transform: rotate(45deg) scale(1.4); } }
+
+.played-row { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-top: 8px; }
+.played-row .mini-label { margin: 0 4px 0 0; }
+.played { padding: 2px 6px; border: 1px solid var(--line); border-radius: 4px; color: var(--muted); font-size: 11px; }
+.score em { margin-left: 6px; }

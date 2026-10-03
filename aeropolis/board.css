@@ -1,0 +1,575 @@
+:root {
+  --night: #1b2126;
+}
+
+body {
+  margin: 0;
+  padding: 36px;
+  background: #121619;
+  color: var(--ink);
+}
+
+/* ---------- board shell ---------- */
+
+.board {
+  position: relative;
+  width: auto;
+  margin: 0 auto;
+  padding: 30px 34px 26px;
+  border-radius: 10px;
+  background:
+    radial-gradient(1100px 620px at 50% 0%, #2a333b, transparent),
+    linear-gradient(180deg, #202830, #171d22);
+  box-shadow: 0 26px 60px rgba(0, 0, 0, 0.6);
+  color: #e7edf1;
+  overflow: hidden;
+}
+
+/* Schematic art nouveau tower, drawn on load — the board's full backdrop. */
+#board-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  display: block;
+}
+
+.turn-strip {
+  position: relative;
+  z-index: 1;
+}
+
+.board-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.13);
+}
+
+.board-head h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 46px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.board-head .tagline {
+  margin: 6px 0 0;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: #93a0a8;
+}
+
+.head-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.replenish {
+  max-width: 760px;
+  margin: 0 auto 20px;
+  padding: 9px 13px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 6px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: #b6c1c8;
+}
+
+.replenish strong {
+  color: #eef3f6;
+  font-weight: 600;
+}
+
+.replenish-band {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- three-column layout ---------- */
+
+.board-layout {
+  display: grid;
+  grid-template-columns: minmax(250px, 1fr) minmax(170px, 0.55fr) minmax(250px, 1fr);
+  gap: 28px;
+  align-items: start;
+  padding: 26px 0;
+}
+
+.board-side {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  min-width: 0;
+}
+
+.loc-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.loc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* Which line a location serves — the board's two halves. */
+.loc-col-head {
+  padding-bottom: 9px;
+  border-bottom: 2px solid var(--side);
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--side);
+}
+
+.loc-col-note {
+  display: block;
+  margin-top: 5px;
+  font-family: var(--font-body);
+  font-size: 11.5px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #8d99a1;
+}
+
+/* The one neutral location, on the axis beneath the two halves. */
+.shared {
+  min-width: 0;
+  padding-bottom: 26px;
+}
+
+/* ---------- location ---------- */
+
+.location {
+  position: relative;
+  padding: 16px 18px 17px;
+  border-radius: 7px;
+  border-left: 9px solid var(--accent);
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.4);
+}
+
+.loc-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.loc-name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 23px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.loc-glyph {
+  flex: none;
+  font-size: 30px;
+  line-height: 1;
+  color: rgba(20, 24, 28, 0.22);
+}
+
+.loc-flavour {
+  margin: 3px 0 0;
+  font-size: 12px;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+.loc-lock {
+  margin: 7px 0 0;
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
+/* Badge on any location the Line also stops at — ties the two systems together.
+.loc-rail {
+  margin: 7px 0 0 6px;
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #e9c477;
+  background: rgba(233, 196, 119, 0.14);
+}
+*/
+
+.loc-body {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  margin-top: 13px;
+  padding-top: 13px;
+  border-top: 1px dashed rgba(20, 24, 28, 0.25);
+}
+
+.reservoir {
+  flex: none;
+}
+
+.mini-label {
+  margin: 0 0 6px;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.slots {
+  display: flex;
+  gap: 7px;
+}
+
+/* Matches the socket on the cards, so a cube visibly moves slot → socket. */
+.cube-slot {
+  display: grid;
+  place-items: center;
+  width: 42.5px;
+  height: 42.5px;
+  border: 2px dashed color-mix(in srgb, var(--accent) 55%, rgba(20, 24, 28, 0.3));
+  border-radius: 4px;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(20, 24, 28, 0.34);
+}
+
+.reward {
+  flex: 1;
+}
+
+.reward-text {
+  margin: 0;
+  font-size: 15.5px;
+  line-height: 1.35;
+  font-weight: 500;
+}
+
+/* .coin, .coin-num live in icons.css, shared with deck.html. */
+
+/* ---------- the spire ---------- */
+
+.spire {
+  width: auto;
+  padding: 16px 18px 18px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.24);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.spire-title {
+  margin: 0 0 2px;
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-align: center;
+  color: #e7edf1;
+}
+
+.spire-sub {
+  margin: 0 0 14px;
+  font-size: 11px;
+  text-align: center;
+  letter-spacing: 0.03em;
+  color: #8fa0a9;
+}
+
+.start-marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 7px 0;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #b9c5cc;
+}
+
+.token {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.token.citizen { background: var(--forum); }
+.token.outcast { background: var(--outcast-track); }
+
+.track {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.space {
+  display: grid;
+  grid-template-columns: 30px 1fr 50px;
+  align-items: center;
+  gap: 10px;
+  height: 38px;
+  padding: 0 12px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.05));
+}
+
+/* Higher spaces glow warmer — where you want the tokens to meet. */
+.space[data-band="high"] {
+  background: linear-gradient(90deg, rgba(233, 196, 119, 0.34), rgba(233, 196, 119, 0.12));
+}
+
+.space[data-band="mid"] {
+  background: linear-gradient(90deg, rgba(233, 196, 119, 0.17), rgba(233, 196, 119, 0.06));
+}
+
+.space-no {
+  font-size: 11px;
+  font-weight: 700;
+  color: #93a0a8;
+}
+
+.space-rung {
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.space-vp {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-align: right;
+  color: #f0e2c4;
+}
+
+/* ---------- card row, shown inside the Noodle Shop location ---------- */
+
+.market-row {
+  margin-top: 13px;
+  padding-top: 13px;
+  border-top: 1px dashed rgba(20, 24, 28, 0.25);
+}
+
+.market-slots {
+  display: flex;
+  gap: 9px;
+}
+
+.market-slot {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 88px;
+  border: 2px dashed rgba(20, 24, 28, 0.26);
+  border-radius: 4px;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(20, 24, 28, 0.32);
+}
+
+/* ---------- the line (train loop) ----------
+
+.line-section {
+  min-width: 0;
+  margin: 0;
+}
+
+.line-diagram {
+  margin-top: 14px;
+  padding: 18px 12px 8px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.24);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.line-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.rail-outer {
+  fill: none;
+  stroke: rgba(233, 196, 119, 0.22);
+  stroke-width: 9;
+}
+
+.rail-ties {
+  fill: none;
+  stroke: rgba(233, 196, 119, 0.45);
+  stroke-width: 2;
+  stroke-dasharray: 1 11;
+  stroke-linecap: round;
+}
+
+.stop-dot {
+  fill: #171d22;
+  stroke: #e9c477;
+  stroke-width: 2.5;
+}
+
+.stop-dot.current {
+  fill: #e9c477;
+}
+
+.stop-label {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  fill: #dfe6ea;
+}
+
+.train-glyph {
+  font-size: 22px;
+}
+
+.line-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 10px;
+  padding: 14px 4px 18px;
+}
+
+.seat-block .mini-label {
+  margin: 0 0 6px;
+}
+
+.seat-row {
+  display: flex;
+  gap: 8px;
+}
+
+.seat {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px dashed rgba(233, 196, 119, 0.45);
+}
+
+.seat.filled {
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.seat.filled.citizen { background: var(--forum); }
+.seat.filled.outcast { background: var(--outcast-track); }
+
+.line-rules {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: #bcc7ce;
+}
+
+*/
+
+/* ---------- turn sequence ---------- */
+
+.turn-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.13);
+}
+
+.step {
+  padding: 12px 15px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.step h3 {
+  margin: 0 0 5px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #e9c477;
+}
+
+.step p {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: #bcc7ce;
+}
+
+.step .n {
+  color: #7f8c94;
+}
+
+@media (max-width: 900px) {
+  .board-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .board-side {
+    gap: 28px;
+  }
+
+  .spire {
+    order: -1;
+  }
+
+}
+
+/* ---------- screentop.gg export (export-screentop.js) ---------- */
+
+/* The board alone, square-cornered and without cross-page nav, so the image
+   can be dropped in as a board. */
+body.board-export {
+  padding: 0;
+  background: #fff;
+}
+
+body.board-export .board {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+body.board-export .head-right {
+  display: none;
+}

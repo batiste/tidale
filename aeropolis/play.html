@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Aeropolis — Playtest</title>
+    <link rel="stylesheet" href="common.css" />
+    <link rel="stylesheet" href="icons.css" />
+    <link rel="stylesheet" href="play.css" />
+  </head>
+  <body>
+    <header class="page-head">
+      <h1>Aeropolis <span class="sub">Playtest · 2 players, hot-seat</span></h1>
+      <nav>
+        <a class="nav-link" href="concept.html">Concept</a>
+        <a class="nav-link" href="deck.html">Cards</a>
+        <a class="nav-link" href="board.html">Board</a>
+        <a class="nav-link" href="rules.html">Rules</a>
+      </nav>
+    </header>
+
+    <div class="status" id="status"></div>
+    <div id="result"></div>
+
+    <main class="table">
+      <section class="board-area">
+        <div id="conflict"></div>
+        <div class="locations" id="locations"></div>
+        <div id="market"></div>
+      </section>
+      <aside class="spire" id="spire"></aside>
+      <section class="players" id="players"></section>
+    </main>
+
+    <section class="log-wrap">
+      <p class="mini-label">Log (newest first)</p>
+      <ol class="log" id="log"></ol>
+    </section>
+
+    <div class="prompt" id="prompt" hidden></div>
+
+    <dialog id="setup">
+      <form method="dialog">
+        <h2>New game</h2>
+        <div id="setup-players" class="setup-players"></div>
+        <menu>
+          <button type="button" class="btn" id="setup-random">Re-deal characters</button>
+          <button class="btn" value="cancel">Cancel</button>
+          <button class="btn primary" value="start">Start</button>
+        </menu>
+      </form>
+    </dialog>
+
+    <script src="deck-data.js"></script>
+    <script src="board-data.js"></script>
+    <script src="icons.js"></script>
+    <script src="play.js"></script>
+  </body>
+</html>

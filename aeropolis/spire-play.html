@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Spire — Playtest</title>
+    <link rel="stylesheet" href="common.css" />
+    <link rel="stylesheet" href="double-life-play.css" />
+    <link rel="stylesheet" href="undercity-play.css" />
+    <link rel="stylesheet" href="spire-play.css" />
+  </head>
+  <body>
+    <header class="page-head">
+      <h1>Spire <span class="sub">Playtest · hot-seat</span></h1>
+      <nav>
+        <a class="nav-link" href="spire.html">Rules</a>
+        <button class="nav-link" id="new-game" type="button">New game</button>
+      </nav>
+    </header>
+
+    <div class="status" id="status"></div>
+
+    <main class="table">
+      <section>
+        <p class="mini-label">Market <span id="market-count"></span></p>
+        <div class="market" id="market"></div>
+        <p class="mini-label">Spire · ● Citizen ◆ Outcast · number = hex cost</p>
+        <div class="board-scroll"><div id="board"></div></div>
+      </section>
+      <aside class="players" id="players"></aside>
+    </main>
+
+    <section class="log-wrap">
+      <p class="mini-label">Log (newest first)</p>
+      <ol class="log" id="log"></ol>
+    </section>
+
+    <div class="prompt" id="prompt"></div>
+
+    <dialog id="setup">
+      <form method="dialog">
+        <h2>New game</h2>
+        <label class="count">Players
+          <select id="setup-count">
+            <option>2</option><option>3</option><option selected>4</option>
+          </select>
+        </label>
+        <div id="setup-players" class="setup-players"></div>
+        <menu>
+          <button class="btn" value="cancel">Cancel</button>
+          <button class="btn primary" value="start">Start</button>
+        </menu>
+      </form>
+    </dialog>
+
+    <script src="spire-data.js"></script>
+    <script src="spire-play.js"></script>
+  </body>
+</html>

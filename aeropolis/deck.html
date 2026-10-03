@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Aeropolis — Starter Deck</title>
+    <link rel="stylesheet" href="common.css" />
+    <link rel="stylesheet" href="icons.css" />
+    <link rel="stylesheet" href="deck.css" />
+  </head>
+  <body>
+    <header class="page-head">
+      <div>
+        <h1>Aeropolis — Prototype Cards</h1>
+        <p>
+          Two characters and an example seven-card starter deck. Each player begins with 2 coins. A
+          deck card reads two ways: played into a character line, 
+          or kept in hand until the discard phase. Every played card has a cube socket. 
+          The face-down Intrigue mode is
+          Print at true
+          57 × 89 mm with ⌘P.
+        </p>
+      </div>
+      <nav style="display: flex; flex-direction: column; gap: 8px;">
+        <a class="nav-link" href="concept.html"><span class="chev">←</span> Concept</a>
+        <a class="nav-link" href="board.html">Board <span class="chev">→</span></a>
+        <a class="nav-link" href="rules.html">Rules <span class="chev">→</span></a>
+        <a class="nav-link" href="play.html">Playtest <span class="chev">→</span></a>
+      </nav>
+    </header>
+
+    <h2 class="section-head">
+      Characters
+      <span class="note">
+        One of each per player, in play from setup. They anchor the left end of their line.
+      </span>
+    </h2>
+    <ul class="deck" id="characters"></ul>
+
+    <h2 class="section-head">
+      Example Starter Deck — 7 cards
+      <span class="note">Identical for every player in this draft.</span>
+      <span class="note">
+        Card procedures and terminology are defined in the <a href="rules.html">draft rules</a>.
+      </span>
+    </h2>
+    <ul class="deck" id="deck"></ul>
+
+    <h2 class="section-head">
+      Noodle Shop — Coin-cost samples
+      <span class="note">
+        Bought from the shared Noodle Shop for <strong>coin</strong> before joining your hand. After
+        purchase, each card follows the same process as the starter deck. Costs and effects are
+        first-pass examples.
+      </span>
+      <span class="note">
+        Revolutionary Organizer and Echo are playtest probes for the <strong>Other Line</strong>
+        rules, priced above the rest of the shop since their effect scales with board state
+        instead of paying a flat amount.
+      </span>
+    </h2>
+    <ul class="deck" id="market"></ul>
+
+    <h2 class="section-head">
+      Conflict Cards
+      <span class="note">
+        One revealed at the start of each round from a separate Conflict-card deck. Not played
+        from hand and not part of a line — it sets that round's <strong>Reward</strong> and
+        <strong>Condition</strong> for the conflict, plus the <strong>Refill Bonus</strong> added
+        to Replenish (2 × player count + this card's bonus).
+      </span>
+    </h2>
+    <ul class="deck" id="conflicts"></ul>
+
+    <h2 class="section-head">
+      Revolution Conflict Cards
+      <span class="note">
+        Replaces the Conflict pile once the Revolution begins — 3 of these shuffled in instead.
+        Same shape as a Conflict card, raised stakes.
+      </span>
+    </h2>
+    <ul class="deck" id="revolution-conflicts"></ul>
+
+    <script src="deck-data.js"></script>
+    <script src="icons.js"></script>
+    <script>
+      // Intrigue is parked while the core loop gets tested. The text below is kept
+      // intact — flip this to true to put the block back on every card.
+      const SHOW_INTRIGUE = true;
+
+      // CHARACTERS, DECK, MARKET, CONFLICTS, REVOLUTION_CONFLICTS all live in
+      // deck-data.js, loaded above.
+
+      const LINE_LABEL = { citizen: "Citizen", outcast: "Outcast", any: "Broker" };
+
+      function characterMarkup(char) {
+        const sockets = Array.from(
+          { length: char.sockets },
+          () => `<span class="socket">Cube</span>`
+        ).join("");
+
+        const ORDINALS = ["1st", "2nd", "3rd", "4th", "5th"];
+        const costCells = char.playCosts
+          .map((cost, index) => {
+            const amount = cost === 0 ? `<span class="cost-amount free">Free</span>` : `<span class="cost-amount">${withIcons(`${cost} coin`)}</span>`;
+            return `<div class="cost-cell">
+                      <span class="cost-ord">${ORDINALS[index] ?? index + 1}</span>
+                      ${amount}
+                    </div>`;
+          })
+          .join("");
+
+        return `
+          <li>
+            <article class="card char" data-line="${escapeHtml(char.line)}">
+              <header class="card-head">
+                <h2 class="card-title">${escapeHtml(char.title)}</h2>
+                <span class="line-badge">${escapeHtml(LINE_LABEL[char.line] ?? char.line)}</span>
+              </header>
+              <div class="card-art"><span class="art-glyph">${char.glyph}</span></div>
+              <div class="card-body">
+                <section class="block block-ability">
+                  <p class="block-label">Ability</p>
+                  <p class="block-text">${withIcons(char.ability)}</p>
+                </section>
+                <section class="block block-full">
+                  <p class="block-label">Recruits</p>
+                  <div class="recruit-line">
+                    <div class="socket-row">${sockets}</div>
+                    <span class="recruit-arrow" aria-hidden="true">→</span>
+                    <p class="block-text">${withIcons(char.reward)}</p>
+                  </div>
+                </section>
+              </div>
+              <footer class="cost-strip">${costCells}</footer>
+            </article>
+          </li>
+        `;
+      }
+
+      function cardMarkup(card) {
+        // Two readings of "cube to destination": a card with slots fires a
+        // separate effect per socket it holds a cube in — most have just one —
+        // while a slotless card routes the cube on to the character instead.
+        const playBody = card.slots
+          ? card.slots
+              .map(
+                (slot) => `
+             <div class="cost-line slot-row">
+               <span class="socket">Cube</span>
+               <p class="block-text">
+                 ${withIcons(slot.text)}
+                 ${slot.note ? `<span class="slot-note">${withIcons(slot.note)}</span>` : ""}
+               </p>
+             </div>`
+              )
+              .join("")
+          : `<p class="block-text">${withIcons(card.play)}</p>
+             <span class="route">
+               <span class="socket">Cube</span>
+               <span class="route-dest">Character</span>
+             </span>`;
+        const intrigue = SHOW_INTRIGUE
+          ? `<section class="block block-intrigue">
+               <div class="intrigue-head">
+                 <span class="socket">Cube</span>
+                 <p class="block-label">Conflict</p>
+                 <span class="intrigue-value" title="Conflict value">${card.conflictValue}</span>
+               </div>
+             </section>`
+          : "";
+
+        // Noodle Shop cards are bought for coin before they ever
+        // reach your hand — everything else follows the exact same slotted-card
+        // template as the starter deck, still recruiting and socketing a cube to play.
+        const priceStrip = card.cost
+          ? `<div class="price-strip">
+               <span class="price-label">Cost to buy</span>
+               <span class="price-amount">${withIcons(`${card.cost} coin`)}</span>
+             </div>`
+          : "";
+
+        return `
+          <li>
+            <article class="card" data-line="${escapeHtml(card.line)}">
+              <header class="card-head">
+                <h2 class="card-title">${escapeHtml(card.title)}</h2>
+                <span class="line-badge">${escapeHtml(LINE_LABEL[card.line] ?? card.line)}</span>
+              </header>
+              ${priceStrip}
+              <div class="card-art"><span class="art-glyph">${card.glyph}</span></div>
+              <div class="card-body">
+                <section class="block block-play">
+                  <p class="block-label">Play</p>
+                  ${playBody}
+                </section>
+                ${intrigue}
+                <footer class="card-footer">
+                  <span class="footer-label">Discard effect</span>
+                  <span class="footer-value discard-amount">${withIcons(card.discardEffect)}</span>
+                </footer>
+              </div>
+            </article>
+          </li>
+        `;
+      }
+
+      function conflictCardMarkup(card, revolution = false) {
+        return `
+          <li>
+            <article class="card conflict${revolution ? " revolution" : ""}" data-line="${escapeHtml(card.line)}">
+              <header class="card-head">
+                <h2 class="card-title">${escapeHtml(card.title)}</h2>
+                <span class="line-badge">${revolution ? "Revolution Conflict" : "Conflict"}</span>
+              </header>
+              <div class="card-art"><span class="art-glyph">${card.glyph}</span></div>
+              <div class="card-body">
+                <section class="block block-full">
+                  <p class="block-label">Reward</p>
+                  <p class="block-text">${withIcons(card.reward)}</p>
+                </section>
+                <section class="block block-condition">
+                  <p class="block-label">Game changer</p>
+                  <p class="block-text">${withIcons(card.condition)}</p>
+                </section>
+                <footer class="card-footer">
+                  <span class="footer-label">Refill</span>
+                  <span class="footer-value">${escapeHtml(card.refillStart)} +${card.refill}</span>
+                </footer>
+              </div>
+            </article>
+          </li>
+        `;
+      }
+
+      // One entry per screentop.gg sheet — the decks as that platform cuts
+      // them, which is why both Conflict types share a sheet.
+      const SHEETS = {
+        character: () => CHARACTERS.map(characterMarkup),
+        base: () => DECK.map(cardMarkup),
+        shop: () => MARKET.map(cardMarkup),
+        conflict: () => [
+          ...CONFLICTS.map((c) => conflictCardMarkup(c)),
+          ...REVOLUTION_CONFLICTS.map((c) => conflictCardMarkup(c, true)),
+        ],
+      };
+
+      // Cards per row on a sheet: the divisor of the card count that puts the
+      // sheet closest to 1.4:1, so the grid is always full — a blank cell
+      // would offset screentop's slicing.
+      function gridCols(count) {
+        const off = (cols) =>
+          Math.abs(Math.log((cols * 57) / (Math.ceil(count / cols) * 89) / 1.4));
+        let best = count;
+        for (let cols = 1; cols < count; cols++) {
+          if (count % cols === 0 && off(cols) < off(best)) best = cols;
+        }
+        return best;
+      }
+
+      // ?sheet=<name> renders that one deck as a bare export grid instead of
+      // the page (see export-screentop.js).
+      const sheet = new URLSearchParams(location.search).get("sheet");
+
+      if (SHEETS[sheet]) {
+        const cards = SHEETS[sheet]();
+        document.body.className = "sheet-export";
+        document.body.innerHTML =
+          `<ul class="deck" style="--cols:${gridCols(cards.length)}">${cards.join("")}</ul>`;
+      } else {
+        document.getElementById("characters").innerHTML =
+          CHARACTERS.map(characterMarkup).join("");
+        document.getElementById("deck").innerHTML = DECK.map(cardMarkup).join("");
+        document.getElementById("market").innerHTML = MARKET.map(cardMarkup).join("");
+        document.getElementById("conflicts").innerHTML = CONFLICTS.map((c) => conflictCardMarkup(c)).join("");
+        document.getElementById("revolution-conflicts").innerHTML =
+          REVOLUTION_CONFLICTS.map((c) => conflictCardMarkup(c, true)).join("");
+      }
+    </script>
+  </body>
+</html>

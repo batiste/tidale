@@ -1,0 +1,296 @@
+/* Aeropolis additions on top of double-life-play.css (spire, players, prompt, dialog) and aeropolis-icons.css. */
+
+:root { --ruby: #8e2f2a; --card-ratio: 56 / 87; } /* one card format for actions, characters and Uprisings: bridge size, 56 × 87 mm */ /* Uprising colour: the card and the locations it is fought at */
+body { font-size: 15px; }
+.mini-label { font-size: 12px; }
+.status { font-size: 16px; }
+/* Bottom banner: bigger, with obvious buttons. */
+body { padding-bottom: 220px; }
+.prompt { gap: 12px; padding: 18px 28px; border-top: 2px solid var(--gold); background: rgba(20, 24, 28, 0.98); box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.5); }
+.prompt .msg { font-size: 19px; line-height: 1.4; }
+.btn { font-size: 14px; }
+.prompt .btn { padding: 12px 22px; border: 2px solid var(--gold); border-radius: 10px; background: rgba(233, 196, 119, 0.16); color: #f3ede0; font-size: 17px; }
+.prompt .btn:hover { background: rgba(233, 196, 119, 0.32); }
+.prompt .btn.primary, .prompt .btn[data-btn] { background: var(--gold); color: #1b2126; }
+.prompt .btn.primary:hover, .prompt .btn[data-btn]:hover { background: #f3d58f; }
+/* Spend a Stim: a green outline button, apart from the gold ones (not a "Draw" look-alike). */
+.prompt .btn.stim { margin-left: 28px; border: 2px dashed #6fcf8f; background: rgba(61, 138, 90, 0.22); color: #d6f5df; }
+.prompt .btn.stim:hover { background: rgba(61, 138, 90, 0.45); }
+.prompt .btn[data-undo] { border-color: var(--muted); background: transparent; color: var(--muted); font-size: 14px; }
+.log { font-size: 14px; }
+
+.table { grid-template-columns: minmax(0, 1fr) 360px; }
+.log-wrap { margin-top: 0; }
+.log { max-height: 75vh; }
+
+.tf-left { display: flex; gap: 16px; align-items: flex-start; }
+.tf-main { flex: 1; min-width: 0; }
+/* Spire: a tall, wide tower. Rows alternate shade; tokens are big enough to read across the table. */
+.spire-track { width: 170px; padding: 6px 8px; border: 3px solid var(--brass); border-radius: 12px 12px 6px 6px; background: linear-gradient(180deg, #2e3a40, #1f272c); }
+.sp-row { gap: 5px; height: 38px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+.sp-row:nth-child(odd) { background: rgba(255, 255, 255, 0.03); }
+.sp-row b { width: 28px; margin-right: 6px; color: #cfd8dd; font-size: 17px; }
+.sp-mark { margin-left: auto; color: rgba(255, 255, 255, 0.3); font-size: 12px; font-weight: 600; } /* Citizen start by player count */
+.tok { width: 20px; height: 20px; border-width: 2px; }
+.spire-wrap { width: 170px; }
+.spire-title { margin: 0; color: var(--gold); font-family: var(--font-display); font-size: 24px; letter-spacing: 0.14em; text-align: center; text-transform: uppercase; }
+.spire-help { margin: 2px 0 8px; color: var(--muted); font-size: 12px; line-height: 1.35; text-align: center; }
+.spire-end { display: flex; gap: 8px; align-items: center; margin: 6px 0; color: #cfd8dd; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.spire-end .tok { width: 12px; height: 12px; background: #cfd8dd; }
+
+.uprising { margin-top: 6px; color: var(--text); font-size: 15px; }
+
+/* ---------- cards ---------- */
+
+#row { display: flex; flex-wrap: wrap; gap: 18px; margin-bottom: 20px; }
+.row-cards { display: flex; gap: 10px; }
+
+.tcard {
+  --frame: var(--brass);
+  --tint: rgba(176, 129, 47, 0.16);
+  display: flex;
+  flex-direction: column;
+  width: 140px;
+  aspect-ratio: var(--card-ratio);
+  border: 4px solid var(--frame);
+  border-radius: 10px;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+}
+.tcard.out, .tuck.out { --frame: var(--verdigris); --tint: rgba(47, 125, 116, 0.16); }
+.tcard.live { cursor: pointer; transition: transform 0.12s ease, box-shadow 0.12s ease; }
+.tcard.live:hover { transform: translateY(-4px); box-shadow: 0 0 0 3px var(--gold), 0 8px 16px rgba(0, 0, 0, 0.5); }
+.row-cards .tcard:not(.live) { opacity: 0.55; }
+
+.band { padding: 6px 7px; background: var(--tint); font-size: 14px; }
+.band.up { border-bottom: 1px dashed rgba(20, 24, 28, 0.25); }
+.band.down { border-top: 1px dashed rgba(20, 24, 28, 0.25); }
+.band-fx { min-height: 1.9em; line-height: 1.9; text-align: center; }
+
+.face { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 2px; padding: 4px 6px; position: relative; }
+.face h3 { color: var(--ink); font-size: 17px; text-align: center; }
+.corners { position: absolute; top: 5px; left: 6px; right: 6px; display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; color: var(--ink-soft); }
+
+/* ---------- players ---------- */
+
+#players { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 14px; }
+/* Player panel: thick border and header band in the player's colour, like the city locations. */
+.player { margin-bottom: 0; padding: 0; border: 4px solid var(--pc); border-radius: 10px; }
+.player { position: relative; }
+.player.active { box-shadow: none; }
+.player > h3 { align-items: baseline; border-radius: 5px 5px 0 0; padding: 6px 12px; background: var(--pc); color: #15191c; font-size: 18px; }
+.player > h3 small { color: #15191c; font-size: 13px; font-weight: 700; }
+.player-body { padding: 4px 12px 12px; }
+.goods { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 8px; font-size: 15px; }
+.stock .cap { color: rgba(255, 255, 255, 0.28); font-size: 0.9em; font-weight: 600; }
+.stock.full .cap { color: #fff; font-weight: 800; }
+.scheme-card { display: inline-flex; align-items: center; padding: 2px 6px 2px 2px; border-radius: 6px; background: #3a3340; color: #f3ede0; }
+
+.tableau { display: flex; justify-content: center; gap: 16px; margin-top: 10px; align-items: center; }
+.char-col { display: flex; flex-direction: column; align-items: center; }
+.tcard.char { width: 130px; position: relative; z-index: 1; }
+
+/* Tucked strips peek out from behind the character card. */
+.tuck { --frame: var(--brass); --tint: rgba(176, 129, 47, 0.16); position: relative; width: 120px; border: 3px solid var(--frame); background: var(--paper); color: var(--ink); }
+/* Full card preview after hovering 1s. */
+.tuck-preview { position: absolute; top: 50%; right: calc(100% + 10px); z-index: 20; transform: translateY(-50%); visibility: hidden; opacity: 0; pointer-events: none; transition: opacity 0.15s, visibility 0s; }
+.tuck:hover .tuck-preview { visibility: visible; opacity: 1; transition-delay: 1s; }
+.char-col.out .tuck-preview { right: auto; left: calc(100% + 10px); } /* open outward: Citizen left, Outcast right */
+.tuck.up { border-bottom: none; border-radius: 8px 8px 0 0; margin-bottom: -2px; }
+.tuck.down { border-top: none; border-radius: 0 0 8px 8px; margin-top: -2px; }
+.tuck .band { border: none; font-size: 13px; }
+
+/* ---------- city ---------- */
+
+#map { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 22px; } /* wraps on small screens */
+/* Lower city = teal, upper city = brass, Cable Lift = both. Thick border + coloured header band. */
+.city-loc { --zone: var(--verdigris); position: relative; border: 4px solid var(--zone); border-radius: 10px; background: var(--surface); }
+.city-loc.high { --zone: var(--brass); }
+.city-loc.low.high { border-color: var(--verdigris) var(--brass) var(--brass) var(--verdigris); }
+/* Marching dashes (active player, Uprising locations): a dashed frame whose dashes run clockwise around the box,
+   over a thin steady line. Each edge is a repeating gradient; the animation slides each one along its edge. */
+.player.active::before, .city-loc.fight::before {
+  --ant: var(--gold);
+  content: "";
+  position: absolute;
+  inset: -9px;
+  pointer-events: none;
+  border: 1px solid color-mix(in srgb, var(--ant) 35%, transparent);
+  background:
+    linear-gradient(90deg, var(--ant) 60%, transparent 0) 0 0 / 18px 4px repeat-x,
+    linear-gradient(90deg, var(--ant) 60%, transparent 0) 0 100% / 18px 4px repeat-x,
+    linear-gradient(0deg, var(--ant) 60%, transparent 0) 0 0 / 4px 18px repeat-y,
+    linear-gradient(0deg, var(--ant) 60%, transparent 0) 100% 0 / 4px 18px repeat-y;
+  animation: march 0.9s linear infinite;
+}
+.city-loc.fight::before { --ant: #e0513f; }
+@keyframes march {
+  to { background-position: 18px 0, -18px 100%, 0 -18px, 100% 18px; }
+}
+@media (prefers-reduced-motion: reduce) { .player.active::before, .city-loc.fight::before { animation: none; } }
+.loc-name { border-radius: 5px 5px 0 0; padding: 6px 10px; background: var(--zone); color: #fff; font-family: var(--font-display); font-size: 16px; letter-spacing: 0.06em; text-transform: uppercase; }
+.city-loc.low.high .loc-name { background: linear-gradient(90deg, var(--verdigris), var(--brass)); }
+.loc-body { padding: 6px 10px 8px; }
+.loc-zone { color: var(--muted); font-size: 12px; }
+.loc-zone b { color: #f0a060; }
+.loc-ctrl { margin-top: 4px; font-size: 13px; }
+.loc-troops { display: flex; gap: 4px; margin-top: 6px; min-height: 24px; }
+.troops { min-width: 24px; height: 24px; padding: 0 6px; border-radius: 4px; color: #15191c; font-weight: 800; text-align: center; line-height: 24px; }
+
+.silhouette { width: 50px; height: 58px; color: rgba(20, 24, 28, 0.82); fill: currentColor; }
+.tcard.char .face { gap: 4px; }
+/* Illustrated character: the picture covers the whole face; the name moves to its tooltip. */
+.tcard.char .face.art { padding: 0; }
+.char-art { width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; }
+.face.art h3, .face.art .char-kind { display: none; }
+.btn.small { margin-left: 8px; padding: 2px 8px; font-size: 11px; letter-spacing: 0; }
+
+.glossary { margin-bottom: 16px; }
+.glossary summary { cursor: pointer; }
+.glossary ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 5px; font-size: 13px; color: #b9c3c9; }
+.glossary b { color: #f3ede0; }
+
+/* ---------- reveal: street run and Scheme ---------- */
+
+.reveal:empty { display: none; }
+.reveal {
+  position: fixed;
+  left: 50%;
+  bottom: 104px;
+  z-index: 6;
+  transform: translateX(-50%);
+  max-width: calc(100vw - 32px);
+  padding: 12px 16px 16px;
+  border: 1px solid rgba(233, 196, 119, 0.5);
+  border-radius: 12px;
+  background: rgba(20, 24, 28, 0.97);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+}
+.reveal-note { margin-bottom: 8px; color: var(--gold); font-family: var(--font-display); font-size: 16px; letter-spacing: 0.08em; text-transform: uppercase; }
+.reveal-row { display: flex; gap: 16px; align-items: flex-start; }
+.reveal-drawn { flex: none; }
+.reveal-drawn .tcard { width: 150px; box-shadow: 0 0 0 3px #d9731f, 0 6px 16px rgba(0, 0, 0, 0.5); }
+/* Teach the run: red frames on the goods (cost corner) and the heat of the drawn card. */
+.reveal-drawn .corners > span:first-child:not(:empty), .reveal-drawn .face > .heat { padding: 1px 3px; border-radius: 4px; outline: 2px solid #d8392b; outline-offset: 1px; }
+.reveal-side { display: flex; flex-direction: column; gap: 8px; min-width: 260px; }
+/* Heat meter: big "heat / limit", then one pip per point (lit = heat, amber = the drawn card's heat, red = over the limit). */
+.heat-meter { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; font-size: 22px; color: #f3ede0; }
+.heat-meter .gi { font-size: 26px; align-self: center; }
+.heat-meter b { font-size: 52px; line-height: 1; color: #f0a060; }
+.heat-meter span { font-size: 30px; color: var(--muted); }
+.heat-meter em { font-size: 30px; font-style: normal; font-weight: 800; color: #f3d58f; }
+.heat-meter.bust em, .heat-meter.bust b { color: #ff6b57; }
+.heat-meter .pips { display: flex; gap: 4px; flex-basis: 100%; }
+.pips i { width: 18px; height: 12px; border-radius: 3px; background: rgba(255, 255, 255, 0.12); }
+.pips i.on { background: #d9731f; }
+.pips i.next { background: #f3d58f; }
+.pips i.over { background: #ff6b57; }
+.haul { display: flex; flex-wrap: wrap; gap: 12px; font-size: 22px; color: #f3ede0; }
+.reveal-cards { display: flex; gap: 10px; overflow-x: auto; padding: 4px; } /* padding: room for rings and hover lift */
+.reveal-card { flex: none; }
+.reveal .mini-label { margin: 0 0 6px; }
+.reveal .tcard.live:hover { transform: translateY(-4px); }
+.face .heat { position: absolute; bottom: 5px; right: 6px; font-size: 12px; }
+.prompt .ctx { margin-bottom: 4px; color: var(--gold); font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+
+/* ---------- modal: Uprising result ---------- */
+
+.modal:empty { display: none; }
+.modal { position: fixed; inset: 0; z-index: 10; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(0, 0, 0, 0.6); }
+.modal-box { max-width: 820px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 20px 24px; border: 1px solid rgba(233, 196, 119, 0.5); border-radius: 12px; background: var(--panel); box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6); }
+.modal-box h2 { color: var(--gold); font-size: 22px; }
+.modal-box .modal-sub { margin: 4px 0 12px; color: var(--muted); font-size: 13px; }
+.modal-box p { margin: 8px 0; }
+.modal-box menu { display: flex; justify-content: flex-end; margin: 16px 0 0; padding: 0; }
+.tuck.up > .band { border-radius: 5px 5px 0 0; }
+.tuck.down > .band { border-radius: 0 0 5px 5px; }
+
+/* ---------- Uprising card ---------- */
+
+#uprising-card { margin-bottom: 16px; }
+.uprising-slot { display: flex; gap: 12px; align-items: flex-end; }
+.ucard { display: flex; flex-direction: column; width: 154px; aspect-ratio: var(--card-ratio); border: 4px solid var(--ruby); border-radius: 10px; background: var(--paper); color: var(--ink); box-shadow: 0 3px 8px rgba(0, 0, 0, 0.45); overflow: hidden; }
+.ucard-head { padding: 6px 8px; background: var(--ruby); color: #fff; text-align: center; }
+.ucard-head span { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.85; }
+.ucard-head b { display: block; font-family: var(--font-display); font-size: 15px; letter-spacing: 0.05em; text-transform: uppercase; }
+.ucard-locs { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; padding: 6px 6px 0; }
+.uloc { padding: 2px 6px; border-radius: 4px; background: var(--verdigris); color: #fff; font-size: 11px; font-weight: 700; }
+.uloc.high { background: var(--brass); }
+.uloc.low.high { background: linear-gradient(90deg, var(--verdigris), var(--brass)); }
+.ucard-art { display: block; flex: 1 1 0; width: 64px; min-height: 16px; margin: 4px auto 2px; color: var(--ruby); } /* takes the spare height: rewards sit at the bottom */
+.ucard-reward { display: flex; align-items: center; gap: 6px; padding: 5px 8px; border-top: 1px dashed rgba(20, 24, 28, 0.25); font-size: 14px; }
+.ucard-reward .rank { flex: none; width: 30px; color: var(--ink-soft); font-size: 11px; font-weight: 800; text-transform: uppercase; }
+.modal-uprising { display: flex; gap: 18px; align-items: flex-start; }
+.modal-uprising > div:last-child { flex: 1; min-width: 0; }
+
+/* ---------- victory ---------- */
+
+.victory { margin: -20px -24px 14px; padding: 18px 24px 10px; background: linear-gradient(180deg, var(--pc), transparent); text-align: center; }
+.victory-crown { font-size: 44px; line-height: 1; color: var(--gold); text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); }
+.victory h2 { color: #fff; font-size: 30px; text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5); }
+.results tr.winner td { background: rgba(233, 196, 119, 0.15); font-weight: 700; }
+
+/* ---------- AI seats ---------- */
+.setup-player { grid-template-columns: 26px 1fr 140px 130px 130px; }
+.ai-badge { margin-left: 8px; padding: 1px 7px; border-radius: 10px; background: rgba(20, 24, 28, 0.35); color: #15191c; font-family: var(--font-body); font-size: 11px; font-style: normal; font-weight: 700; letter-spacing: 0.04em; }
+.char-kind { color: var(--ink-soft); font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+dialog { max-width: 860px; }
+.setup-head span { color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+.prompt .btn small { display: block; margin-top: 3px; color: inherit; font-size: 12px; font-weight: 600; opacity: 0.85; max-width: none; }
+.modal-box menu { align-items: center; gap: 12px; }
+.auto-note { color: var(--muted); font-size: 12px; }
+.ai-why { color: var(--muted); font-style: italic; }
+
+/* ---------- narrow screens ---------- */
+
+/* One column: this round's Uprising first, then the board, the log, and the icon glossary last. */
+@media (max-width: 1100px) {
+  .table { display: flex; flex-direction: column; gap: 16px; }
+  .log-wrap { display: contents; }
+  #uprising-card { order: -1; margin: 0; }
+  .glossary { order: 1; }
+  .log { max-height: 50vh; }
+}
+
+/* Phones: a horizontal Spire, one player per row, compact prompt, run panel and dialogs. */
+@media (max-width: 700px) {
+  body { padding: 12px 12px 180px; }
+  .tf-left { flex-direction: column; gap: 10px; }
+  .spire-wrap { width: 100%; }
+  .spire-title { font-size: 18px; text-align: left; }
+  .spire-help, .spire-end { display: none; }
+  /* Levels 1 → 13 from left to right; each level stacks its pawns. */
+  .spire-track { display: flex; flex-direction: row-reverse; width: 100%; padding: 4px; border-width: 2px; border-radius: 8px; box-sizing: border-box; }
+  .sp-row { flex: 1 1 0; flex-direction: column; justify-content: flex-start; gap: 3px; height: auto; min-height: 58px; padding: 3px 0; border-bottom: none; border-left: 1px solid rgba(255, 255, 255, 0.08); }
+  .sp-row b { width: auto; margin: 0; font-size: 12px; text-align: center; }
+  .sp-row .tok { width: 12px; height: 12px; }
+  .sp-mark { margin: auto 0 0; font-size: 9px; }
+  #map { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .loc-name { font-size: 13px; }
+  #row { gap: 10px; }
+  .row-cards { gap: 8px; }
+  .row-cards .tcard { width: calc((100vw - 24px - 8px) / 2 - 2px); max-width: 150px; }
+  #players { grid-template-columns: 1fr; }
+  .tuck-preview { display: none; } /* hover previews: no hover on touch screens, and they overflow the page */
+  .tableau { gap: 10px; }
+  .prompt { padding: 10px 12px; gap: 8px; }
+  .prompt .msg { flex-basis: 100%; font-size: 16px; }
+  .prompt .btn { padding: 9px 14px; font-size: 15px; }
+  .prompt .btn.stim { margin-left: 12px; }
+  .reveal { left: 8px; right: 8px; transform: none; max-width: none; padding: 10px; }
+  .reveal-row { gap: 10px; }
+  .reveal-drawn .tcard { width: 140px; }
+  .reveal-side { min-width: 0; }
+  .heat-meter b { font-size: 38px; }
+  .heat-meter span, .heat-meter em { font-size: 22px; }
+  .pips i { width: 12px; }
+  .modal { padding: 8px; }
+  .modal-box { padding: 14px; }
+  .modal-uprising { flex-direction: column; align-items: center; }
+  .modal-uprising > div:last-child { width: 100%; overflow-x: auto; }
+  .setup-player { grid-template-columns: 26px 1fr 1fr; }
+  .setup-player input { grid-column: 2 / 4; }
+  .setup-head { display: none; }
+}

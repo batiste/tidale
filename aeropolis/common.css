@@ -1,0 +1,67 @@
+/* Shared across deck.html, rules.html, concept.html, board.html, play.html.
+   Page-specific colors and layout stay in each page's own stylesheet. */
+
+:root {
+  --ink: #14181c;
+  --ink-soft: #3d474f;
+  --paper: #efe7d8;
+  --paper-edge: #e2d6c1;
+  --brass: #b0812f;
+  --verdigris: #2f7d74;
+  --rust: #9e4a2c;
+  --gold: #e9c477;
+
+  /* Each location owns a colour, used for its card accent (border, title) and
+     carried by the Spire track token/train seat for its side. Agent cubes
+     themselves are plain grey — see rules.html Glossary. */
+  --forum: #b0812f;
+  --counting: #2f5d86;
+  --den: #a13b3b;
+  --bar: #9e4a2c;
+  --scrap: #5d7a35;
+  --lift: #6a4a86;
+  --market: #94406e;
+  --outcast-track: #2f7d74;
+
+  --font-display: "Avenir Next Condensed", "Futura", Impact, sans-serif;
+  --font-body: "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+}
+
+/* ---------- cross-page nav ---------- */
+
+.nav-link {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 18px;
+  border: 1px solid rgba(233, 196, 119, 0.45);
+  border-radius: 999px;
+  background: rgba(233, 196, 119, 0.09);
+  color: var(--gold);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.nav-link:hover {
+  background: rgba(233, 196, 119, 0.18);
+  border-color: rgba(233, 196, 119, 0.8);
+  transform: translateY(-1px);
+}
+
+.nav-link .chev {
+  font-size: 15px;
+  line-height: 1;
+}

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Aeropolis — Playtest</title>
+    <link rel="stylesheet" href="common.css" />
+    <link rel="stylesheet" href="aeropolis-icons.css" />
+    <link rel="stylesheet" href="double-life-play.css" />
+    <link rel="stylesheet" href="aeropolis-play.css" />
+  </head>
+  <body>
+    <header class="page-head">
+      <h1>Aeropolis <span class="sub">Playtest · hot-seat</span></h1>
+      <nav>
+        <a class="nav-link" href="index.html">Rules</a>
+        <button class="nav-link" id="sound" type="button">Sound on</button>
+        <button class="nav-link" id="new-game" type="button">New game</button>
+      </nav>
+    </header>
+
+    <div class="status" id="status"></div>
+
+    <main class="table">
+      <section class="tf-left">
+        <div class="spire-wrap">
+          <h2 class="spire-title">The Spire</h2>
+          <p class="spire-help">Score: both heights added. When a player's two meet, this round is the last.</p>
+          <p class="spire-end"><i class="tok C"></i> Citizen · starts at 13 (2p) or 12 (3–4p)</p>
+          <div class="spire-track" id="spire"></div>
+          <p class="spire-end"><i class="tok O"></i> Outcast · starts at the base</p>
+        </div>
+        <div class="tf-main">
+          <p class="mini-label">City · Deal sends troops to the lower city, Rally to the upper city</p>
+          <div id="map"></div>
+          <div id="row"></div>
+          <p class="mini-label">Players</p>
+          <div id="players"></div>
+        </div>
+      </section>
+      <section class="log-wrap">
+        <div id="uprising-card"></div>
+        <details class="glossary" open><summary class="mini-label">Icons</summary><ul id="glossary"></ul></details>
+        <p class="mini-label">Log (newest first) <button class="btn small" id="copy-log" type="button">Copy log</button></p>
+        <ol class="log" id="log"></ol>
+      </section>
+    </main>
+
+    <div class="reveal" id="reveal"></div>
+    <div class="modal" id="modal"></div>
+    <div class="prompt" id="prompt"></div>
+
+    <dialog id="setup">
+      <form method="dialog">
+        <h2>New game</h2>
+        <label class="count">Players
+          <select id="setup-count">
+            <option>2</option><option selected>3</option><option>4</option>
+          </select>
+        </label>
+        <label class="count"><input type="checkbox" id="setup-reasoning" /> Show AI reasoning in the log (top 3 options and their values, each AI turn)</label>
+        <div id="setup-players" class="setup-players"></div>
+        <menu>
+          <button class="btn" value="cancel">Cancel</button>
+          <button class="btn primary" value="start">Start</button>
+        </menu>
+      </form>
+    </dialog>
+
+    <script src="aeropolis-data.js"></script>
+    <script src="aeropolis-sound.js"></script>
+    <script src="aeropolis-play.js"></script>
+    <script src="aeropolis-bots.js"></script>
+  </body>
+</html>

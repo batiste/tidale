@@ -1,0 +1,564 @@
+:root {
+  /* Card geometry: true 57 x 89 mm ratio, scaled up for screen reading. */
+  --card-w: 262px;
+  --card-h: calc(var(--card-w) * 89 / 57);
+
+  --night: #1b2126;
+  --revolution: #8f1d1d;
+}
+
+body {
+  margin: 0;
+  padding: 40px 32px 72px;
+  background:
+    radial-gradient(1200px 700px at 50% -200px, #2b333a, transparent),
+    #191f24;
+  color: var(--paper);
+}
+
+.page-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 40px;
+  max-width: 1180px;
+  margin: 0 auto 34px;
+}
+
+.page-head h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.page-head code {
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 0.92em;
+}
+
+.page-head p {
+  margin: 10px 0 0;
+  max-width: 60ch;
+  color: #a9b3ba;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.deck {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 22px;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+/* ---------- card ---------- */
+
+.card {
+  container-type: size;
+  position: relative;
+  width: var(--card-w);
+  height: var(--card-h);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 3.5mm;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.35) inset, 0 14px 28px rgba(0, 0, 0, 0.45);
+}
+
+/* Accent per line affinity. */
+.card[data-line="citizen"] { --accent: var(--brass); }
+.card[data-line="outcast"] { --accent: var(--verdigris); }
+.card[data-line="any"]     { --accent: var(--rust); }
+.card.revolution           { --accent: var(--revolution); }
+
+.card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 2cqw;
+  padding: 3.4cqw 4cqw 2.6cqw;
+  background: var(--accent);
+  color: #fdf8ee;
+}
+
+.card-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 6.4cqw;
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.line-badge {
+  flex: none;
+  font-size: 3.1cqw;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+/* Placeholder art panel — swap for real illustration later. */
+.card-art {
+  position: relative;
+  height: 34cqh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(
+      135deg,
+      rgba(20, 24, 28, 0.05) 0 2px,
+      transparent 2px 9px
+    ),
+    linear-gradient(170deg, #dccfb6, #c9bda6);
+  background-color: #d7c9ae;
+  border-bottom: 0.6cqw solid rgba(20, 24, 28, 0.14);
+}
+
+.card-art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(60% 90% at 50% 120%, rgba(20, 24, 28, 0.22), transparent);
+}
+
+.art-glyph {
+  position: relative;
+  font-size: 20cqh;
+  line-height: 1;
+  color: rgba(20, 24, 28, 0.3);
+}
+
+.card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.block {
+  padding: 3cqw 4cqw;
+}
+
+.block-label {
+  margin: 0 0 1.2cqw;
+  font-size: 3.3cqw;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.block-text {
+  margin: 0;
+  font-size: 5.9cqw;
+  line-height: 1.28;
+}
+
+.block-play {
+  position: relative;
+  flex: 1;
+}
+
+/* Where a recruited Agent cube gets socketed — same on deck and character cards. */
+.socket {
+  flex: none;
+  width: 13.75cqw;
+  height: 13.75cqw;
+  display: grid;
+  place-items: center;
+  border: 0.5cqw dashed rgba(20, 24, 28, 0.28);
+  border-radius: 1.2cqw;
+  font-size: 2.5cqw;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(20, 24, 28, 0.34);
+}
+
+/* Slotted card: cube is spent to produce the listed effect. */
+.cost-line {
+  display: flex;
+  align-items: center;
+  gap: 2.4cqw;
+}
+
+.cost-line .block-text {
+  flex: 1;
+}
+
+/* Multi-socket card: one row per cube slot, each firing its own effect
+   as soon as it's filled. Slots beyond the first aren't filled by the
+   normal recruit-and-play flow — a card like the Fixer moves a cube
+   into them later — so each row can carry a small note saying so. */
+.slot-row + .slot-row {
+  margin-top: 2.2cqw;
+  padding-top: 2.2cqw;
+  border-top: 1px dashed rgba(20, 24, 28, 0.18);
+}
+
+.slot-note {
+  display: block;
+  margin-top: 0.6cqw;
+  font-size: 3.2cqw;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ink-soft);
+}
+
+/* Card without a slot: the cube is routed onward to the character. */
+.route {
+  position: absolute;
+  right: 4cqw;
+  bottom: 3cqw;
+  display: flex;
+  align-items: center;
+  gap: 2cqw;
+}
+
+.route-dest {
+  padding: 1.6cqw 2.6cqw;
+  border-radius: 1.2cqw;
+  background: var(--accent);
+  color: #fdf8ee;
+  font-size: 2.7cqw;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+/* Divider lives here so it disappears with the block. */
+.block-intrigue {
+  border-top: 1px dashed rgba(20, 24, 28, 0.25);
+  background: var(--night);
+  color: #d9e0e4;
+}
+
+.block-intrigue .block-label {
+  color: #8fa3ab;
+}
+
+.intrigue-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2cqw;
+}
+
+.intrigue-head .block-label {
+  flex: 1;
+  margin: 0;
+}
+
+.block-intrigue .socket {
+  border-color: rgba(217, 224, 228, 0.35);
+  color: rgba(217, 224, 228, 0.55);
+}
+
+.intrigue-value {
+  flex: none;
+  width: 13cqw;
+  height: 13cqw;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--revolution);
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 7.5cqw;
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2cqw;
+  padding: 2.4cqw 4cqw;
+  background: var(--paper-edge);
+  border-top: 1px solid rgba(20, 24, 28, 0.16);
+  font-size: 3.8cqw;
+}
+
+.card-footer .footer-label {
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.card-footer .footer-value {
+  font-weight: 600;
+  font-size: 5cqw;
+}
+
+/* Discard-effect row only: bumped 25% over the shared .footer-value size. */
+/* .card-footer .footer-value.discard-amount {
+  font-size: 5.75cqw;
+} */
+
+/* .coin, .coin-num, .cube-icon now live in icons.css, shared with board.html. */
+
+/* ---------- character cards ---------- */
+
+/* Same paper-and-ink scheme as the deck; the accent header and anchor strip
+   mark it as a permanent character, so no frame is needed. */
+.card.char .card-art {
+  height: 28cqh;
+}
+
+.card.char .art-glyph {
+  font-size: 26cqh;
+}
+
+.card.char .block {
+  padding: 4cqw 4cqw;
+}
+
+.card.char .block + .block {
+  border-top: 1px dashed rgba(20, 24, 28, 0.25);
+}
+
+.card.char .block-ability {
+  flex: 1;
+}
+
+/* A single line of sockets to fill; origin is ignored here. */
+.socket-row {
+  display: flex;
+  gap: 2.6cqw;
+}
+
+/* Sockets → reward, all on one line: filling every socket is what pays out
+   the reward text sitting right after the arrow. */
+.recruit-line {
+  display: flex;
+  align-items: center;
+  gap: 2.6cqw;
+}
+
+.recruit-line .block-text {
+  flex: 1;
+}
+
+.recruit-arrow {
+  flex: none;
+  font-size: 5.5cqw;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.reward-lead {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+
+/* Tinted like the deck cards' footer strip, marking it as the payoff block. */
+.block-full {
+  background: var(--paper-edge);
+}
+
+/* ---------- conflict cards ---------- */
+
+/* Not played from hand: same paper front, just Reward + Condition, no socket. */
+.card.conflict .card-art {
+  height: 26cqh;
+}
+
+.card.conflict .art-glyph {
+  font-size: 24cqh;
+}
+
+.card.conflict .block {
+  padding: 3cqw 4cqw;
+}
+
+.card.conflict .block + .block {
+  border-top: 1px dashed rgba(20, 24, 28, 0.25);
+}
+
+.block-condition {
+  flex: 1;
+}
+
+/* Escalating price of playing further cards into this character's line. */
+.cost-strip {
+  display: flex;
+  border-top: 1px solid rgba(20, 24, 28, 0.16);
+  background: #f7f2ea;
+}
+
+.cost-cell {
+  flex: 1;
+  padding: 4cqw 0 4cqw;
+  text-align: center;
+  border-left: 1px solid rgba(20, 24, 28, 0.13);
+}
+
+.cost-cell:first-child {
+  border-left: 0;
+}
+
+.cost-ord {
+  display: block;
+  font-size: 2.5cqw;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.cost-amount {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2em;
+  margin-top: 0.6cqw;
+  font-family: var(--font-display);
+  font-size: 6cqw;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.cost-amount.free {
+  color: var(--accent);
+  font-size: 3.4cqw;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.cost-strip-label {
+  padding: 1.8cqw 4cqw 0;
+  background: var(--paper-edge);
+  font-size: 2.6cqw;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--accent);
+}
+
+.anchor-strip {
+  padding: 2.4cqw 4cqw;
+  background: var(--accent);
+  color: #fdf8ee;
+  font-size: 2.9cqw;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* ---------- coin-cost cards (Noodle Shop) ---------- */
+
+/* A price bar in place of the cube-socket flow: these cards are bought
+   with coin, not recruited with a cube, so there's nothing to socket. */
+.price-strip {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 2cqw 4cqw;
+  background: var(--paper-edge);
+  border-bottom: 1px solid rgba(20, 24, 28, 0.16);
+}
+
+.price-label {
+  font-size: 3cqw;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.price-amount {
+  font-family: var(--font-display);
+  font-size: 5.4cqw;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+/* ---------- section headings ---------- */
+
+.section-head {
+  max-width: 1180px;
+  margin: 44px auto 18px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #c3ccd2;
+}
+
+.section-head .note {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #8e9aa1;
+}
+
+.section-head .note strong {
+  font-weight: 600;
+  color: #cfd8dd;
+}
+
+/* ---------- print: real card size ---------- */
+
+@media print {
+  :root { --card-w: 57mm; }
+  body { padding: 6mm; background: #fff; color: #000; }
+  .page-head { display: none; }
+  .deck { gap: 3mm; max-width: none; }
+  .card { box-shadow: none; border: 0.2mm solid #999; }
+}
+
+/* ---------- screentop.gg sheet export (export-screentop.js) ---------- */
+
+/* One deck per image: a gapless grid of cards at a fixed size, sliced back
+   into single cards by screentop's importer — so no page chrome, no gaps
+   between cards, and no blank cells (see gridCols in deck.html). */
+/* Set on :root, like the print block above, so --card-h recomputes with it. */
+:root:has(.sheet-export) {
+  /* 57 x 89 mm at ~200 dpi; keeps the card height a whole 712px. */
+  --card-w: 456px;
+}
+
+body.sheet-export {
+  padding: 0;
+  background: #fff;
+}
+
+body.sheet-export .deck {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), var(--card-w));
+  gap: 0;
+  width: max-content;
+  max-width: none;
+}
+
+/* Square corners and no drop shadow: every pixel of a cell is card face. */
+body.sheet-export .card {
+  border-radius: 0;
+  box-shadow: none;
+}

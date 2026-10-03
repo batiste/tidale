@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Undercity — Draft Rules</title>
+    <link rel="stylesheet" href="common.css" />
+    <link rel="stylesheet" href="rules.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="page-head">
+        <div>
+          <h1>Undercity</h1>
+          <p class="tagline">Aeropolis hand-building variant. No rounds: when your hand is empty, you spend a turn to regroup.</p>
+        </div>
+        <nav aria-label="Game pages">
+          <a class="nav-link" href="undercity-play.html">Playtest</a>
+          <a class="nav-link" href="concept.html">Aeropolis</a>
+        </nav>
+      </header>
+
+      <p class="callout">
+        Play one card per turn to push your cubes around the city. When your hand is empty, you spend a turn to Regroup:
+        score the districts you control and take your cards back. Buy new cards with your reputation, but every purchase brings
+        your Citizen down toward your Outcast, and when they meet the game ends.
+      </p>
+
+      <section>
+        <h2>Setup</h2>
+        <ol class="steps">
+          <li>Board: the 7 locations of Double Life (6 in a ring, Noodle Shop in the centre, adjacent to all except the Counting House and the Scrapyard). No cubes on it.</li>
+          <li>Each player: 12 cubes (5 in reserve, 7 in stock), the 3 starter cards in hand, Citizen token on 12 (top of the Spire), Outcast token on 0.</li>
+          <li>Shuffle the market deck and reveal 5 cards.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Turn</h2>
+        <p>
+          Clockwise, play 1 card from your hand and resolve it. Played cards stay face up in front of you.
+          If your hand is empty at the start of your turn, your turn is Regroup instead.
+        </p>
+      </section>
+
+      <section>
+        <h2>Regroup</h2>
+        <ol class="steps">
+          <li><strong>Score:</strong> each Citizen district you control, Citizen +1; each Outcast district, Outcast +1.</li>
+          <li><strong>Buy:</strong> if you have a cube in the Noodle Shop, you may buy 1 market card (see Market).</li>
+          <li><strong>Take back:</strong> return all your played cards to your hand.</li>
+          <li><strong>Scrap:</strong> if you have a cube in the Scrapyard, you may remove 1 card in your hand from the game. You cannot go below 2 cards.</li>
+          <li><strong>Hire:</strong> if you have a cube in the Counting House, move 1 cube from your stock to your reserve.</li>
+        </ol>
+        <p>A thin hand regroups, and scores, more often. Some market cards let you Regroup early (the card is your turn).</p>
+      </section>
+
+      <section>
+        <h2>Control</h2>
+        <p>
+          You <strong>control</strong> a location if you have more cubes there than any other player; ties: nobody.
+          Each location has one effect. Citizen districts (High Forum, Gaming Den) feed your Citizen, Outcast
+          districts (Rust Bar, Cable Lift) feed your Outcast. The Noodle Shop, Scrapyard and Counting House give
+          no Spire; a single cube there unlocks a Regroup step.
+        </p>
+      </section>
+
+      <section>
+        <h2>Starter Cards</h2>
+        <table class="revolution-table">
+          <thead><tr><th>Card</th><th>Effect</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Recruit</strong></td><td>Place up to 2 cubes from your reserve at one location.</td></tr>
+            <tr><td><strong>Move</strong></td><td>Move up to 2 of your cubes 1 step each.</td></tr>
+            <tr><td><strong>Agitate</strong></td><td>Place 1 cube from your reserve at any location. Then move 1 cube (any player's) from that location to an adjacent one.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Market</h2>
+        <p>
+          Pay a card's cost by moving your Citizen down that many spaces. You cannot pay more than the gap
+          to your Outcast. The bought card goes into your hand; refill the market from the deck.
+        </p>
+        <table class="revolution-table">
+          <thead><tr><th>Card</th><th>Cost</th><th>Copies</th><th>Effect</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Rally</strong></td><td>1</td><td>2</td><td>Place 1 cube from your reserve at any location, then move 1 of your cubes 1 step.</td></tr>
+            <tr><td><strong>Procession</strong></td><td>1</td><td>2</td><td>Move up to 4 of your cubes 1 step each.</td></tr>
+            <tr><td><strong>Smuggler's Route</strong></td><td>1</td><td>2</td><td>Move 1 of your cubes to any location.</td></tr>
+            <tr><td><strong>Mass Recruit</strong></td><td>2</td><td>2</td><td>Place up to 3 cubes from your reserve at one location.</td></tr>
+            <tr><td><strong>Seize</strong></td><td>2</td><td>2</td><td>At a location where you have more cubes than an opponent, return 1 of their cubes to their reserve.</td></tr>
+            <tr><td><strong>Bribe</strong></td><td>2</td><td>2</td><td>At a location where you have a cube, replace 1 opponent cube with 1 of yours from your reserve.</td></tr>
+            <tr><td><strong>Patron</strong></td><td>2</td><td>2</td><td>Outcast +1 for each Outcast district you control.</td></tr>
+            <tr><td><strong>Guild Assembly</strong></td><td>1</td><td>1</td><td>Regroup now, but only Citizen districts score.</td></tr>
+            <tr><td><strong>Street Summons</strong></td><td>1</td><td>1</td><td>Regroup now, but only Outcast districts score.</td></tr>
+            <tr><td><strong>Safehouse</strong></td><td>2</td><td>2</td><td>Regroup now.</td></tr>
+            <tr><td><strong>Riot</strong></td><td>3</td><td>2</td><td>At a location where you have a cube, push every opponent cube there to adjacent locations.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>The Spire</h2>
+        <ul class="steps">
+          <li>Your Citizen never rises above 12. Your Outcast never passes your Citizen.</li>
+          <li>When your two tokens meet, every other player takes 1 last turn, then the game ends.</li>
+          <li>Score: your <strong>lower</strong> token. Tie: higher Citizen.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Playtest Questions</h2>
+        <ul class="steps">
+          <li>Game length: how many turns before someone's tokens meet? Tune with the Spire height (12).</li>
+          <li>Card costs vs how fast Citizen control repays them.</li>
+          <li>Regroup scoring: +1 per district, or more?</li>
+          <li>Buying now also slows your Regroup: should market costs drop by 1?</li>
+          <li>Scrapyard: is thinning worth fighting for?</li>
+          <li>Noodle Shop requirement for buying: interesting or annoying?</li>
+        </ul>
+      </section>
+    </div>
+  </body>
+</html>

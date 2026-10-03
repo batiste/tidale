@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Double Life — Draft Rules</title>
+    <link rel="stylesheet" href="common.css" />
+    <link rel="stylesheet" href="rules.css" />
+    <style>
+      .board-map { width: 100%; max-width: 520px; display: block; margin: 16px auto; }
+      .board-map line { stroke: rgba(255, 255, 255, 0.35); stroke-width: 2; }
+      .board-map rect { stroke-width: 2; fill: #232b31; }
+      .board-map .cit rect { stroke: var(--brass); }
+      .board-map .out rect { stroke: var(--verdigris); }
+      .board-map .sha rect { stroke: var(--market); }
+      .board-map text { fill: #e6ecef; font: 600 11px var(--font-body); text-anchor: middle; }
+      .board-map text.sub { fill: #9aa5ad; font-weight: 400; font-size: 9.5px; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="page-head">
+        <div>
+          <h1>Double Life</h1>
+          <p class="tagline">Working title. A lighter spin-off of Aeropolis: shared actions, one shared deck, one city.</p>
+        </div>
+        <nav aria-label="Game pages">
+          <a class="nav-link" href="concept.html">Aeropolis</a>
+        </nav>
+      </header>
+
+      <p class="callout">
+        Each player runs a Citizen and an Outcast. Draft actions from one shared row to place cubes in the
+        city. Control a location to climb the Spire with the side it feeds. You score only your
+        <strong>weaker</strong> side, so neither life can be neglected.
+      </p>
+
+      <section>
+        <h2>Components</h2>
+        <ul class="steps">
+          <li><strong>Board:</strong> 7 locations and the Spire track (0–30).</li>
+          <li><strong>Residents:</strong> 30 grey cubes, the city's population.</li>
+          <li><strong>Cubes:</strong> 12 per player, in the player's colour.</li>
+          <li><strong>Spire tokens:</strong> 2 per player, one Citizen, one Outcast.</li>
+          <li><strong>Action deck:</strong> 15 cards (see Actions).</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Setup</h2>
+        <ol class="steps">
+          <li>Place 3 residents on each location, 4 on the Noodle Shop.</li>
+          <li>Place both Spire tokens of each player on 0.</li>
+          <li>Each player, starting with the last player and going counter-clockwise, takes a free Recruit action.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Board</h2>
+        <p>
+          Six locations form a ring; the Noodle Shop sits in the centre, adjacent to all. Each location
+          shows what its controller gains at cleanup.
+        </p>
+        <svg class="board-map" viewBox="0 0 400 310" role="img" aria-label="Board adjacency">
+          <line x1="96" y1="90" x2="200" y2="30" /><line x1="200" y1="30" x2="304" y2="90" />
+          <line x1="304" y1="90" x2="304" y2="210" /><line x1="304" y1="210" x2="200" y2="270" />
+          <line x1="200" y1="270" x2="96" y2="210" /><line x1="96" y1="210" x2="96" y2="90" />
+          <line x1="200" y1="150" x2="96" y2="90" /><line x1="200" y1="150" x2="200" y2="30" />
+          <line x1="200" y1="150" x2="304" y2="90" /><line x1="200" y1="150" x2="304" y2="210" />
+          <line x1="200" y1="150" x2="200" y2="270" /><line x1="200" y1="150" x2="96" y2="210" />
+          <g class="cit"><rect x="44" y="72" width="104" height="36" rx="6" /><text x="96" y="88">High Forum</text><text class="sub" x="96" y="101">Citizen +2</text></g>
+          <g class="cit"><rect x="148" y="12" width="104" height="36" rx="6" /><text x="200" y="28">Counting House</text><text class="sub" x="200" y="41">Citizen +2</text></g>
+          <g class="cit"><rect x="252" y="72" width="104" height="36" rx="6" /><text x="304" y="88">Gaming Den</text><text class="sub" x="304" y="101">Citizen +2</text></g>
+          <g class="out"><rect x="252" y="192" width="104" height="36" rx="6" /><text x="304" y="208">Rust Bar</text><text class="sub" x="304" y="221">Outcast +2</text></g>
+          <g class="out"><rect x="148" y="252" width="104" height="36" rx="6" /><text x="200" y="268">Scrapyard</text><text class="sub" x="200" y="281">Outcast +2</text></g>
+          <g class="out"><rect x="44" y="192" width="104" height="36" rx="6" /><text x="96" y="208">Cable Lift</text><text class="sub" x="96" y="221">Outcast +2</text></g>
+          <g class="sha"><rect x="148" y="132" width="104" height="36" rx="6" /><text x="200" y="148">Noodle Shop</text><text class="sub" x="200" y="161">Citizen +1 · Outcast +1</text></g>
+        </svg>
+      </section>
+
+      <section>
+        <h2>Round Structure</h2>
+        <ol class="steps">
+          <li><strong>Reveal:</strong> shuffle the action deck and reveal 4 actions face up.</li>
+          <li>
+            <strong>Actions:</strong> in turn order, take 1 face-up action, resolve it immediately, then
+            refill the row from the deck. Continue until each player has taken 3 actions.
+          </li>
+          <li><strong>Cleanup:</strong> see below.</li>
+        </ol>
+        <p>A taken action you cannot resolve is wasted; you may still take it to deny it.</p>
+      </section>
+
+      <section>
+        <h2>Actions</h2>
+        <table class="revolution-table">
+          <thead><tr><th>Action</th><th>Copies</th><th>Effect</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Recruit</strong></td><td>5</td><td>At one location, return up to 2 residents to the supply. Place 1 of your cubes there for each.</td></tr>
+            <tr><td><strong>Move</strong></td><td>4</td><td>Move up to 2 of your cubes 1 step each.</td></tr>
+            <tr><td><strong>Agitate</strong></td><td>3</td><td>At a location where you have a cube, push 1 opponent cube to an adjacent location.</td></tr>
+            <tr><td><strong>Seize</strong></td><td>3</td><td>At a location where you have more cubes than an opponent, return 1 of their cubes to their reserve.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Control</h2>
+        <p>
+          You <strong>control</strong> a location if you have more cubes there than any other player.
+          Ties: nobody controls it.
+        </p>
+      </section>
+
+      <section>
+        <h2>Cleanup</h2>
+        <ol class="steps">
+          <li><strong>Score:</strong> each location's controller advances their Spire tokens as shown on the location.</li>
+          <li><strong>Repopulate:</strong> refill every location to its starting residents.</li>
+          <li><strong>Reset:</strong> discard the row, shuffle all actions into the deck, pass first player left.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>End Of The Game</h2>
+        <p>
+          The game ends after cleanup of round 5. Your score is your <strong>lower</strong> Spire token.
+          Tie: higher other token wins; then shared victory.
+        </p>
+      </section>
+
+      <section>
+        <h2>Playtest Questions</h2>
+        <ul class="steps">
+          <li>Core test: at 4 players, do people repeatedly want the same face-up action?</li>
+          <li>Row size (4) and actions per player (3): enough tension, enough agency?</li>
+          <li>Deck mix: is Seize too strong, is Recruit too common?</li>
+          <li>Round count (5) and Spire length (30).</li>
+          <li>Parked for later: Schemes, character identities, Convert (see double-life-data.js).</li>
+        </ul>
+      </section>
+    </div>
+  </body>
+</html>

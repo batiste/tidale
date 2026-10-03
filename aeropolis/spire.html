@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Spire — Draft Rules</title>
+    <link rel="stylesheet" href="common.css" />
+    <link rel="stylesheet" href="rules.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="page-head">
+        <div>
+          <h1>Spire</h1>
+          <p class="tagline">Aeropolis hand-management variant on a hex tower. Every card is an action or coin.</p>
+        </div>
+        <nav aria-label="Game pages">
+          <a class="nav-link" href="spire-play.html">Playtest</a>
+          <a class="nav-link" href="undercity.html">Undercity</a>
+        </nav>
+      </header>
+
+      <p class="callout">
+        Each player has two pawns on the same tower: a Citizen at the top, an Outcast at the base. Play cards for their
+        action, or cash them as coin to move a pawn and buy. Where a pawn stops, its hex activates. When your two pawns
+        meet, the game ends: you score the height of your lower pawn.
+      </p>
+
+      <section>
+        <h2>Setup</h2>
+        <ol class="steps">
+          <li>Board: the tower (see The Tower).</li>
+          <li>Each player: Citizen on a top hex, Outcast on a base hex (spread out), the starter cards in hand, <span data-cfg="startCoins"></span> coin.</li>
+          <li>Shuffle the market deck and reveal <span data-cfg="marketSize"></span> cards.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Turn</h2>
+        <p>Clockwise, take one:</p>
+        <ul class="steps">
+          <li><strong>Action:</strong> play 1 card and resolve its text.</li>
+          <li><strong>Move:</strong> step one of your pawns hex by hex, paying each hex's cost (see Coin).</li>
+          <li><strong>Regroup:</strong> only, and always, when your hand is empty. Take back your used cards; then your burned cards become used. Some hexes and cards also make you Regroup.</li>
+        </ul>
+        <p>Played cards are <strong>used</strong>: face up in front of you until you Regroup.</p>
+      </section>
+
+      <section>
+        <h2>Coin</h2>
+        <ul class="steps">
+          <li>Coin is the only currency: it pays for steps and purchases. Keep unspent coin between turns.</li>
+          <li><strong>Cash:</strong> whenever you pay, you may discard cards from your hand as coin, worth their value. They are used.</li>
+          <li><strong>Burn:</strong> a cashed card may be burned for double value. It skips your next Regroup.</li>
+          <li>Moving down is not free: your Citizen earns coin by falling only through cards such as Sell Out.</li>
+          <li>A hex holds 1 pawn, except in the <strong>top zone</strong> (dashed). Top-zone pawns cannot push, be pushed or swap.</li>
+          <li>Any move (including card actions) <strong>activates</strong> the hex where the pawn stops.</li>
+          <li><strong>Buy:</strong> pay the card's cost in coin. It goes to your hand.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Climb and Push</h2>
+        <ul class="steps">
+          <li><strong>Climb 1:</strong> move your pawn to a free adjacent hex in the row above.</li>
+          <li><strong>Push 1 step down:</strong> you move the rival pawn to a free adjacent hex in the row below.</li>
+          <li>Climb, push and swap are not moves: no activation. No free hex: nothing happens.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>The Tower</h2>
+        <p>
+          <span id="rows"></span> rows of <span id="widths"></span> hexes, top to base. Rows of equal width are staggered by half a hex.
+          Height counts from the base (1) to the top (<span id="top"></span>). No named hex in the top zone or on the base row.
+        </p>
+        <p id="costs"></p>
+        <table class="revolution-table">
+          <thead><tr><th>Hex</th><th>Height</th><th>Effect</th></tr></thead>
+          <tbody id="hexes"></tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Starter Cards</h2>
+        <table class="revolution-table">
+          <thead><tr><th>Card</th><th>Coin</th><th>Copies</th><th>Action</th></tr></thead>
+          <tbody id="starter"></tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Market</h2>
+        <table class="revolution-table">
+          <thead><tr><th>Card</th><th>Coin</th><th>Cost</th><th>Copies</th><th>Action</th></tr></thead>
+          <tbody id="market"></tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>End</h2>
+        <ul class="steps">
+          <li>When a player's Outcast is level with or above their Citizen, every other player takes 1 last turn, then the game ends.</li>
+          <li>Score: the height of your <strong>lower</strong> pawn. Tie: higher Citizen.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Playtest Questions</h2>
+        <ul class="steps">
+          <li>Game length: how many turns before someone meets? Tune the row widths, costs and fall income.</li>
+          <li>Burn: is skipping one Regroup the right price for double coin?</li>
+          <li>Regroup hexes: too strong, since they return the cards just played to reach them?</li>
+          <li>Sell Out: is 2 rows for 2 coin enough for the Citizen to come down in the first half?</li>
+          <li>Push (market only): fun interaction or too punishing?</li>
+          <li>Are there enough reasons for the Citizen to come down (buy, scrap, recall)?</li>
+        </ul>
+      </section>
+    </div>
+
+    <script src="spire-data.js"></script>
+    <script>
+      const c = SP_CONFIG.cost;
+      const row = (cells) => `<tr>${cells.map((x) => `<td>${x}</td>`).join("")}</tr>`;
+      const h = (r) => SP_CONFIG.widths.length - r;
+      const set = (id, v) => (document.getElementById(id).innerHTML = v);
+      document.querySelectorAll("[data-cfg]").forEach((el) => (el.textContent = SP_CONFIG[el.dataset.cfg]));
+      set("rows", SP_CONFIG.widths.length);
+      set("widths", SP_CONFIG.widths.join(", "));
+      set("top", SP_CONFIG.widths.length);
+      set("costs", `Entry cost: ${c.street} per hex, ${c.top} in the top zone (top ${SP_CONFIG.topZone} rows); named hexes +${c.named}.`);
+      set("hexes", Object.entries(SP_HEXES).map(([k, x]) => row([`<strong>${x.name}</strong>`, h(+k.split(",")[0]), SP_EFFECTS[x.effect]])).join(""));
+      set("starter", SP_STARTER.map((x) => row([`<strong>${x.name}</strong>`, x.value, x.copies, x.text || "—"])).join(""));
+      set("market", SP_MARKET.map((x) => row([`<strong>${x.name}</strong>`, x.value, x.cost, x.copies, x.text || "—"])).join(""));
+    </script>
+  </body>
+</html>
