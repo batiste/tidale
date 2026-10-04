@@ -14,7 +14,12 @@
       <h1>Aeropolis <span class="sub">Playtest · hot-seat</span></h1>
       <nav>
         <a class="nav-link" href="index.html">Rules</a>
-        <button class="nav-link" id="sound" type="button">Sound on</button>
+        <button class="nav-link" id="sound" type="button">Effects on</button>
+        <div class="audio-controls" aria-label="Audio controls">
+          <button class="nav-link" id="music-toggle" type="button">Music on</button>
+          <label class="audio-level"><span>Music</span><input id="music-volume" type="range" min="0" max="100" value="25" aria-label="Music volume"><output id="music-volume-value" for="music-volume">25%</output></label>
+          <label class="audio-level"><span>Master</span><input id="master-volume" type="range" min="0" max="100" value="70" aria-label="Master volume"><output id="master-volume-value" for="master-volume">70%</output></label>
+        </div>
         <button class="nav-link" id="new-game" type="button">New game</button>
       </nav>
     </header>

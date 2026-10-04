@@ -19,6 +19,12 @@ body { padding-bottom: 220px; }
 .prompt .btn[data-undo] { border-color: var(--muted); background: transparent; color: var(--muted); font-size: 14px; }
 .log { font-size: 14px; }
 
+.page-head nav { flex-wrap: wrap; align-items: center; }
+.audio-controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 4px 8px; border: 1px solid rgba(233, 196, 119, 0.25); border-radius: 8px; }
+.audio-level { display: grid; grid-template-columns: auto 76px 34px; gap: 6px; align-items: center; color: var(--muted); font-size: 10px; font-weight: 700; text-transform: uppercase; }
+.audio-level input { width: 76px; accent-color: var(--gold); }
+.audio-level output { color: #f3ede0; font-size: 10px; font-variant-numeric: tabular-nums; text-align: right; }
+
 .table { grid-template-columns: minmax(0, 1fr) 360px; }
 .log-wrap { margin-top: 0; }
 .log { max-height: 75vh; }
@@ -256,6 +262,8 @@ dialog { max-width: 860px; }
 
 /* Phones: a horizontal Spire, one player per row, compact prompt, run panel and dialogs. */
 @media (max-width: 700px) {
+  .page-head nav { justify-content: flex-start; }
+  .audio-controls { width: 100%; justify-content: flex-start; }
   body { padding: 12px 12px 180px; }
   .tf-left { flex-direction: column; gap: 10px; }
   .spire-wrap { width: 100%; }

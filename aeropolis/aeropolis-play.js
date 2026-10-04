@@ -916,12 +916,31 @@ $("glossary").innerHTML = glossaryHtml();
 
 // Sound toggle (remembered per browser).
 if (typeof SFX !== "undefined") {
-  const soundLabel = () => ($("sound").textContent = SFX.muted ? "Sound off" : "Sound on");
+  const soundLabel = () => ($("sound").textContent = SFX.muted ? "Effects off" : "Effects on");
   $("sound").addEventListener("click", () => {
     SFX.toggle();
     soundLabel();
   });
+  const musicLabel = () => ($("music-toggle").textContent = SFX.musicEnabled ? "Music on" : "Music off");
+  const setSlider = (id, outputId, value) => {
+    $(id).value = Math.round(value * 100);
+    $(outputId).value = `${$(id).value}%`;
+  };
+  $("music-toggle").addEventListener("click", () => {
+    SFX.setMusicEnabled(!SFX.musicEnabled);
+    musicLabel();
+  });
+  $("music-volume").addEventListener("input", (e) => {
+    setSlider("music-volume", "music-volume-value", SFX.setMusicVolume(e.target.value / 100));
+  });
+  $("master-volume").addEventListener("input", (e) => {
+    setSlider("master-volume", "master-volume-value", SFX.setMasterVolume(e.target.value / 100));
+  });
+  document.addEventListener("click", () => SFX.startMusic(), { once: true });
   soundLabel();
+  musicLabel();
+  setSlider("music-volume", "music-volume-value", SFX.musicVolume);
+  setSlider("master-volume", "master-volume-value", SFX.masterVolume);
 }
 
 // Copy the log as plain text; icons carry hidden labels.

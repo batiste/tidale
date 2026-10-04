@@ -5,16 +5,36 @@
 
 const SFX = (() => {
   let ctx = null;
+  let masterGain = null;
   let muted = false;
+  let masterVolume = 0.7;
+  let musicVolume = 0.25;
+  let musicEnabled = true;
+  const music = new Audio("music.mp3");
+  music.loop = true;
+  music.preload = "none";
   try {
     muted = localStorage.getItem("tf-muted") === "1";
+    masterVolume = Number(localStorage.getItem("tf-master-volume") ?? masterVolume);
+    musicVolume = Number(localStorage.getItem("tf-music-volume") ?? musicVolume);
+    musicEnabled = localStorage.getItem("tf-music-enabled") !== "0";
   } catch (e) {}
+  masterVolume = Math.max(0, Math.min(1, masterVolume));
+  musicVolume = Math.max(0, Math.min(1, musicVolume));
 
   const audio = () => {
-    if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (!ctx) {
+      ctx = new (window.AudioContext || window.webkitAudioContext)();
+      masterGain = ctx.createGain();
+      masterGain.gain.value = masterVolume;
+      masterGain.connect(ctx.destination);
+    }
     if (ctx.state === "suspended") ctx.resume();
     return ctx;
   };
+
+  const updateMusicVolume = () => (music.volume = musicEnabled ? musicVolume * masterVolume : 0);
+  updateMusicVolume();
 
   // A tone with an attack/decay envelope; `to` glides the pitch.
   function tone({ freq, to = freq, type = "sine", start = 0, dur = 0.15, vol = 0.2 }) {
@@ -28,7 +48,7 @@ const SFX = (() => {
     gain.gain.setValueAtTime(0.0001, t);
     gain.gain.exponentialRampToValueAtTime(vol, t + 0.01);
     gain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-    osc.connect(gain).connect(a.destination);
+    osc.connect(gain).connect(masterGain);
     osc.start(t);
     osc.stop(t + dur + 0.02);
   }
@@ -54,7 +74,7 @@ const SFX = (() => {
     gain.gain.exponentialRampToValueAtTime(vol, t + 0.03);
     gain.gain.setValueAtTime(vol, t + dur - 0.05);
     gain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-    osc.connect(f).connect(gain).connect(a.destination);
+    osc.connect(f).connect(gain).connect(masterGain);
     [osc, vib].forEach((o) => {
       o.start(t);
       o.stop(t + dur + 0.02);
@@ -79,7 +99,7 @@ const SFX = (() => {
     gain.gain.setValueAtTime(0.0001, t);
     gain.gain.exponentialRampToValueAtTime(vol, t + 0.01);
     gain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-    src.connect(f).connect(gain).connect(a.destination);
+    src.connect(f).connect(gain).connect(masterGain);
     src.start(t);
   }
 
@@ -135,6 +155,47 @@ const SFX = (() => {
     },
     get muted() {
       return muted;
+    },
+    get musicEnabled() {
+      return musicEnabled;
+    },
+    get musicVolume() {
+      return musicVolume;
+    },
+    get masterVolume() {
+      return masterVolume;
+    },
+    startMusic() {
+      if (!musicEnabled || musicVolume === 0 || masterVolume === 0) return;
+      updateMusicVolume();
+      music.play().catch(() => {});
+    },
+    setMusicEnabled(enabled) {
+      musicEnabled = Boolean(enabled);
+      try {
+        localStorage.setItem("tf-music-enabled", musicEnabled ? "1" : "0");
+      } catch (e) {}
+      updateMusicVolume();
+      if (musicEnabled) this.startMusic();
+      else music.pause();
+      return musicEnabled;
+    },
+    setMusicVolume(value) {
+      musicVolume = Math.max(0, Math.min(1, Number(value) || 0));
+      try {
+        localStorage.setItem("tf-music-volume", String(musicVolume));
+      } catch (e) {}
+      updateMusicVolume();
+      return musicVolume;
+    },
+    setMasterVolume(value) {
+      masterVolume = Math.max(0, Math.min(1, Number(value) || 0));
+      if (masterGain) masterGain.gain.setTargetAtTime(masterVolume, ctx.currentTime, 0.02);
+      try {
+        localStorage.setItem("tf-master-volume", String(masterVolume));
+      } catch (e) {}
+      updateMusicVolume();
+      return masterVolume;
     },
     toggle() {
       muted = !muted;
