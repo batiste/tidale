@@ -186,6 +186,7 @@ const SFX = (() => {
         localStorage.setItem("tf-music-volume", String(musicVolume));
       } catch (e) {}
       updateMusicVolume();
+      if (musicEnabled) this.startMusic();
       return musicVolume;
     },
     setMasterVolume(value) {
@@ -195,6 +196,7 @@ const SFX = (() => {
         localStorage.setItem("tf-master-volume", String(masterVolume));
       } catch (e) {}
       updateMusicVolume();
+      if (musicEnabled) this.startMusic();
       return masterVolume;
     },
     toggle() {

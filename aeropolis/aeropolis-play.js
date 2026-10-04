@@ -183,7 +183,7 @@ async function sendTroops(p, zone, amount) {
 async function moveTroops(p, amount) {
   const arrived = []; // destinations of this effect's moves (bots never move those troops back)
   for (let i = 0; i < amount; i++) {
-    const opts = LOCATIONS.filter((l) => troopsAt(l.id, p) > 0).map((l) => ({ label: l.name, value: l.id }));
+    const opts = LOCATIONS.filter((l) => !arrived.includes(l.id) && troopsAt(l.id, p) > 0).map((l) => ({ label: l.name, value: l.id }));
     if (!opts.length) return log(`${nm(p)} has no troop to move.`);
     const from = await pick(`Move a troop (${i + 1}/${amount}): from where?`, [...opts, { label: "Stop moving", value: null }], p, { kind: "moveFrom", arrived });
     if (!from) return;
@@ -322,9 +322,10 @@ async function effects(p, list) {
 async function activate(p, k, side) {
   S.ctx.push(`${SIDES[k].name} · ${SIDES[k][side].name}`);
   try {
-    const src = (list, name) => list.map((e) => ({ e, name }));
-    const strips = [...P(p).sides[k][side]].reverse().flatMap((id) => src(CARDS[id][side], CARDS[id].name));
-    const all = [...strips, ...src(charOf(P(p), k)[side], charOf(P(p), k).name)];
+    const src = (list, name, cardId) => list.map((e) => ({ e, name, cardId, side }));
+    const strips = [...P(p).sides[k][side]].reverse().flatMap((id) => src(CARDS[id][side], CARDS[id].name, id));
+    const charId = P(p).chars[k];
+    const all = [...strips, ...src(charOf(P(p), k)[side], charOf(P(p), k).name, charId)];
     const gains = new Set(all.filter((s) => s.e.gain));
     const left = [...gains, ...all.filter((s) => !gains.has(s))];
     log(`${nm(p)} activates <b>${SIDES[k][side].name}</b>.`);
@@ -336,7 +337,7 @@ async function activate(p, k, side) {
       // Only plain goods left (or a single effect): their order does not matter.
       const ask = !P(p).ai && a < 0 && left.some((s) => !s.e.gain) && left.length > 1;
       const i = ask
-        ? await pick("Resolve which effect next?", left.map((s, j) => ({ label: `${fxText(s.e)}<small>${esc(s.name)}</small>`, value: j })), p, { kind: "order" })
+        ? await pick("Resolve which effect next?", left.map((s, j) => ({ label: `${fxText(s.e)}<small>${esc(s.name)}</small>`, value: j })), p, { kind: "order", entries: left.map((s, index) => ({ index, cardId: s.cardId, side: s.side, name: s.name })) })
         : P(p).ai ? 0 : Math.max(0, a);
       const [s] = left.splice(i, 1);
       await effect(p, s.e, ctx);
@@ -669,13 +670,19 @@ function renderUprisingCard() {
 
 function renderMap() {
   const u = TF_UPRISINGS[S.uprisings[Math.min(S.uprising, S.uprisings.length - 1)]];
+  const mapPick = ui.msg && ui.player != null && !P(ui.player).ai ? ui.info : null;
   $("map").innerHTML = LOCATIONS.map((l) => {
     const zone = l.low && l.high ? "lower + upper" : l.low ? "lower city" : "upper city";
     const troops = S.players
       .map((x, q) => (troopsAt(l.id, q) ? `<span class="troops" style="background:${x.color}" title="${esc(x.name)}">${troopsAt(l.id, q)}</span>` : ""))
       .join("");
     const fight = S.phase === "play" && u.at.includes(l.id);
-    return `<div class="city-loc ${l.low ? "low" : ""} ${l.high ? "high" : ""} ${fight ? "fight" : ""}">
+    const moveFrom = mapPick && mapPick.kind === "moveFrom" && !(mapPick.arrived || []).includes(l.id) && troopsAt(l.id, ui.player) > 0;
+    const moveTo = mapPick && mapPick.kind === "moveTo" && l.id !== mapPick.from;
+    const sendTo = mapPick && mapPick.kind === "send" && (mapPick.zone === "low" ? l.low : l.high);
+    const selectable = moveFrom || moveTo || sendTo;
+    const pickLabel = moveFrom ? "Select troop source" : moveTo ? "Select troop destination" : "Place troop here";
+    return `<div class="city-loc ${l.low ? "low" : ""} ${l.high ? "high" : ""} ${fight ? "fight" : ""} ${moveFrom ? "pick-from" : ""} ${moveTo ? "pick-to" : ""} ${sendTo ? "pick-send" : ""}" ${selectable ? `data-location-pick="${l.id}" role="button" tabindex="0" aria-label="${pickLabel}: ${esc(l.name)} (${zone})"` : ""}>
       <div class="loc-name">${l.name}</div><div class="loc-body"><div class="loc-zone">${zone}${fight ? " · <b>Uprising</b>" : ""}</div>
       <div class="loc-ctrl">Control: ${fxList(l.control)}${l.upkeep ? ` · <span class="upkeep" title="Upkeep: the controller loses ${l.upkeep} troop here">−${icon("low")}</span>` : ""}</div><div class="loc-troops">${troops || "—"}</div></div></div>`;
   }).join("");
@@ -702,8 +709,12 @@ function renderResults() {
 }
 
 // A card: top strip, face (name, cost, Scheme strength), bottom strip.
-const band = (k, side, fx, label = SIDES[k][side].name) =>
-  `<div class="band ${side}" title="${label}"><div class="band-fx">${fx}</div></div>`;
+const band = (k, side, fx, label = SIDES[k][side].name, pickSide = null, orderPick = null, orderName = null) => {
+  const data = [pickSide ? `data-side-pick="${pickSide}"` : "", orderPick !== null ? `data-order-pick="${orderPick}"` : ""].filter(Boolean).join(" ");
+  const aria = pickSide ? `Place action card ${pickSide === "up" ? "above" : "below"} ${SIDES[k].name}` : orderPick !== null ? `Resolve ${orderName || "card"} effect` : "";
+  const cue = orderPick !== null ? "Click to resolve" : "";
+  return `<div class="band ${side} ${pickSide ? "side-pick" : ""} ${orderPick !== null ? "order-pick" : ""}" title="${label}" ${data ? `${data} role="button" tabindex="0" aria-label="${aria}"` : ""}><div class="band-fx">${fx}${cue ? `<small class="side-pick-cue">${cue}</small>` : ""}</div></div>`;
+};
 
 function cardHtml(id, attrs = "", live = false) {
   const c = CARDS[id];
@@ -765,17 +776,26 @@ const charArt = (x, k) => (charOf(x, k).art ? `<img class="char-art" src="${char
 const silhouette = (x, k) => `<svg class="silhouette" viewBox="0 0 48 56" aria-hidden="true">${ART[x.chars[k]] || (k === "cit" ? TOPHAT + HEAD + BODY : HOOD + BODY)}</svg>`;
 
 // Each character: tucked strips above (newest on top), the character card, tucked strips below (newest at the bottom).
-function tableauHtml(x) {
+function tableauHtml(x, q) {
   // Hovering a tucked strip for 1s shows the whole card (CSS delay).
-  const tuck = (id, side) =>
-    `<div class="tuck ${side} ${CARDS[id].char}">${band(CARDS[id].char, side, fxList(CARDS[id][side]), CARDS[id].name)}<div class="tuck-preview">${cardHtml(id)}</div></div>`;
+  const orderChoice = (id, side) => {
+    if (!ui.msg || ui.player !== q || ui.info.kind !== "order") return null;
+    return ui.info.entries.find((entry) => entry.cardId === id && entry.side === side) || null;
+  };
+  const tuck = (id, side) => {
+    const choice = orderChoice(id, side);
+    return `<div class="tuck ${side} ${CARDS[id].char}">${band(CARDS[id].char, side, fxList(CARDS[id][side]), CARDS[id].name, null, choice?.index ?? null, choice?.name)}<div class="tuck-preview">${cardHtml(id)}</div></div>`;
+  };
   return CHARS.map((k) => {
     const s = x.sides[k];
+    const sidePick = ui.msg && ui.player === q && ui.info.kind === "side" && CARDS[ui.info.id].char === k;
+    const upChoice = orderChoice(x.chars[k], "up");
+    const downChoice = orderChoice(x.chars[k], "down");
     return `<div class="char-col ${k}">
       ${[...s.up].reverse().map((id) => tuck(id, "up")).join("")}
-      <div class="tcard char ${k}">${band(k, "up", fxList(charOf(x, k).up))}
+      <div class="tcard char ${k}">${band(k, "up", fxList(charOf(x, k).up), SIDES[k].up, sidePick ? "up" : null, upChoice?.index ?? null, upChoice?.name)}
         <div class="face ${charOf(x, k).art ? "art" : ""}">${charArt(x, k)}<h3>${charOf(x, k).name}</h3><div class="char-kind">${SIDES[k].name}</div></div>
-        ${band(k, "down", fxList(charOf(x, k).down))}</div>
+        ${band(k, "down", fxList(charOf(x, k).down), SIDES[k].down, sidePick ? "down" : null, downChoice?.index ?? null, downChoice?.name)}</div>
       ${s.down.map((id) => tuck(id, "down")).join("")}</div>`;
   }).join("");
 }
@@ -789,7 +809,7 @@ function renderPlayers() {
       return `<div class="player ${q === acting ? "active" : ""}" style="--pc:${x.color}">
         <h3><span>${esc(x.name)}${x.ai ? ` <em class="ai-badge">AI · ${aiName(x.ai)}</em>` : ""}</span><small>score ${score(x)}</small></h3>
         <div class="player-body"><div class="goods">${goodsLabel(x)}<span class="gx" title="Troops in supply"><span class="gt">troops in supply:</span><b>${x.supply}</b>${icon("low")}</span>${sch}</div>
-        <div class="tableau">${tableauHtml(x)}</div></div></div>`;
+      <div class="tableau">${tableauHtml(x, q)}</div></div></div>`;
     })
     .join("");
 }
@@ -811,7 +831,12 @@ function renderPrompt() {
   } else msg = "Game over.";
   buttons += `<button class="btn" data-undo ${history.length ? "" : "disabled"}>Undo</button>`;
   const ctx = S.ctx.length ? `<div class="ctx">${S.ctx.map(esc).join(" › ")}</div>` : "";
-  $("prompt").innerHTML = `<div class="msg">${ctx}${msg}</div>${buttons}`;
+  const clickHint = ui.info && ui.info.kind === "moveFrom" ? `<small class="pick-hint">Click a highlighted location marked FROM.</small>`
+    : ui.info && ui.info.kind === "moveTo" ? `<small class="pick-hint">Click a highlighted location marked TO.</small>`
+      : ui.info && ui.info.kind === "send" ? `<small class="pick-hint">Click a highlighted location to place a troop in the ${ui.info.zone === "low" ? "lower" : "upper"} city.</small>`
+      : ui.info && ui.info.kind === "side" ? `<small class="pick-hint">Click ▲ Above or ▼ Below on your ${SIDES[CARDS[ui.info.id].char].name} card.</small>`
+        : ui.info && ui.info.kind === "order" ? `<small class="pick-hint">Click an outlined effect on the character line, or use a button.</small>` : "";
+  $("prompt").innerHTML = `<div class="msg">${ctx}${msg}${clickHint}</div>${buttons}`;
 }
 
 // Modal: a result to read before going on (e.g. an Uprising), with the pending pick's buttons.
@@ -950,7 +975,7 @@ $("copy-log").addEventListener("click", () => {
 
 document.addEventListener("click", (e) => {
   if (!S) return;
-  const t = e.target.closest("[data-undo],[data-pass],[data-row],[data-btn],[data-results],[data-close-results]");
+  const t = e.target.closest("[data-undo],[data-pass],[data-row],[data-btn],[data-results],[data-close-results],[data-location-pick],[data-side-pick],[data-order-pick]");
   if (!t) return;
   const d = t.dataset;
   if (d.results !== undefined || d.closeResults !== undefined) {
@@ -959,12 +984,33 @@ document.addEventListener("click", (e) => {
   }
   if (d.undo !== undefined) return undo();
   if (d.btn !== undefined && ui.msg) return ui.player != null && P(ui.player).ai ? undefined : settle(ui.buttons[+d.btn].value);
+  if (d.locationPick !== undefined && ui.msg && ui.player != null && !P(ui.player).ai) {
+    if (ui.info.kind === "moveFrom" && !(ui.info.arrived || []).includes(d.locationPick) && troopsAt(d.locationPick, ui.player) > 0) return settle(d.locationPick);
+    if (ui.info.kind === "moveTo" && d.locationPick !== ui.info.from) return settle(d.locationPick);
+    if (ui.info.kind === "send" && LOC[d.locationPick] && (ui.info.zone === "low" ? LOC[d.locationPick].low : LOC[d.locationPick].high)) return settle(d.locationPick);
+  }
+  if (d.sidePick !== undefined && ui.msg && ui.player === current() && ui.info.kind === "side" && d.sidePick in { up: true, down: true }) {
+    const char = t.closest(".char-col").classList.contains("cit") ? "cit" : "out";
+    if (CARDS[ui.info.id].char === char) return settle(d.sidePick);
+  }
+  if (d.orderPick !== undefined && ui.msg && ui.player != null && !P(ui.player).ai && ui.info.kind === "order") {
+    const index = Number(d.orderPick);
+    if (ui.info.entries[index] && ui.buttons[index].value === index) return settle(index);
+  }
   if (ui.msg || P(current()).ai) return; // AI seats play by themselves
   if (d.pass !== undefined) return passTurn();
   if (d.row !== undefined) {
     const [k, i] = d.row.split(",");
     return recruit(k, +i);
   }
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Enter" && e.key !== " ") return;
+  const target = e.target.closest("[data-location-pick],[data-side-pick],[data-order-pick]");
+  if (!target) return;
+  e.preventDefault();
+  target.click();
 });
 
 /* ---------- setup dialog ---------- */
