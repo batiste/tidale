@@ -2,158 +2,308 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tidale makes affordable, portable card games with simple rules and real strategic depth.">
     <title>Tidale Game Company</title>
+    <link rel="icon" href="tidale-logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        /* Basic reset */
+        :root {
+            --bg: #f7f4ee;
+            --surface: #ffffff;
+            --ink: #1a2033;
+            --muted: #5b6275;
+            --line: #e4dfd4;
+            --accent: #3759b9;
+            --accent-dark: #263f87;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: sans-serif;
         }
-        p {
-            margin: 1em 0;
-        }
-        
+
         body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background: #e3d1ab url(back.jpg) repeat-y center center;
-            background-size: cover;
-            color: #000000;
-            min-height: 100vh;
-            text-align: center;
-            padding: 10px;
-        }
-        
-        /* Logo and header */
-        .header {
-            margin-top: 20px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo {
-            width: 80px;
-            margin-right: 20px;
-            margin-bottom: 10px
-        }
-        
-        .title {
-            font-size: 20px;
-            letter-spacing: 3px;
-            font-weight: bold;
-            color: #000000;
-            text-shadow: 2px 2px #333;
-        }
-        
-        .subtitle {
-            font-size: 1.2em;
-            color: #1a1a1a;
+            background: var(--bg);
+            color: var(--ink);
+            font-family: Inter, system-ui, -apple-system, sans-serif;
+            font-size: 17px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Button styling */
-        .game-buttons {
-            display: flex;
-            flex-direction: row;
-            gap: 20px;
+        a {
+            color: inherit;
         }
-        
-        .game-button {
-            background-color: #4b5c91;
-            border: none;
-            padding: 0;
-            color: #f4f4f4;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 3px 3px 10px rgba(39, 51, 78, 0.913);
-            max-width: 500px;
+
+        .wrap {
+            max-width: 1080px;
             margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header .wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .brand img {
+            display: block;
+            height: 56px;
+        }
+
+        nav {
+            display: flex;
+            gap: 28px;
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        nav a {
             text-decoration: none;
+            color: var(--muted);
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        /* Intro */
+        .intro {
+            padding-top: 56px;
+            padding-bottom: 48px;
+        }
+
+        .intro > * {
+            max-width: 720px;
+        }
+
+        .eyebrow {
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        h1, h2, h3 {
+            font-family: Fraunces, Georgia, serif;
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -0.01em;
+        }
+
+        h1 {
+            font-size: clamp(34px, 5vw, 52px);
+            margin: 12px 0 18px;
+        }
+
+        .lead {
+            font-size: 19px;
+            color: var(--muted);
+        }
+
+        /* Games */
+        .games {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+            gap: 28px;
+            padding-bottom: 72px;
+        }
+
+        .game {
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            padding-bottom: 5px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            overflow: hidden;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
-        .game-button img {
-            /* padding-top: 1em; */
-            margin:0;
+        .game:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 40px rgba(26, 32, 51, 0.12);
+        }
+
+        .game img {
+            display: block;
             width: 100%;
-            max-height: 310px;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
         }
 
-        .game-button .game-title {
-            display: inline-block;
-            font-size: 1.4em;
-            padding: 10px 5px;
-        }
-    
-        .game-button .game-sub {
-            display: inline-block;
-            padding-bottom: 10px;
-            padding: 5px 5px;
-        }
-        
-        .game-button:hover {
-            background-color: #002049;
-            box-shadow: 1px 1px 1px rgba(39, 51, 78, 0.913);
+        .game-body {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            padding: 22px 24px 24px;
         }
 
-        @media only screen and (max-width: 800px) {
-            .game-buttons {
-                flex-direction: column;
-            }
+        .game h3 {
+            font-size: 26px;
+        }
+
+        .meta {
+            margin: 4px 0 12px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--accent);
+        }
+
+        .game p {
+            color: var(--muted);
+            flex: 1;
+        }
+
+        .cta {
+            margin-top: 20px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .game:hover .cta {
+            color: var(--accent-dark);
+        }
+
+        /* Mission */
+        .mission {
+            border-top: 1px solid var(--line);
+            padding: 64px 0;
+        }
+
+        .mission .wrap {
+            display: grid;
+            grid-template-columns: 1fr 1.6fr;
+            gap: 48px;
+        }
+
+        .mission h2 {
+            font-size: 32px;
+        }
+
+        .mission p + p {
+            margin-top: 1em;
+        }
+
+        .mission p {
+            color: var(--muted);
         }
 
         /* Footer */
         footer {
-            margin: 2em;
-            font-size: 1em;
-            /* color: #ccc; */
+            border-top: 1px solid var(--line);
+            padding: 28px 0;
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        footer .wrap {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 720px) {
+            nav {
+                display: none;
+            }
+
+            .intro {
+                padding-top: 32px;
+                padding-bottom: 36px;
+            }
+
+            .mission .wrap {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .wrap {
+                padding: 0 16px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Logo and Title Section -->
-    <div class="header">
-        <h1 class="title"><img src="tidale-logo.png" alt="Tidale Logo" class="logo"></h1>
-        <p class="subtitle">Portable Card Games</p>
-    </div>
+    <header>
+        <div class="wrap">
+            <a class="brand" href="/"><img src="tidale-logo.png" alt="Tidale"></a>
+            <nav>
+                <a href="#games">Games</a>
+                <a href="#about">About</a>
+            </nav>
+        </div>
+    </header>
 
-    <!-- Game Buttons -->
-    <div class="game-buttons">
-        <a href="/deckhand-race-for-infamy/" class="game-button">
-            <span class="game-title">DeckHand: Race for Infamy</span>
-            <!-- <span class="game-sub">Simultaneous actions up to 5 players</span> -->
-            <div><img src="deckhand-2.jpg" /></div>
-        </a>
-        <a href="https://batiste.github.io/deckhand/" 
-        class="game-button">
-            <span class="game-title">DeckHand</span>
-            <!-- <span class="game-sub">Deck building up to 4 players</span> -->
-            <div><img src="deckhand.jpg" /></div>
-        </a>
-    </div>
+    <main>
+        <section class="wrap intro">
+            <span class="eyebrow">Portable card games</span>
+            <h1>Big strategy that fits in your pocket.</h1>
+            <p class="lead">
+                Tidale designs affordable card games with rules you can learn in minutes
+                and decisions that keep you coming back.
+            </p>
+        </section>
 
-    <div style="max-width: 800px; margin: 2em">
-        <p>
-            At Tidale Games, our mission is to craft affordable, immersive, and portable card games.
-        </p>
-        <p>
-            We believe in creating simple rules that lead to strategic depth, making our games easy to learn yet rewarding 
-            for players who dive deeper with each play. Whether you're a casual gamer or a seasoned 
-            strategist, we want to deliver an engaging experience that fits right in your backpack.
-        </p>
-    </div>
+        <section class="wrap games" id="games">
+            <a href="/deckhand-race-for-infamy/" class="game">
+                <img src="deckhand-2.jpg" alt="DeckHand: Race for Infamy artwork">
+                <div class="game-body">
+                    <h3>DeckHand: Race for Infamy</h3>
+                    <span class="meta">Engine building · Drafting · Up to 5 players</span>
+                    <p>
+                        A fast pirate engine builder in 108 cards. Draft over five quick rounds,
+                        build your Fleet and race for powerful Infamy cards.
+                    </p>
+                    <span class="cta">Discover the game →</span>
+                </div>
+            </a>
+            <a href="/deckhand/" class="game">
+                <img src="deckhand.jpg" alt="DeckHand artwork" style="object-position: center 30%;">
+                <div class="game-body">
+                    <h3>DeckHand</h3>
+                    <span class="meta">Deck building · 2–4 players</span>
+                    <p>
+                        The original pirate deck-builder. Gather gold, recruit a crew and assemble
+                        a formidable deck where every card matters.
+                    </p>
+                    <span class="cta">Discover the game →</span>
+                </div>
+            </a>
+        </section>
 
-    <!-- Footer -->
+        <section class="mission" id="about">
+            <div class="wrap">
+                <h2>Our mission</h2>
+                <div>
+                    <p>
+                        At Tidale, we craft affordable, immersive and portable card games.
+                    </p>
+                    <p>
+                        We believe simple rules can lead to real strategic depth: games that are easy
+                        to learn, yet reward players who dive deeper with each play. Whether you're a
+                        casual gamer or a seasoned strategist, we want to deliver an engaging experience
+                        that fits right in your backpack.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
     <footer>
-        &copy; 2025 Tidale. All rights reserved.
+        <div class="wrap">
+            <span>&copy; 2026 Tidale. All rights reserved.</span>
+        </div>
     </footer>
 </body>
 
