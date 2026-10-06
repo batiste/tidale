@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DeckHand - A Pirate Card Game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Della+Respira&family=Lobster+Two:wght@400;700&family=Oleo+Script+Swash+Caps&family=Pirata+One&family=Playfair+Display&display=swap" rel="stylesheet">
+    <link href="./index.css" rel="stylesheet" /> 
+
+    <meta property='og:title' content='DeckHand - A Pirate Card Game'/>
+    <meta property='og:image' content='https://batiste.github.io/deckhand/cover.jpg' />
+    <meta property='og:description' content='DeckHand is an exciting pirate-themed card game adventure for 2 to 4 player. DeckHand focuses on providing players interesting choices and interactions.'/>
+    <meta property='og:url' content='batiste.github.io/deckhand/'/>
+    <meta property='og:image:width' content='435' />
+    <meta property='og:image:height' content='600' />
+
+    <link rel="icon" href="./icons/tentacle.ico" sizes="any">
+    <link rel="icon" href="./icons/tentacle.svg" type="image/svg+xml">
+</head>
+<body>
+    <h1>DeckHand —  A Pirate Deck Builder Game</h1>
+    
+    <div class="hand">
+        <div class="card small-card" id="card1"><img src="marketing/cards/spice-trade.webp" alt=""></div>
+        <div class="card" id="card2"><img src="marketing/cards/lost-expedition.webp" alt=""></div>
+        <div class="card large-card" id="card3"><img src="marketing/cards/krakens-fury.webp" alt=""></div>
+        <div class="card" id="card4"><img src="marketing/cards/ghost-crew.webp" alt=""></div>
+        <div class="card small-card" id="card5"><img src="marketing/cards/desperate-chase.webp" alt=""></div>
+    </div>
+
+    <div class="content centered">
+    
+        <h2>DeckHand in Short</h2>
+
+        <p style="margin-top:0;font-weight: bold; color: #ffeab4;text-shadow: 2px 2px 3px black;">
+            Embark on  a thrilling pirate adventure for 2 to 4 players, igniting your deck-building creativity!
+        </p>
+
+    </div>
+
+    <div id="game-info">
+
+        <p class="nav">
+            <a href="#preorder">Print and Play</a> |
+            <a href="#gameplay-preview">Gameplay Preview</a> |
+            <a href="./how-to-play.html">How To Play</a> |
+            <a href="#read-the-rules">Read the rules</a> |
+            <a href="#board">Board</a> |
+            <a href="#print-preview">On the table</a> |
+            <a href="./how-to-play.html#solo-challenges">Solo Challenges</a> | 
+            <a href="https://batiste.github.io/deckhand/mediakit/">Media Kit</a>
+        </p>
+
+        <div class="card-container">
+            <div class="l-card">
+                <h2>Assemble a Formidable Deck</h2>
+                <p>Craft a unique deck from 63 different cards. 
+                    Prepare for a dynamic experience that hinges on the board state, 
+                    your strategic choices, and thrilling interactions.</p>
+            </div>
+            <div class="l-card">
+                <h2>Easy Setup & Portable</h2>
+                <p>Swift setup with no additional game components – just cards!  
+                    Grasp the rules in less than 3 minutes and immerse yourself 
+                    in the action whether at home or on the go!</p>
+            </div>
+            <div class="l-card">
+                <h2>Short Games, Big Impact</h2>
+                <p>A 2-player game typically lasts 30 minutes, striking a balance between accessible
+                    rules for casual gamers and engaging decisions for strategy enthusiasts.
+                </p>
+            </div>
+            <div class="l-card">
+                <h2>No Tracking of Life Points</h2>
+                <p>No complex tracking mechanics! DeckHand focuses on a streamlined experience where you count your victory points at the end.</p>
+            </div>
+            <div class="l-card">
+                <h2>Each Card Matters</h2>
+                <p>Every 63 cards in DeckHand has a unique effect, 
+                   adding excitement and unpredictability to each playthrough.</p>
+            </div>
+            <div class="l-card">
+                <h2>Turn Luck to Your Advantage</h2>
+                <p>Cleverly push your luck, turning dire situations into victories, or strategically favoring probability for long-term success.</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="box-order">
+            <div>
+                <h2 id="preorder">Print and Play</h2>
+                <p class="centered">
+                    The physical game is no longer available to order.<br>
+                    Print and Play available in English <span class="flag">🇬🇧</span>,
+                    French <span class="flag">🇫🇷</span> and
+                    Spanish <span class="flag">🇪🇸</span>.
+                </p>
+                <p class="centered">
+                    <a href="https://discord.gg/MaWz2cgW6k">Join the Discord Server</a>
+                    <a href="https://boardgamegeek.com/boardgame/399951/deckhand">Board Game Geek Entry</a>
+                    <a href="https://linktr.ee/_deckhand_">Other social links</a>
+                    <a href="https://www.kickstarter.com/projects/deckhand/deckhand-the-pirate-card-game" id="pre-order">Kickstarter for the first edition</a>
+                    <!-- <a href="https://tabletopia.com/games/deckhand">Play DeckHand on Tabletopia</a> -->
+                </p>
+            </div>
+
+
+            <div id="tuck-box"></div>
+
+            <p style="display: flex; flex-direction: column; margin: 15px; align-items: center;">
+                <span class="price-teaser">
+                    Get the DeckHand Print and Play<br>for 5$ or 5€.
+                </span>
+
+                <a class="button" href="https://paypal.me/BatisteBieler">Pay with PayPal</a>
+                <br>
+                <span style="font-size: 12px;">Send the money on PayPal to <strong>@BatisteBieler</strong>,<br>
+                    then <a href="mailto:batiste.bieler+deckhand@gmail.com">contact me</a> to receive the files.</span>
+            </p>
+
+        </div>
+
+
+        <div class="content centered">
+            <h2 id="crew-expansion" style="display: flex;align-items: center;">
+                <span>Crew Expansion</span> <span class="new">Free</span></h2>
+
+            <p>
+                This expansion comprises 12 new Crew cards that can be enlisted to accompany you on your seafaring escapades.
+                Now, during your turn, you can discreetly hire a Crew member. Once revealed, your 
+                Crew will offer you one of their special skills every turn. In addition, 5 new base cards have been added for
+                a little extra spice. This is all on <a href="https://drive.google.com/drive/folders/1Q2YrPkwHwWGL1BouDfNLTK9Rz-WX4WWC">free access</a> in Print and Play format.
+            </p>
+
+            <a href="https://drive.google.com/drive/folders/1Q2YrPkwHwWGL1BouDfNLTK9Rz-WX4WWC"><img src="marketing/ext-banner.jpg" width="100%"></a>
+
+            <a href="how-to-play.html#crew-expansion">How To Play the Crew Expansion</a>
+
+            <p>
+                If you have DeckHand first edition (KickStarter) and you want to get your hand onto the expansion, 
+                <a href="https://www.makeplayingcards.com/sell/marketplace/deckhand-crew-expansion.html">
+                    you can now get a copy printed on makeplayingcards.com.
+                </a>
+            </p>
+
+            <!-- <h3>Print the Expansion</h3>
+            <p>
+                We are organizing a print run at cost. The package will be shrink-wrapped, 
+                containing the 17 cards, plus a rule card for the new rules. 
+                The cost worldwide will be €9 (Euros) + €10 (Euros) for shipping, 
+                totaling approximately $20 (USD). If you are interested, voice you desire
+                by <a href="https://forms.office.com/r/9D348CY91P">filling up this</a> before the 24th of February 2024.
+            </p> -->
+
+        </div>
+
+
+        <div class="content centered">
+            <h2 id="gameplay-preview">Gameplay Preview</h2>
+
+            <p>In DeckHand, players take turns accumulating gold coins and purchasing new cards to enhance 
+                their decks and increase their power. Competing against opponents, you'll aim to acquire 
+                the most valuable cards, strategically building synergies and thwarting your opponents' plans.
+                Speed is of the essence as you strive to execute your strategy before your 
+                opponents, all while racing against the clock to achieve victory.</p>
+
+            <p>In order to get a sense of what to expect in DeckHand, explore a subset of the 63 cards showcasing intriguing facets of the game.</p>
+            <div style="width: 100%; text-align: center;" id="card-selection">
+                <input type="radio" name="position" />
+                <input type="radio" name="position" checked />
+                <input type="radio" name="position" />
+                <input type="radio" name="position" />
+                <input type="radio" name="position" />
+                <input type="radio" name="position" />
+                <input type="radio" name="position" />
+                <input type="radio" name="position" />
+                <input type="radio" name="position" />
+                <main id="carousel">
+                    <div class="item" onclick="cardSelect(0)"><img src="marketing/cards/blademaster.webp" alt=""></div>
+                    <div class="item" onclick="cardSelect(1)"><img src="marketing/cards/monkeys-bargain.webp" alt=""></div>
+                    <div class="item" onclick="cardSelect(2)"><img src="marketing/cards/end-of-rainbow.webp" alt=""></div>
+                    <div class="item" onclick="cardSelect(3)"><img src="marketing/cards/voodoo-curse.webp" alt=""></div>
+                    <div class="item" onclick="cardSelect(4)"><img src="marketing/cards/adventures-guild.webp" alt=""></div>
+                    <div class="item" onclick="cardSelect(5)"><img src="marketing/cards/improvised-grenade.webp" alt=""></div>
+                    <div class="item" onclick="cardSelect(6)"><img src="marketing/cards/bank-fortress.webp" alt=""></div>
+                    <div class="item" onclick="cardSelect(7)"><img src="marketing/cards/governors-jail.webp" alt=""></div>
+                    <div class="item" onclick="cardSelect(8)"><img src="marketing/cards/lost-expedition.webp" alt=""></div>
+                </main>
+            </div>
+
+            <p style="max-width: 700px;">If you'd like to delve deeper into DeckHand's game play, explore
+                 our <a href="./how-to-play.html"><b>How To Play page</b></a>.
+            </p>
+        </div>
+
+        <script>
+            function cardSelect(i) {
+                var inputs = document.querySelectorAll('#card-selection input')
+                inputs[i].click()
+                inputs[i].focus()
+            }
+        </script>
+    
+        <div class="content centered">
+            <h2 id="board">Board</h2>
+            <p class="centered">
+                This serves as an illustrative board state for a single player. It's essential that each 
+                player organizes their stash/discard pile in a visually clear and easily readable manner.
+            </p>
+            <a href="marketing/board.webp"><img src="marketing/board.webp" width="100%"></a>
+        </div>
+
+
+        <div class="content centered">
+            <h2 id="read-the-rules">Understanding the Rules</h2>
+            <p><a href="./DeckHand Rules.pdf">DeckHand rules</a> have been designed to be minimal so you can pick up the game in no time, with the complexity shifted on
+                the cards themselves. Additionally,
+                players are provided with helper cards for assistance.
+            </p>
+
+            <a href="./DeckHand Rules.pdf">
+                <img src="marketing/rules.webp" width="100%">
+            </a>
+        </div>
+
+
+        <div class="content centered" style="max-width: 1000px">
+            <h2 id="solo-challenges">Solo Challenges</h2>
+
+            <p>
+                <a href="./how-to-play.html#solo-challenges"><b>Explore the game in Solo</b></a>! 
+                Sharpen your skills 
+                and knowledge of the cards while taking on these challenges individually.
+            </p>
+
+            <div class="card-container">
+                <div class="l-card">
+                    <h2>Victory Beast Solo Challenge</h2>
+                    <p>Aim to finish the game with at least 32 victory points.</p>
+                </div>
+                <div class="l-card">
+                    <h2>Attack Freak Solo Challenge</h2>
+                    <p>Aim to finish the game with at least 26 victory points and at least 9 Attacks.</p>
+                </div>
+                <div class="l-card">
+                    <h2>Architect Solo Challenge</h2>
+                    <p>Aim to finish the game with at least 27 victory points and at least 8 Structures.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="content centered" style="max-width: 1000px">
+            <h2 id="box-content">DeckHand's Box Content</h2>
+
+            <ul class="text-column">
+                <li>The Rules Booklet</li>
+                <li>4x Coins</li>
+                <li>4x Coin Indicator</li>
+                <li>8x Fist Fight</li>
+                <li>8x Celebrate</li>
+                <li>1x Tavern</li>
+                <li>1x Fortune Teller</li>
+                <li>1x Quick Shot</li>
+                <li>1x Mutiny</li>
+                <li>1x Blademaster</li>
+                <li>1x Poisoned Grog</li>
+                <li>1x Beach Bum</li>
+                <li>1x Karmic Elevation</li>
+                <li>1x Kung Fu Lessons</li>
+                <li>1x Governor’s Wedding</li>
+                <li>1x Imperial Powder</li>
+                <li>1x Haggling</li>
+                <li>1x Alley Thief</li>
+                <li>1x Useless Totem</li>
+                <li>1x Council Hall</li>
+                <li>1x Typhoon</li>
+                <li>1x Alchemy</li>
+                <li>1x Emperor’s Caprice</li>
+                <li>1x Card Mastery</li>
+                <li>1x Spice Trade</li>
+                <li>1x Hideout</li>
+                <li>1x Gold Mine</li>
+                <li>1x Harbor Market</li>
+                <li>1x Ancient Library</li>
+                <li>1x Rum Factory</li>
+                <li>1x Exploration</li>
+                <li>1x Treasure Map</li>
+                <li>1x Going Ape</li>
+                <li>1x Ghost Crew</li>
+                <li>1x Haunted Cave</li>
+                <li>1x Governor’s Jail</li>
+                <li>1x Lost Expedition</li>
+                <li>1x Stealthy Observer</li>
+                <li>1x Extravagance</li>
+                <li>1x Shipyard</li>
+                <li>1x Walk the Plank</li>
+                <li>1x Monkey’s Bargain</li>
+                <li>1x Wind in Sails</li>
+                <li>1x Adventurer’s Guild</li>
+                <li>1x End of the Rainbow</li>
+                <li>1x Bank Fortress</li>
+                <li>1x Seaside Citadel</li>
+                <li>1x Architect’s Workshop</li>
+                <li>1x Voodoo Curse</li>
+                <li>1x Abyss Marauder</li>
+                <li>1x Smuggler’s Cache</li>
+                <li>1x Gambling Addiction</li>
+                <li>1x Desperate Chase</li>
+                <li>1x Improvised Grenade</li>
+                <li>1x Unguarded Graveyard</li>
+                <li>1x Bewitched Doll</li>
+                <li>1x Crooked Merchant</li>
+                <li>1x Merfolk Mercenary</li>
+                <li>1x Kraken’s Fury</li>
+                <li>1x Skull island</li>
+                <li>1x Treasure Hunt</li>
+                <li>1x The Grand Council</li>
+                <li>1x Angry Mob</li>
+                <li>1x Tax Collector</li>
+                <li>1x Hidden Cove</li>
+                <li>1x Crafty Coco</li>
+            </ul>
+
+            <img src="marketing/all-cards.webp" width="100%">
+        </div>
+
+
+        <div class="content centered">
+
+        </div>
+
+        <div class="content centered">
+            <h2 id="print-preview">DeckHand English First Edition</h2>
+
+            <p>
+                We aim for the very best quality print. Our cards are poker sized cards (MtG) with a matt surface.
+                All card illustrations were created by the game author with the assistance of AI tools.
+            </p>
+
+            <a href="marketing/print2.webp"><img src="marketing/print2.webp" width="100%"></a>
+
+            <!-- <p>Second prototype unboxing.</p>
+            <iframe width="560" height="360" src="https://www.youtube.com/embed/dXHYfOlRKOg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> -->
+
+            <!-- <p>First prototype print.</p>
+            <iframe width="560" height="360" src="https://www.youtube.com/embed/NheWub_03sM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> -->
+        
+            <h3 id="production-details">Production Details</h3>
+
+            <ul>
+                <li>Printed with <a href="https://www.makeplayingcards.com/">MakePlayingCards.com</a></li>
+                <li>2.5"×3.5" or 63×88x31mm, 90 cards</li>
+                <li>Card Stock: (S33) Superior Smooth</li>
+                <li>Finishing: MPC Game Card Finish (matt)</li>
+                <li>Packaging: Custom Tuck Box (T30 UV Coated Gloss)</li>
+                <li>Box Printed: Outside printed, shrink-wrapped</li>
+                <li>Booklet: with Bi-Fold (4 Sides)</li>
+            </ul>
+        
+        </div>
+
+    </div>
+
+    <div class="content centered">
+        <h2 id="box-content">Credits</h2>
+
+        <ul>
+            <li>Batiste Bieler, creator, illustrator</li>
+            <li>Jessica Gibbons, playtester</li>
+            <li>Gaël Nardin, playtester</li>
+            <li>Xavier Meyer, playtester</li>
+            <li>Jonathan Bieler, playtester</li>
+            <li>Riccardo Zoppello, illustrator</li>
+            <li>Yves Margarita, editor</li>
+            <li>Midjourney, silicium based illustrator</li>
+        </ul>
+    </div>
+
+    <div class="hand" style="margin-top: 20px;">
+        <div class="card small-card" id="card1"><img src="marketing/cards/adventures-guild.webp" alt=""></div>
+        <div class="card" id="card2"><img src="marketing/cards/crooked-merchant.webp" alt="Crooked Merchant"></div>
+        <div class="card small-card" id="card3"><img src="marketing/cards/useless-totem.webp" alt="Useless Totem"></div>
+        <div class="card" id="card4"><img src="marketing/cards/extravagance.webp" alt="Extravagance"></div>
+        <div class="card small-card" id="card5"><img src="marketing/back.webp" alt="Back"></div>
+    </div>
+    
+    <div>
+    </div>
+    <div class="content centered" style="display: flex; align-items: center;">
+        <a href="https://tidale.org"><img src="../tidale-logo.png" class="logo"></a>
+        <p>Batiste Bieler | 2023
+            | <a href="https://www.deviantart.com/zoppy/gallery">Box illustration</a> 
+            | <a href="https://www.deviantart.com/faden1/gallery">Card illustrations</a> 
+            | <a href="https://delapouite.com/">Icons by Delapouite</a>
+    </div>
+
+    <!-- Add any additional sections, rules, or features here -->
+
+
+<!-- <div id="popup1" class="overlay">
+    <div class="popup">
+        <a id="closeP" class="close"  href="#close">×</a>
+        <iframe width="100%" height="680px" src="https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAMAAMGOGg5UOFA0SU9BWjRUMVYzUkhNNjk4SUs2OUZYUy4u&embed=true" frameborder="0" marginwidth="0" marginheight="0" style="border: none; max-width:750px; max-height:100vh" allowfullscreen webkitallowfullscreen mozallowfullscreen msallowfullscreen> </iframe>
+    </div>
+</div>
+
+
+<script>
+    document.getElementById('pre-order').onclick = () => {
+        document.getElementById('popup1').style['display'] = 'block';
+    }
+    document.getElementById('closeP').onclick = () => {
+        document.getElementById('popup1').style['display'] = 'none';
+    }
+</script> -->
+
+    
+
+<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+
+<script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.153.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.153.0/examples/jsm/"
+    }
+  }
+</script>
+
+<script type="module" src="./main.js"></script>
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-1048886-9', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+<!-- <script src="//embed.typeform.com/next/embed.js"></script> -->
+
+</body>
+</html>

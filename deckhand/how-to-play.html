@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DeckHand - How to Play</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Della+Respira&family=Lobster+Two:wght@400;700&family=Oleo+Script+Swash+Caps&family=Pirata+One&family=Playfair+Display&display=swap" rel="stylesheet">
+    <link href="./index.css" rel="stylesheet" /> 
+
+    <meta property='og:title' content='DeckHand - How to Play'/>
+    <meta property='og:image' content='https://batiste.github.io/deckhand/cover.jpg' />
+    <meta property='og:description' content='How To Play, Rules, Card details and rules explanations, and other Resources for DeckHand the pirate card game.'/>
+    <meta property='og:url' content='batiste.github.io/deckhand/how-to-play.html'/>
+    <meta property='og:image:width' content='435' />
+    <meta property='og:image:height' content='600' />
+    <link rel="icon" href="./icons/tentacle.ico" sizes="any">
+    <link rel="icon" href="./icons/tentacle.svg" type="image/svg+xml">
+    <style>
+        .card-pres {
+            display: flex;
+            margin-bottom: 1em;
+        }
+        .card-pres img {
+            margin-right: 1em;
+            width: 250px;
+            /* height: 300px; */
+        }
+        @media only screen and (max-width: 600px) {
+            .card-pres {
+                flex-direction: column;
+            }
+        }
+        h3 {
+            font-family: "Open Sans", Arial, Helvetica, sans-serif;
+            font-weight: normal;
+            text-align: left;
+            color: #ffeab4;
+            text-shadow: none;  
+            font-size: 20px;
+        }
+        .sticky {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #525b61;
+            padding: 8px;
+            box-shadow: 0px 3px 7px #252525;
+        }
+        .anchor {
+            padding-bottom: 20px;
+        }
+        .crew-list li {
+            margin: 12px 0;
+        }
+        ul li {
+            margin-bottom: 0.6em;
+        }
+    </style>
+</head>
+<body style="background-color: #343434;">
+
+    <h1 style="margin-top: 1.5em;">DeckHand — How To Play</h1>
+
+    <p style="margin: 10px; text-align: center;"><a href="/deckhand/#gameplay-preview">← Back to the main website</a></p>
+
+    <div style="text-align: center;" class="sticky">
+        <a href="#video">Video</a>&nbsp;&nbsp;
+        <a href="#simplified">Simplified Game</a>&nbsp;&nbsp;
+        <a href="#extended">Rapide Fire Game</a>&nbsp;&nbsp;
+        <a href="#ill">Game Board</a>&nbsp;&nbsp;
+        <a href="#solo-challenges">Solo Challenges</a>&nbsp;&nbsp;
+        <a href="#rules">Rules</a>&nbsp;&nbsp;
+        <a href="#details">Card Details</a>&nbsp;&nbsp;
+        <a href="#crew-expansion">Expansion</a>
+    </div>
+    
+    <div style="max-width: 900px; margin: 2em auto;">
+
+        <h2 id="video">Video</h2>
+
+        <p style="text-align: center;">
+            A quick 10 minutes video to get you started.
+        </p>
+
+
+        <iframe width="100%" height="415" style="margin:auto; display: block;" src="https://www.youtube.com/embed/erDK8WzwB8E?si=Z-TpJ8ox_QxgJ3t5" title="YouTube video player" 
+        frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+        <p>
+            Since this video was produced, there have been small changes that are reflected in your booklet:
+        </p>
+
+        <ol>
+            <li>The 17 Coin cards have been replaced by 4 Coin cards and 4 Coin Indicator cards.</li>
+            <li>The special 10 cards rules for 4 players has been removed.</li>
+            <li>The <b>+1 Discard</b> is not optional, and must be applied if possible.</li>
+        </ol>
+
+        <h2 style="margin-top: 50px" id="simplified">Beginner Game Mode</h2>
+
+        <p>
+            To set up a beginner game, you may exclude up to 11 cards for a 2 to 3 player game. 
+            No cards can be excluded for a 4-player game and therefor we do not recommend this player count for a first 
+            experience with DeckHand.<br>
+            Feel free to remove any cards you find complex or that might slow down the game. Here is a suggested list:
+        </p>
+
+        <ul class="text-column">
+            <li>The Grand Council</li>
+            <li>Gold Mine</li>
+            <li>Bewitched Doll</li>
+            <li>Imperial Powder</li>
+            <li>Typhoon</li>
+            <li>Monkey's Bargain</li>
+            <li>Governor's Wedding</li>
+            <li>Kraken's Fury</li>
+            <li>Ghost Crew</li>
+            <li>Improvised Grenade</li>
+            <li>Going Ape</li>
+        </ul>
+
+        <h2 style="margin-top: 50px" id="extended">Rapid Fire Game Mode</h2>
+
+        <p>
+            For players seeking a faster and more dynamic experience with DeckHand, 
+            consider this extended game mode to help players acquire cards more quickly and enable more combos in the late game.
+        </p>
+
+        <ul>
+            <li><b>Starting Coins</b>: Each player starts with 3 coins instead of 1.</li>
+            <li><b>Supply Cards</b>: Setup the supply deck with 15 cards per player instead of the usual 11. For a 4-player game, use 13 cards per player instead.</li>
+            <li><b>Reloading Cards</b>: Before the game starts, all players but the starting player might reload 
+                a card from the supply. Then shuffle the reload deck. 
+                This allows players to flush out cards that might be considered unfair, such as Merfolk Mercenary, Treasure Hunt, or Seaside Citadel.</li>
+            <li><b>Crew Expansion</b> (if available) : Deal a hand of Crew cards equal to the number of players 
+                plus 2 to the player sitting to the left of the starting player. 
+                This player chooses one Crew card and places it face-down in front of them, then passes 
+                the remaining Crew cards to the left. This continues until each player has one Crew card.
+                Shuffle the remaining 2 cards back into the Crew deck.
+            </li>
+            <li><b>No Action Limit</b>: There is no more limit to the number of actions you can use each turn.</li>
+        </ul>
+
+        <h2 style="margin-top: 50px" id="ill">Game Board Illustration for 1 Player</h2>
+
+
+        <a href="marketing/board.webp" style="display: flex; justify-content: center;">
+            <img src="marketing/board.webp" style="width: 100%; max-width: 800px;" />
+        </a>
+
+        <h2 id="solo-challenges">Solo Challenges</h2>
+
+        <p>
+            To set up a solo challenge, follow the setup for a 2-player game but 
+            add an extra card to the supply deck (23 instead of 22). 
+            Take turn after turn until the game is finished, but at the start of each turn, remove one card from the supply. 
+            This creates a natural clock that you have to beat.<br>
+            During solo challenges, you take charge of making decisions that enemies would typically make.
+            If an effect targets an enemy, disregard the targeting aspect of the effect,
+            while other parts of the effect still take place.
+        </p>
+
+
+        <div class="card-container">
+            <div class="l-card">
+                <h2>Victory Beast Solo Challenge</h2>
+                <p>Aim to finish the game with at least 32 victory points.</p>
+            </div>
+            <div class="l-card">
+                <h2>Attack Freak Solo Challenge</h2>
+                <p>Aim to finish the game with at least 26 victory points and at least 9 Attacks.</p>
+            </div>
+            <div class="l-card">
+                <h2>Architect Solo Challenge</h2>
+                <p>Aim to finish the game with at least 27 victory points and at least 8 Structures.</p>
+            </div>
+        </div>
+
+        <h2 id="rules">Rules</h2>
+
+        <a href="./DeckHand Rules.pdf" style="display: flex; justify-content: center;">
+            <img src="marketing/rules.webp" style="width:100%; max-width: 760px;">
+        </a>
+
+        <h3>What does <b>then</b> mean on cards such as Tavern and Exploration?</h3>
+
+        <p>
+            In DeckHand, <b>then</b> is never used as a condition but always to emphasize that
+            things need to happen in a sequence. On Tavern, the "then" is there to convey that you should
+            draw before checking the rest of the conditions. On Exploration, it should be understood "Additionally."
+        </p>
+
+        <h3>What happens to the supply when the supply deck runs out?</h3>
+
+        <p>
+            Players can buy from the supply, but the cards are not replenished.
+            Naturally, nothing can be bought if there are no face-up cards left.
+        </p>
+
+        <h3>What happens when my stash and deck are empty?</h3>
+        
+        <p>
+            Nothing happens at first. However, as soon as one or more cards enter your stash, 
+            the normal rules applies, and you must immediately reform a deck.
+            Cards discarded together (e.g., with Alchemy) enter the stash simultaneously.
+        </p>
+
+        <h2 style="margin-top: 50px" id="details">Card details and Explanations</h2>
+
+        <p style="margin-bottom: 30px">
+            Here are some insights on some of the most distinctive DeckHand cards, 
+            including a few that may need further explanation. 
+            If after this read you still have questions, join the discussion on
+            <a href="https://discord.gg/MaWz2cgW6k"><b>Discord</b></a> or 
+            <a href="https://boardgamegeek.com/boardgame/399951/deckhand"><b>Board Game Geek</b></a>.
+        </p>
+    
+        <div class="card-pres">
+            <img src="cards/celebrate.jpg" />
+            <div>
+                <h3>Celebrate</h3>
+                <p>
+                    Once you play a card, that card is considered out of your hand. 
+                    Therefore, Celebration can only give you 1 coin at best 
+                    unless you manage to introduce a third Celebration into your deck. 
+                    Celebration is designed to be a decent card initially but becomes
+                    progressively less effective as the game progresses.
+                </p>
+            </div>
+        </div>
+
+        <div class="card-pres">
+            <img src="cards/seaside-citadel.jpg" />
+            <div>
+                <h3>Seaside Citadel</h3>
+                <p>
+                    Extra Actions are almost always beneficial, especially when they come
+                    with an additional card. If you play Seaside Citadel as your first card, 
+                    you will have 3 Actions remaining once fully resolved 
+                    (2 starting Actions - 1 to play Seaside Citadel, +2 from the effect). 
+                    Actions can be used for playing or buying cards in any order or combination, 
+                    and your 2 starting Actions are no exception.
+                </p>
+                <p>
+                    Keep in mind that once you have used 5 Actions, which include playing and buying cards, 
+                    your turn is over. However, extra Buys you obtain from cards
+                    like Haggling (+1 Buy) are not counted as the rules state: "You may buy 1 card <b>without using an Action</b> this turn."
+                </p>
+            </div>
+        </div>
+
+        <div class="card-pres">
+            <img src="cards/wind-in-sails.jpg" />
+            <div>
+                <h3>Wind in Sails</h3>
+                <p>
+                    Wind in Sails is a start-of-turn card that grants you a 4-card draw instead of 3, 
+                    simply by sitting in your stash.<br>
+                    As the game progresses and your stash grows, its effects continue as long as it remains in your stash.
+                    If this card ends up at the bottom of your deck, you may consider it unlucky, 
+                    but there's a chance to strategically place it at the bottom of your stash
+                    if you play your cards right.
+                </p>
+
+                <p>
+                    Note that if you play Wind in Sails with only one card left in your deck, and decide to draw it, Wind in Sails won't be shuffled back 
+                    into your deck. It goes into your stash after resolving all consequences, including the shuffle.
+                </p>
+            </div>
+        </div>
+
+
+        <div class="card-pres">
+            <img src="cards/crafty-coco.jpg" />
+            <div>
+                <h3>Crafty Coco</h3>
+                <p>
+                    Crafty Coco is a card that permanently changes the rules of the game as long as it is in your stash. 
+                    Start-of-turn and Rule-change (indicated by the fist icon) cards are cumulative, making them all active at the same time. 
+                    The order in which they appear in the stash is inconsequential.
+                </p>
+                
+                <p>
+                    Crafty Coco might be a challenging card to take advantage of unless you start your turn already wealthy
+                    or manage to buy a "When discarded" card. In the latter case,
+                    you will naturally benefit when it is discarded at the beginning of your next turn.
+                </p>
+            </div>
+        </div>
+
+        <div class="card-pres">
+            <img src="cards/fortune-teller.jpg" />
+            <div>
+                <h3>Fortune Teller</h3>
+                <p>
+                    The Fortune Teller opens up possibilities by allowing you to target any deck,
+                    whether it's your own, an opponent's, the supply deck, or even the reload deck.
+                </p>
+                <p>
+                    Use it strategically
+                    to try to obtain what you need, whether it's extra Actions, coins, or cards.
+                    Additionally, it can be employed to gain insights into an opponent's top cards,
+                    enhancing your ability to use cards like Desperate Chase or Voodoo Curse effectively.
+                </p>
+                <p>
+                    If you reveal cards from a deck with just one card, 
+                    you would reveal only that one card.
+                    According to the general rules, looking at cards does
+                    not empty the deck, so it wouldn't trigger a shuffle.
+                </p>
+            </div>
+        </div>
+
+        <div class="card-pres">
+            <img src="cards/tavern.jpg" />
+            <div>
+                <h3>Tavern</h3>
+                <p>
+                    Start by drawing a card if you have an adventure, then assess the other conditions.
+                    This improves your chances of obtaining the card's complete benefits.
+                    It's important to adhere to the general rule that effects
+                    should always be resolved step by step, without re-ordering.
+                </p>
+                <p><i>In the 1st printed edition there is a "Then" on the second line that you can disregard.</i></p>
+            </div>
+        </div>
+
+        <div class="card-pres">
+            <img src="cards/desperate-chase.jpg" />
+            <div>
+                <h3>Desperate Chase</h3>
+                <p>
+                    You can play Desperate Chase if both you and a chosen enemy have at least 2 cards in your respective decks.
+                    Then, reveal up to 3 cards. If there are only 2 cards in a deck, follow the general rule:
+                    <b>If an effect cannot be fully applied, it still applies partially, to the extent possible</b>.
+                    So, in this case, reveal only 2 cards from the deck.
+                </p>
+                <p>
+                    According to the general rules, revealing cards does
+                    not empty the deck, so it would never trigger a shuffle.
+                </p>
+            </div>
+        </div>
+
+        <div class="card-pres">
+            <img src="cards/exploration.jpg" />
+            <div>
+                <h3>Exploration</h3>
+                <p>
+                    If you have an Adventure card in your hand, you gain an additional Action. 
+                    In addition to this, you draw one card and gain one coin. 
+                </p>
+                <p>
+                    The order of resolution is such that you first check the condition of 
+                    having an Adventure card, and if met, you gain the extra Action; 
+                    then, regardless of whether the condition is met or not, you draw a card and gain a coin.
+                </p>
+                <p>
+                    This order has been chosen for game balance reasons; drawing the card first would
+                    dramatically increase the likelihood of gaining an extra Action.
+                </p>
+
+                <p><i>In the 1st printed edition there is a "Then" that has been replaced by "Additionally"</i>.</p>
+            </div>
+        </div>
+
+        <div class="card-pres">
+            <img src="cards/poisoned-grog.jpg" />
+            <div>
+                <h3>Poisoned Grog</h3>
+                <p>
+                    The Poisonous Grog is a card that is often better off discarded than played. 
+                    You'd consider drinking the Grog yourself only in dire circumstances.
+                </p>
+                <p>
+                    The discard effect happens naturally at the beginning of your turn. But 
+                    a few cards in DeckHand might enable you to discard Poisoned Grog a little
+                    bit sooner (Typhoon, Alchemy, Rum Factory).
+                </p>
+            </div>
+        </div>
+
+        <div class="card-pres">
+            <img src="cards/governor’s-wedding.jpg" />
+            <div>
+                <h3>Governor's Wedding</h3>
+                <p>
+                    When you extend a wedding invitation, you anticipate a thoughtful gift in return.
+                    But is this complimentary Buy truly worth the coin offering? Your opponent might
+                    think otherwise, and your generous invitation might be rudely rejected (by refusing to Buy), 
+                    and you will receive no gift in return.
+                </p>
+                <p>
+                    The Governor's Wedding can be mutually beneficial, potentially allowing 2 weaker
+                    players in a 3-4 player game to support each other.
+                </p>
+            </div>
+        </div>
+
+        <div class="card-pres">
+            <img src="cards/bewitched-doll.jpg" />
+            <div>
+                <h3>Bewitched Doll</h3>
+                <p>
+                    This card exerts quite an intrusive effect on one of your opponents. When you play it, 
+                    you gain control of their cards, coins and execute their first Action on their turn. 
+                </p>
+                <p>
+                    If you generate additional
+                    Actions or Buys by this control, you maintain control for those as well if you wish. if you
+                    do not the controlled player will have the opportunity to use them.
+                    In any case, you must follow valid game rules and not make nonsensical plays. For 
+                    Example, it is not allowed to play Karmic Elevation and not pay the coin, or
+                    if there is no valid card to swap.
+                </p>
+                <p>
+                    But otherwise, 
+                    you have a wide range of possibilities. You could even use the Improvised Grenade on their 
+                    own stash. The question is, what kind of damage are you able to inflict to make this 
+                    card worth playing?
+                </p>
+            </div>
+        </div>
+
+        <div class="card-pres">
+            <img src="cards/governor’s-jail.jpg" />
+            <div>
+                <h3>Governor's Jail</h3>
+                <p>
+                    Getting 2 coins is already a good deal, but the ability to block a supply card 
+                    for a turn opens up multiple strategic possibilities. You can use it to reserve 
+                    the card for yourself, preventing an opponent from acquiring it. Additionally, 
+                    you can influence any cards that interact with the supply to your advantage.
+                </p>
+                <p>
+                    While the card is face-down, it cannot be interacted with in any way. It is like it doesn't exist. 
+                    However, it still occupies one of the six slots in the market.
+                    You restore it by simply flipping it face-up on your next turn.
+                </p>
+            </div>
+        </div>
+
+        <div class="card-pres">
+            <img src="cards/monkey’s-bargain.jpg" />
+            <div>
+                <h3>Monkey’s Bargain</h3>
+                <p>
+                    The temptation to remove your weaker base deck cards is strong,
+                    but have you considered parting with a higher victory point card? 
+                    Your decision hinges on whether you can make the most of those extra 
+                    Actions. Choose wisely what to trade with the Capuchin monkey.
+                </p>
+            </div>
+        </div>
+
+        <div class="card-pres">
+
+            <img src="cards/gambling-addiction.jpg" />
+            <div>
+                <h3>Gambling Addiction</h3>
+                <p>
+                    DeckHand has an equal amount of Attacks, Adventures, and Structures. You could calculate 
+                    your odds and make a rational choice, but can a real Pirate ever be truly rational?
+                </p>
+                <p>
+                    When you have 2 reloads, you play them consecutively, and they are always optional. That means
+                    you could do 1 reload and stop there if you are satisfied.
+                </p>
+            </div>
+        </div>
+
+        <div class="card-pres">
+
+            <img src="cards/improvised-grenade.jpg" />
+            <div>
+                <h3>Improvised Grenade</h3>
+                <p>
+                    Consider acquiring Improvised Grenade in the mid-game when opponents have larger 
+                    stashes and 2-cost cards.
+                </p>
+                <p>
+                    Be cautious about using it as your first card, as 
+                    it can potentially destroy itself if you discard it and you have no better target.
+                    This is possible because the discard trigger (<b>When discarded</b>) 
+                    happens after the card enters your stash, so keep this in mind to avoid unintended consequences.
+                </p>
+                <p>
+                    The card discard effect can be used as a deck thinner, but everybody "benefits". 
+                    It's important to note that ownership of fewer than 4 cards is not allowed (general rules). 
+                    Therefore, any effect that could potentially reduce ownership to 3 or less does not apply.
+                </p>
+            </div>
+        </div>
+
+        <div class="card-pres">
+            <img src="cards/useless-totem.jpg" />
+            <div>
+                <h3>Useless Totem</h3>
+                <p>
+                    Useless Totem is maybe not as useless as it looks at first glance. 
+                    It has interesting interaction with Tavern, Fortune Teller
+                    and any card that cares about card type on the supply such as Adventurer’s Guild
+                    or Gambling Addiction. 2 victory points for one coin is also a bargain.
+                </p>
+                <p>
+                    As Useless Totem is every type at once, all all time, from any location,
+                    playing it does nothing more than putting it in your stash.
+                </p>
+            </div>
+        </div>
+
+        <div class="card-pres">
+            <img src="cards/end-of-the-rainbow.jpg" />
+            <div>
+                <h3>End of the Rainbow</h3>
+                <p>
+                    When this card is in your stash alongside an Attack and a Structure, 
+                    you gain an extra Action at the beginning of your turn.
+                    Keep in mind that your opponents might try to influence
+                    your stash to disable this effect.
+                </p>
+            </div>
+        </div>
+
+
+        <div class="card-pres">
+            <img src="cards/typhoon.jpg" />
+            <div>
+                <h3>Typhoon</h3>
+                <p>
+                    Typhoon offers you the chance to pass around a weaker card, 
+                    hoping for something better in return. This decision depends on your
+                    neighbor's stash. Since the pass effect is simultaneous, it does not empty any deck.
+                    If a player has no cards in their stash, they must pass the top card of their deck.
+                </p>
+
+                <p>When drawing 2 cards, remember that the draws are sequential and optional.
+                    Therefor you can choose to draw 0, 1, or 2 cards.</p>
+                <p>
+                    If the choice of cards to pass around seems to matter
+                    (e.g., one player seem to change their card based on another's choice), 
+                    as the initiator of the effect, you can decide the exact order in which
+                    each player selects a card to pass.
+                </p>
+            </div>
+        </div>
+
+        <div class="card-pres">
+            <img src="cards/imperial-powder.jpg" />
+            <div>
+                <h3>Imperial Powder</h3>
+                <p>
+                    Imperial Powder is a highly volatile package, primed to explode at any moment. 
+                    The question is, can you dispose of it before the game ends? Perhaps a 
+                    Typhoon event will set it off?
+                    If that happens, and you pass Imperial Powder to your opponent (thus losing ownership)
+                    you might target Imperial Powder itself for destruction.
+                    If you do, the explosive effect triggers again, but for your neighbor's benefit. 
+                    I'll let you imagine the explosive consequences.
+                </p>
+            </div>
+        </div>
+
+        <div class="card-pres">
+            <img src="cards/rum-factory.jpg" />
+            <div>
+                <h3>Rum Factory</h3>
+                <p>
+                    What starts like a generous gift might end up causing a heavy hangover.<br>
+                    Rum Factory can provide the reach you need to access a desirable card.
+                </p>
+                <p>
+                    Alternatively, luck might favor you on the next turn, allowing you to discard
+                    a start-of-turn card, already placing it where you want it for your following turn.
+                </p>
+            </div>
+        </div>
+
+        <div class="card-pres">
+            <img src="cards/going-ape.jpg" />
+            <div>
+                <h3>Going Ape</h3>
+                <p>
+                    Going Ape offers incredible flexibility, allowing you to swap a card
+                    from your hand with any other card from the supply of the same cost without consuming an Action. 
+                    This includes the possibility of swapping Going Ape itself if 
+                    it serves your strategy. If you do that Going Ape ends up in the supply
+                    and not in your discard.
+                </p>
+            </div>
+        </div>
+
+        <div class="card-pres">
+            <img src="cards/voodoo-curse.jpg" />
+            <div>
+                <h3>Voodoo Curse</h3>
+                <p>A powerful card if you can hit a good card from your opponent.
+                    Voodoo Curse can even be played on yourself. 
+                    This is because it uses "target player" rather than "target enemy".
+                    Other cards in 
+                    DeckHand offer similar flexibility, such as Lost Expedition.
+                </p>
+                <p>
+                    Cards like Voodoo Curse, which do not use the "discard" keyword, 
+                    do not trigger the "When discarded" effects of affected cards. 
+                    For a card to be discarded, it has to be in someone's hand first.
+                </p>
+            </div>
+        </div>
+
+
+        <div class="card-pres">
+            <img src="cards/ghost-crew.jpg" />
+            <div>
+                <h3>Ghost Crew</h3>
+                <p>
+                    The peculiar wording on Ghost Crew is there to avoid a
+                    catastrophic interaction with cards such as Voodoo Curse or Kraken's Fury.
+                </p>
+                <p>
+                    If this card were to simply state "on top of your deck", playing Voodoo Curse on it would
+                    allow you to place it on top of your own deck, effectively taking it away from your opponent.
+                </p>
+                <p>
+                    In DeckHand, you own all the cards from your hand, deck, and stash unless a steal, 
+                    remove from the game, or swap effect occurs.
+                    Putting a card aside, such as with the Lost Expedition effect, does not change the ownership.
+                    At the end of the game, all the cards you own contribute to your victory points.
+                </p>
+            </div>
+        </div>
+
+
+        <div class="card-pres">
+            <img src="cards/skull-island.jpg" />
+            <div>
+                <h3>Skull Island</h3>
+                <p>
+                    Everyone reveals a card. Then you (and only you) have the option to swap one of them with a card from the supply. 
+                    All revealed cards, including the newly swapped one, go back on the top of their respective decks. 
+                </p>
+                <p>
+                    A swap can only occur if there are two valid cards to exchange; otherwise, nothing happens.
+                </p>
+            </div>
+        </div>
+
+        <div class="card-pres">
+            <img src="cards/emperor’s-caprice.jpg" />
+            <div>
+                <h3>Emperor's Caprice</h3>
+                <p>
+                    You can gain a powerful effect if your opponent allows it.
+                    The two reloads can also prove valuable in combination with other cards.
+                </p>
+                <p>
+                    If, for any reason, the effect of the chosen card makes it leave the supply, 
+                    like in the case of choosing Gambling Addiction and reloading it, the card's 
+                    effect continue as long as it remains valid.
+                </p>
+                <p>
+                    Once a card's effect begins resolution, 
+                    it detaches from the card itself and should be brought to its conclusion.
+                </p>
+            </div>
+        </div>
+
+
+        <div class="card-pres">
+            <img src="cards/gold-mine.jpg" />
+            <div>
+                <h3>Gold Mine</h3>
+                <p>
+                    Present your opponent with a challenging task: predicting the combined 
+                    value of your next 3 cards. If they haven't been closely monitoring your 
+                    stash, this could prove quite difficult for them. Should they fail, you
+                    strike gold without expending an Action.
+                </p>
+
+                <p>The 3 draws are sequential and optional, so you might draw none, one, or continue up to 3.</p>
+            </div>
+        </div>
+
+        <div class="card-pres">
+            <img src="cards/jail-breaker.jpg" />
+            <div>
+                <h3>Jail Breaker</h3>
+                <p>
+                    The Jail Breaker is eagerly waiting to break out of your deck and embark on an adventure.
+                    If you do not send him on one, he will simply re-enter your deck automatically to wait for a better time to escape.
+                </p>
+                <p>
+                    This card is part of the Crew expansion and introduces a new concept: a Buy action with a card type restriction. 
+                    In this case, the Buy action can only be used for an adventure card.
+                </p>
+            </div>
+        </div>
+
+        <!-- <div class="card-pres">
+            <img src="cards/harbor-market.jpg" />
+            <div>
+                <p>
+                    A simple card that might help you win the game.
+                </p>
+            </div>
+        </div> -->
+
+
+
+        <h2 id="crew-expansion">Crew Expansion Rules</h2>
+
+        <p>In the <a href="https://drive.google.com/drive/folders/1Q2YrPkwHwWGL1BouDfNLTK9Rz-WX4WWC">free expansion</a>, 
+            a new type of cards called <b>Crew</b> is introduced.
+            These cards reside in a separate Crew deck. To hire a Crew during the game, 
+            make use of an action to secretly look at the top 3 cards of this Crew deck, 
+            put 1 in front of you face down, one back on top of the deck, and the last one at
+            the bottom.
+            (refer to <a href="https://drive.google.com/drive/folders/1Q2YrPkwHwWGL1BouDfNLTK9Rz-WX4WWC">the rules</a> for complete instructions).
+        </p>
+        <p>
+            The Crew remains hidden until you choose to pay them 1 coin. 
+            Once paid, flip the Crew card face up, revealing their skills to the other players.
+        </p>
+
+        <p>Revealing a crew or utilizing one of their skills does not count as an Action. 
+            However, you can only use one skill per turn and per crew.
+        </p>
+
+        <div class="card-pres">
+            <img src="cards/young-pirate.jpg" style="border-radius: 7px;" />
+            <div>
+                <h3>Young Pirate</h3>
+                <ol class="crew-list">
+                    <li>
+                        The red arrow on this skill indicate the left side is a salary, not a condition.
+                        The salary has to be paid by discarding an Attack.
+                        <br>
+                        If you already discarded an Attack by other means this turn, it doesn't count.
+                        It has to be discarded right there and then when you want to use the skill.
+                    </li>
+                    <li>
+                        As there is not red or green arrow, this skill is a condition. This means the left
+                        part is a game state that you need to reach to be able to chose this skill.
+                        <br>
+                        In this case, you need to have at least 6 attacks in your stash to be able to activate this skill and
+                        gain an extra Action.
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+
+        <div class="card-pres">
+            <img src="cards/the-archeologist.webp" style="border-radius: 7px;" />
+            <div>
+                <h3>The Archeologist</h3>
+                <ol class="crew-list">
+                    <li>
+                        The green arrow on this skill indicates that the skill can be
+                        freely used every turn without any condition. 
+                        In this case, to use this skill's effect, 
+                        you would need to have a supply card face
+                        down, which is a result that a few cards can create 
+                        (such as The Grand Council, Hidden Cove, Governor's Jail).
+                    </li>
+                    <li>
+                        When you unearth 2, it means you can select up to 2 cards from your stash and place them at the bottom of your deck.
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="card-pres">
+            <img src="cards/saboteur.webp" style="border-radius: 7px;" />
+            <div>
+                <h3>Saboteur</h3>
+                <ol class="crew-list">
+                    <li>
+                        The Saboteur's free skill forces an enemy to choose a 1-cost card from 
+                        their stash and place it at the bottom of their deck.
+                    </li>
+                    <li>
+                        The Saboteur allows you to swap any face-up cards on the table after you have played 2 attacks.
+                        These could be cards in your stash, an opponent's stash, or even cards in the supply.
+                        Crew cards do not have a cost; therefore, it is not allowed to swap them.
+                    </li>
+                    <li>
+                        "Steal 1" means that you can decrease an enemy's coin count by 1 and increase your own by 1. 
+                        If no enemy has any coins, you cannot use this skill.
+                    </li>
+                    <li>
+                        If you hired a Crew this turn, you can activate the Saboteur's last skill and 
+                        flip any 1 Crew card face down, disabling it until its owner pays 1 coin to reactivate it.
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+
+        <p style="text-align: center;"><a href="/deckhand/#gameplay-preview">← Back to the main website</a></p>
+    </div>
+
+
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-1048886-9', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+<!-- <script src="//embed.typeform.com/next/embed.js"></script> -->
+
+</body>
+</html>
