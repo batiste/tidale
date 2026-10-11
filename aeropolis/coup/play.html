@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Aeropolis Coup — Playtest</title>
+    <link rel="stylesheet" href="play.css" />
+  </head>
+  <body>
+    <header class="page-head">
+      <h1>Aeropolis Coup <span class="sub">Core prototype · vs bots</span></h1>
+      <nav>
+        <a class="nav-link" href="plan-1.txt">Spec</a>
+        <label class="nav-link">Players
+          <select id="count"><option>2</option><option selected>3</option><option>4</option></select>
+        </label>
+        <button class="nav-link" id="sound" type="button">Sound on</button>
+        <button class="nav-link" id="new-game" type="button">New game</button>
+      </nav>
+    </header>
+
+    <div class="status" id="status"></div>
+    <div class="prompt" id="prompt"></div>
+
+    <main class="table">
+      <section>
+        <p class="mini-label">City · High (Citizen) / Low (Outcast)</p>
+        <div class="board" id="board"></div>
+        <p class="mini-label">Market</p>
+        <div class="market" id="market"></div>
+      </section>
+      <aside class="players" id="players"></aside>
+    </main>
+
+    <section class="log-wrap">
+      <p class="mini-label">Log (newest first)</p>
+      <ol class="log" id="log"></ol>
+    </section>
+
+    <dialog id="round-modal" class="modal"></dialog>
+
+    <script src="play.js"></script>
+  </body>
+</html>

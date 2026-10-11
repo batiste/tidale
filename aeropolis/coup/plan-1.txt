@@ -1,0 +1,177 @@
+# Aeropolis — Core Prototype
+
+New prototype in a series. The reference version is ../index.html.
+This directory explores a quite different version of the game.
+
+2–4 players. Card draft: cards.json (20 Citizen, 20 Outcast, 20 Secrets, 10 characters, 3 stack cards).
+
+## Concept
+
+A city is on the edge of revolution.
+
+Each player controls two characters (2 cards):
+- **Citizen** (C) — High City
+- **Outcast** (O) — Low City
+
+The two character cards are stacked vertically. Each starts a horizontal **line** to its right.
+Each character card has a unique effect. All cards are bridge sized.
+
+Players place agents, gather Secrets and gain leverage over the city's personalities
+to control locations when the Revolution comes.
+
+**Core hypothesis: a coup needs an inside man.**
+The Outcast brings force, the Citizen brings legitimacy. Neither controls a location alone.
+
+---
+
+## Terms
+
+- **Agent**: a player's cube, placed on a location half. Not spent.
+- **High / Low**: the two halves of each location. Citizen places agents in High, Outcast in Low.
+- **Control**: see Locations.
+- **Line**: the cards to the right of a character. Max 2 cards; adding a 3rd discards the oldest.
+- **Arms slot**: on about 50% of cards, with a location affinity (see Arms).
+- **Cell**: a Citizen card and an Outcast card in the same column whose arms slots name the same location: +1 Low strength there while both stay.
+- **Pay → get**: an optional effect, resolved each time it fires (e.g. pay 1 gold → 1 agent). Agent placement at a location of your choice always costs 1 gold; agents at a fixed location are free.
+- **Personality**: a token tied to a location, target of leverage (see Secrets).
+- **Resources**: gold, arms. Both pay card costs. Some cards also cost a Secret (discard it unrevealed): a design space to explore.
+
+---
+
+## Split economy
+
+- Outcast line: mostly Secrets, arms, Low agents.
+- Citizen line: mostly gold, High agents.
+
+Each side needs what the other produces.
+
+---
+
+## Setup
+
+- Each player: 2 gold, 1 arm, 12 agents in reserve (shared by Citizen and Outcast). No agents on the board.
+- Market: 2 Citizen + 2 Outcast cards, each refilled from its own deck, plus 3 free stacks always available: **Stipend** (Citizen, +1 gold), **Retainer** (Citizen, pay 1 gold → 1 High agent), **Hired Muscle** (Outcast, pay 1 gold → 1 Low agent).
+- Revolution track at 0.
+- First player: random; passes left each round.
+- Empty deck (market or Secrets): shuffle its discards into it.
+
+---
+
+## Actions
+
+Each round, players take 3 turns each, one at a time, going around the table 3 times.
+On a turn, take 1 action:
+
+**Investigate**: draw 1 Secret.
+
+**Build connection**: take 1 card from the market, pay its cost (gold, arms or free).
+Add it to the line of its own character (C cards to C, O cards to O).
+Activate that line: resolve every effect on it, character included (as in ../index.html).
+Refill the market. Stack cards take a line slot like any other.
+
+Agents are placed only by effects (cards, Secrets, Workers); with an empty reserve, a placement moves one of your agents (same half) instead.
+**Move**: an agent changes location, staying in its half.
+
+Secrets are used for free, at any time (see Secrets).
+
+---
+
+## Locations
+
+Each location has a High half and a Low half.
+
+**Control**: the player with the highest Low strength, among players with at least 1 agent in High.
+Low strength = your agents in Low + your arms on cards with that location's affinity + your cells there.
+Tie: nobody.
+
+| Location    | Personality | Reward             | Revolution VP |
+|-------------|-------------|--------------------|---------------|
+| Governor    | Governor    | draw a Secret      | 3             |
+| Military    | General     | 1 arm              | 3             |
+| Guild       | Guildmaster | 2 gold             | 3             |
+| Underground | Kingpin     | your Outcast line holds 3 cards until the next control (losing it: discard the oldest) | 3 |
+| Printer     | —           | draw 2 Secrets, discard 1 | 1 |
+| Workers     | —           | place 1 agent (High or Low) | 1 |
+
+**Seats of power**: the 4 locations with a personality are worth 3 VP; Printer and Workers 1 VP.
+Leverage over a personality therefore matters where it counts most.
+
+---
+
+## Arms
+
+Arms come from line effects and Military. They also pay card costs.
+
+Arming a card: put 1 arm from your supply on its arms slot.
+- When you add a card with an arms slot to a line, you may arm it (before the line activates).
+- At the end of the round, you may put 1 arm on one card in your lines.
+
+A card leaving the line discards its arms.
+
+Converting slots: the arm is spent at once for the slot's effect (gold or Secret).
+
+---
+
+## End of round
+
+1. Arm one card (see Arms).
+2. Resolve Control of every location; each controller takes its reward.
+3. Discard all arms on cards.
+4. Upkeep: each controller sends 1 of their Low agents there back to reserve.
+5. Revolution +1.
+
+In the last round, the Revolution replaces steps 2–5.
+
+---
+
+## Secrets
+
+One shared Secret deck. Hand limit 3: discard down to 3 after drawing. Each Secret has:
+- a title
+- a **Reveal** effect (weak)
+- a **Prepared** effect (strong, at the Revolution)
+- optionally a personality
+
+At any time, for free, a Secret can be:
+- **Exploited**: reveal it, apply Reveal, discard it.
+- **Leveraged** (personality Secrets only): discard it to blackmail that personality:
+  - win a contract: take a market card for free (as Build connection, without cost), or
+  - remove an opponent's agent (either half) from the personality's location.
+
+Otherwise it stays hidden as **Prepared** until the Revolution.
+
+At most 10–15% of Secrets score VP (under a condition).
+
+Example: **MILITARY PLANS** (General)
+- Reveal: place 2 agents in Military Low.
+- Prepared: place 2 agents in Military Low and 1 in High.
+
+---
+
+## Revolution
+
+Revolution track: a countdown, +1 at the end of each round. The game lasts 6 rounds.
+At the end of round 6 (see End of round):
+1. Reveal and resolve all Prepared Secrets, in turn order.
+2. Resolve Control of every location (arms on cards count).
+3. Score: Revolution VP of each controlled location, plus Secret VP.
+
+Tie: most gold left, then most arms.
+
+The Revolution cannot be prevented, only prepared for.
+
+Later: a Revolution catalyst players benefit from triggering.
+
+---
+
+## Parked ideas
+
+- Cells may be replaced by a card effect that activates the card above or below it (the other character's line).
+
+---
+
+## Prototype goal
+
+- Does the Citizen/Outcast duality feel real?
+- Does the High/Low control rule make the two characters work together?
+- Does the theme (intrigue, secrets, blackmail) match the mechanics?
