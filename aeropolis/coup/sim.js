@@ -2,6 +2,7 @@
 //   node sim.js [games] [players]            play, write logs to sim-logs/, print stats
 //   node sim.js compare [games] [players]    compare rule variants (see VARIANTS)
 //   node sim.js balance [games] [players]    character and card strength
+//   node sim.js audit                        price every card with the value model (cards.json _schema.values)
 const fs = require("fs");
 const path = require("path");
 const E = require("./play.js");
@@ -9,10 +10,15 @@ E.boot(require("./cards.json"));
 
 const ALL_VARIANTS = {
   base: {},
+  "Low only": { strength: "low" },
   "5 locations": { locations: ["governor", "military", "guild", "underground", "workers"] },
+  "no cap": { lowCap: 0 },
   "no upkeep": { upkeep: false },
   "arming: escalate": { arming: "escalate" },
   "arming: tax": { arming: "tax" },
+  "cap + no upkeep": { upkeep: false },
+  "High × Low": { strength: "product" },
+  "High × Low + High cap 3": { strength: "product", highCap: 3 },
 };
 
 // compare [games] [players] [variant names, comma separated]
@@ -38,6 +44,7 @@ async function batch(games, players, config = {}, logDir = null) {
       vps,
       margin: G.ranking[0].vp.total - G.ranking[1].vp.total,
       tiedTop: G.ranking[0].vp.total === G.ranking[1].vp.total,
+      flips: G.flips,
       controlled: G.players.reduce((t, p) => t + p.vp.locs.length, 0) / E.LOCS.length,
       // players present (any agent) per location at the Revolution
       presence: mean(board.map((b) => G.players.filter((p) => b.high[p.id] || b.low[p.id]).length)),
@@ -80,6 +87,8 @@ function summary(r, games, players) {
     "tied top %": f1(100 * mean(r.games.map((g) => (g.tiedTop ? 1 : 0)))),
     "controlled %": f1(100 * mean(r.games.map((g) => g.controlled))),
     "players/location": f1(mean(r.games.map((g) => g.presence))),
+    "High/Low placed": `${f1(per("agent:high"))}/${f1(per("agent:low"))}`,
+    "control changes/game": f1(mean(r.games.map((g) => g.flips))),
     "plans/turn": f1(per("plans") / turns),
     investigate: f1(per("investigate")),
     "stack buys": f1(stackBuys),
@@ -92,8 +101,11 @@ function summary(r, games, players) {
     upkeep: f1(per("upkeep")),
     "arms placed at end": f1(per("arm:end")),
     "arms taxed": f1(per("arm:tax")),
+    "capped placements": f1(per("capped")),
     "cells formed": f1(per("cell-formed")),
     "paid effects": f1(per("pay")),
+    "power effects fired": f1(per("pay:power")),
+    "agents removed": f1(per("removed")),
   };
 }
 
@@ -108,6 +120,33 @@ function table(rows, cols) {
   const mode = isNaN(Number(args[0])) ? args.shift() : "play";
   const games = Number(args[0]) || (mode === "play" ? 5 : 40);
   const players = Number(args[1]) || 4;
+
+  if (mode === "audit") {
+    const data = require("./cards.json");
+    console.log(`Values in gold: ${Object.entries(data._schema.values).map(([k, v]) => `${k} ${v}`).join(", ")}`);
+    console.log("Per activation: what the card gives each time its line fires (optional pay → get counted net, never below 0).");
+    console.log("Payback: activations needed to earn back the buy cost.\n");
+    const row = (d, side) => {
+      const per = E.defValue(d);
+      const cost = d.cost ? E.costValue(d.cost) : 0;
+      return {
+        card: d.name + (d.power ? " *" : ""),
+        side,
+        cost: f1(cost),
+        "per activation": f1(per),
+        payback: per ? f1(cost / per) : "—",
+        effects: d.effects.map(E.fx).join("; "),
+      };
+    };
+    const cols = ["card", "side", "cost", "per activation", "payback", "effects"];
+    const chars = data.characters.map((c) => row(c, c.side)).sort((a, b) => b["per activation"] - a["per activation"]);
+    console.log(`Characters (fire on every activation of their line)\n${table(chars, cols)}\n`);
+    const cards = [...data.basic.map((d) => row(d, d.side + " stack")), ...data.citizen.map((d) => row(d, "citizen")), ...data.outcast.map((d) => row(d, "outcast"))].sort(
+      (a, b) => (a.payback === "—") - (b.payback === "—") || a.payback - b.payback
+    );
+    console.log(`Market cards, best payback first (* = power card)\n${table(cards, cols)}`);
+    return;
+  }
 
   if (mode === "compare") {
     const rows = [];

@@ -3,16 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Undercity — Playtest</title>
-    <link rel="stylesheet" href="common.css" />
-    <link rel="stylesheet" href="double-life-play.css" />
-    <link rel="stylesheet" href="undercity-play.css" />
+    <title>Spire — Playtest</title>
+    <link rel="stylesheet" href="../common.css" />
+    <link rel="stylesheet" href="../double-life/double-life-play.css" />
+    <link rel="stylesheet" href="../undercity/undercity-play.css" />
+    <link rel="stylesheet" href="spire-play.css" />
   </head>
   <body>
     <header class="page-head">
-      <h1>Undercity <span class="sub">Playtest · hot-seat</span></h1>
+      <h1>Spire <span class="sub">Playtest · hot-seat</span></h1>
       <nav>
-        <a class="nav-link" href="undercity.html">Rules</a>
+        <a class="nav-link" href="spire.html">Rules</a>
         <button class="nav-link" id="new-game" type="button">New game</button>
       </nav>
     </header>
@@ -23,15 +24,8 @@
       <section>
         <p class="mini-label">Market <span id="market-count"></span></p>
         <div class="market" id="market"></div>
-        <div class="board-wrap">
-          <div class="board-scroll">
-            <div class="board" id="board"></div>
-          </div>
-          <div>
-            <p class="mini-label">Spire · ● Citizen ◆ Outcast</p>
-            <div class="spire-track" id="spire"></div>
-          </div>
-        </div>
+        <p class="mini-label">Spire · ● Citizen ◆ Outcast · number = hex cost</p>
+        <div class="board-scroll"><div id="board"></div></div>
       </section>
       <aside class="players" id="players"></aside>
     </main>
@@ -59,7 +53,7 @@
       </form>
     </dialog>
 
-    <script src="undercity-data.js"></script>
-    <script src="undercity-play.js"></script>
+    <script src="spire-data.js"></script>
+    <script src="spire-play.js"></script>
   </body>
 </html>

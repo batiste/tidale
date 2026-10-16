@@ -1,25 +1,27 @@
 {
   "_schema": {
-    "effect": "{ gold|arms|secret|high|low|move: n, at?: location, ifNoArms?: true }, { choice: [effect, effect] } or { pay: cost, get: effect } (optional: pay to get). high/low = place agents in that half (at: any if omitted). move = move your agents. secret = draw Secrets.",
+    "effect": "{ gold|arms|secret|high|low|move|remove: n (remove = opponent agents), at?: location, where?: \"noLow\" (only where you have no Low agent), ifNoArms?: true }, { choice: [effect, effect] } or { pay: cost, get: effect or [effects] } (optional: pay to get). power: true marks the strong pay cards (10-20% of the deck). high/low = place agents in that half (at: any if omitted). move = move your agents. secret = draw Secrets.",
     "cost": "{ gold?: n, arms?: n, secret?: n }; {} = free. secret = discard that many Secrets unrevealed",
     "slot": "arms slot: { at: location, convert?: effect } or null. convert = the arm is turned into that effect instead of adding strength.",
     "vp": "{ n, control: location } = n VP if you control it; { n, per: \"seat\" } = n VP per seat of power you control",
+    "values": { "gold": 1, "arms": 1.5, "secret": 2, "agent": 1.5, "agentFixed": 1, "move": 0.75, "remove": 2 },
+    "valuesNote": "Exchange rates in gold, used to price cards (node sim.js audit) and by the bots. agent = placed where you choose; agentFixed = at a named location.",
     "locations": ["governor", "military", "guild", "underground", "printer", "workers"],
     "personalities": { "governor": "governor", "general": "military", "guildmaster": "guild", "kingpin": "underground" }
   },
 
   "characters": [
-    { "id": "ch-councillor", "side": "citizen", "name": "Councillor", "effects": [{ "gold": 1 }] },
+    { "id": "ch-councillor", "side": "citizen", "name": "Councillor", "effects": [{ "gold": 2 }] },
     { "id": "ch-judge", "side": "citizen", "name": "Judge", "effects": [{ "pay": { "gold": 1 }, "get": { "high": 1 } }] },
     { "id": "ch-arms-dealer", "side": "citizen", "name": "Arms Dealer", "effects": [{ "arms": 1 }] },
-    { "id": "ch-socialite", "side": "citizen", "name": "Socialite", "effects": [{ "choice": [{ "secret": 1 }, { "gold": 1 }] }] },
+    { "id": "ch-socialite", "side": "citizen", "name": "Socialite", "effects": [{ "choice": [{ "secret": 1 }, { "gold": 2 }] }] },
     { "id": "ch-envoy", "side": "citizen", "name": "Envoy", "effects": [{ "pay": { "gold": 1 }, "get": { "move": 1 } }] },
 
     { "id": "ch-hustler", "side": "outcast", "name": "Hustler", "effects": [{ "pay": { "gold": 1 }, "get": { "low": 1 } }] },
-    { "id": "ch-fixer", "side": "outcast", "name": "Fixer", "effects": [{ "gold": 1 }, { "arms": 1 }] },
+    { "id": "ch-fixer", "side": "outcast", "name": "Fixer", "effects": [{ "gold": 2 }, { "arms": 1 }] },
     { "id": "ch-snitch", "side": "outcast", "name": "Snitch", "effects": [{ "secret": 1 }] },
-    { "id": "ch-gunrunner", "side": "outcast", "name": "Gunrunner", "effects": [{ "low": 1, "at": "military" }] },
-    { "id": "ch-firebrand", "side": "outcast", "name": "Firebrand", "effects": [{ "low": 1, "at": "workers" }, { "arms": 1 }] }
+    { "id": "ch-gunrunner", "side": "outcast", "name": "Gunrunner", "effects": [{ "pay": { "arms": 1 }, "get": { "low": 1 } }] },
+    { "id": "ch-firebrand", "side": "outcast", "name": "Firebrand", "effects": [{ "low": 1, "where": "noLow" }] }
   ],
 
   "basic": [
@@ -29,38 +31,41 @@
   ],
 
   "citizen": [
-    { "id": "c-banker", "name": "Banker", "cost": { "gold": 2 }, "effects": [{ "gold": 2 }], "slot": null, "copies": 2 },
-    { "id": "c-magistrate", "name": "Magistrate", "cost": { "gold": 1 }, "effects": [{ "gold": 1 }, { "pay": { "gold": 1 }, "get": { "high": 1 } }], "slot": null, "copies": 2 },
-    { "id": "c-senator", "name": "Senator", "cost": { "gold": 1, "secret": 1 }, "effects": [{ "high": 1, "at": "governor" }, { "gold": 1 }], "slot": { "at": "governor" }, "copies": 1 },
-    { "id": "c-quartermaster", "name": "Quartermaster", "cost": { "gold": 1 }, "effects": [{ "high": 1, "at": "military" }], "slot": { "at": "military" }, "copies": 2 },
-    { "id": "c-guild-broker", "name": "Guild Broker", "cost": { "gold": 1 }, "effects": [{ "gold": 1 }], "slot": { "at": "guild", "convert": { "gold": 1 } }, "copies": 2 },
-    { "id": "c-salon-hostess", "name": "Salon Hostess", "cost": { "gold": 2 }, "effects": [{ "secret": 1 }], "slot": null, "copies": 2 },
-    { "id": "c-patron", "name": "Patron", "cost": { "arms": 1 }, "effects": [{ "pay": { "gold": 1 }, "get": { "high": 1 } }, { "arms": 1 }], "slot": null, "copies": 2 },
-    { "id": "c-diplomat", "name": "Diplomat", "cost": { "gold": 1 }, "effects": [{ "move": 1 }], "slot": { "at": "guild" }, "copies": 1 },
-    { "id": "c-censor", "name": "Censor", "cost": { "gold": 2 }, "effects": [{ "high": 1, "at": "printer" }], "slot": { "at": "printer", "convert": { "secret": 1 } }, "copies": 1 },
-    { "id": "c-guard-captain", "name": "Guard Captain", "cost": { "arms": 1, "secret": 1 }, "effects": [{ "high": 1, "at": "military" }, { "arms": 1 }], "slot": { "at": "military" }, "copies": 1 },
-    { "id": "c-landlord", "name": "Slum Landlord", "cost": {}, "effects": [{ "gold": 1 }], "slot": { "at": "underground" }, "copies": 1 },
-    { "id": "c-reformer", "name": "Reformer", "cost": { "gold": 1 }, "effects": [{ "high": 1, "at": "workers" }], "slot": { "at": "workers" }, "copies": 1 },
-    { "id": "c-spymaster", "name": "Spymaster", "cost": { "secret": 1 }, "effects": [{ "secret": 1 }, { "pay": { "gold": 1 }, "get": { "high": 1 } }], "slot": null, "copies": 1 },
-    { "id": "c-financier", "name": "Financier", "cost": { "gold": 2 }, "effects": [{ "gold": 1 }, { "arms": 1 }], "slot": null, "copies": 1 }
+    { "id": "c-banker", "name": "Banker", "cost": { "gold": 2 }, "effects": [{ "gold": 2 }, { "pay": { "gold": 3 }, "get": { "high": 3 } }], "slot": null, "copies": 1, "power": true },
+    { "id": "c-magistrate", "name": "Magistrate", "cost": { "gold": 2 }, "effects": [{ "gold": 2 }, { "pay": { "gold": 1 }, "get": { "high": 1 } }], "slot": null, "copies": 2 },
+    { "id": "c-senator", "name": "Senator", "cost": { "gold": 2, "secret": 1 }, "effects": [{ "high": 1, "at": "governor" }, { "gold": 2 }], "slot": { "at": "governor" }, "copies": 1 },
+    { "id": "c-quartermaster", "name": "Quartermaster", "cost": { "gold": 2 }, "effects": [{ "high": 1, "at": "military" }], "slot": { "at": "military" }, "copies": 2 },
+    { "id": "c-guild-broker", "name": "Guild Broker", "cost": { "gold": 2 }, "effects": [{ "gold": 2 }], "slot": { "at": "guild", "convert": { "gold": 1 } }, "copies": 2 },
+    { "id": "c-salon-hostess", "name": "Salon Hostess", "cost": { "gold": 3 }, "effects": [{ "secret": 1 }], "slot": null, "copies": 1 },
+    { "id": "c-kingmaker", "name": "Kingmaker", "cost": { "gold": 2 }, "effects": [{ "pay": { "gold": 2, "arms": 1 }, "get": [{ "high": 2 }, { "low": 2 }] }], "slot": { "at": "guild" }, "copies": 1, "power": true },
+    { "id": "c-banker-2", "name": "Moneylender", "cost": { "gold": 3 }, "effects": [{ "gold": 3 }], "slot": null, "copies": 1 },
+    { "id": "c-patron", "name": "Patron", "cost": { "gold": 1, "arms": 1 }, "effects": [{ "pay": { "gold": 1 }, "get": { "high": 1 } }, { "arms": 1 }], "slot": null, "copies": 2 },
+    { "id": "c-diplomat", "name": "Diplomat", "cost": { "gold": 2 }, "effects": [{ "move": 1 }], "slot": { "at": "guild" }, "copies": 1 },
+    { "id": "c-censor", "name": "Censor", "cost": { "gold": 3 }, "effects": [{ "high": 1, "at": "printer" }], "slot": { "at": "printer", "convert": { "secret": 1 } }, "copies": 1 },
+    { "id": "c-guard-captain", "name": "Guard Captain", "cost": { "gold": 1, "arms": 1, "secret": 1 }, "effects": [{ "high": 1, "at": "military" }, { "arms": 1 }], "slot": { "at": "military" }, "copies": 1 },
+    { "id": "c-landlord", "name": "Slum Landlord", "cost": { "gold": 1 }, "effects": [{ "gold": 2 }], "slot": { "at": "underground" }, "copies": 1 },
+    { "id": "c-reformer", "name": "Reformer", "cost": { "gold": 2 }, "effects": [{ "high": 1, "at": "workers" }], "slot": { "at": "workers" }, "copies": 1 },
+    { "id": "c-spymaster", "name": "Spymaster", "cost": { "gold": 1, "secret": 1 }, "effects": [{ "secret": 1 }, { "pay": { "gold": 1 }, "get": { "high": 1 } }], "slot": null, "copies": 1 },
+    { "id": "c-inquisitor", "name": "Inquisitor", "cost": { "gold": 3 }, "effects": [{ "pay": { "gold": 2, "secret": 1 }, "get": [{ "remove": 1 }, { "high": 1 }] }], "slot": { "at": "governor" }, "copies": 1, "power": true }
   ],
 
   "outcast": [
-    { "id": "o-smuggler", "name": "Smuggler", "cost": { "gold": 1 }, "effects": [{ "gold": 1 }], "slot": { "at": "military" }, "copies": 2 },
-    { "id": "o-informant", "name": "Informant", "cost": { "gold": 1 }, "effects": [{ "secret": 1 }], "slot": null, "copies": 2 },
-    { "id": "o-agitator", "name": "Agitator", "cost": {}, "effects": [{ "gold": 1 }, { "pay": { "gold": 1 }, "get": { "low": 1 } }], "slot": null, "copies": 2 },
-    { "id": "o-thug", "name": "Thug", "cost": {}, "effects": [{ "low": 1, "at": "military" }], "slot": { "at": "military" }, "copies": 2 },
-    { "id": "o-fence", "name": "Fence", "cost": {}, "effects": [{ "gold": 1 }], "slot": null, "copies": 1 },
-    { "id": "o-gang-boss", "name": "Gang Boss", "cost": { "gold": 2 }, "effects": [{ "low": 2, "at": "underground" }], "slot": { "at": "underground" }, "copies": 1 },
-    { "id": "o-pickpocket", "name": "Pickpocket", "cost": { "arms": 1 }, "effects": [{ "secret": 1 }, { "gold": 1 }], "slot": null, "copies": 1 },
-    { "id": "o-dockhand", "name": "Dockhand", "cost": { "gold": 1 }, "effects": [{ "low": 1, "at": "guild" }], "slot": { "at": "guild" }, "copies": 2 },
-    { "id": "o-deserter", "name": "Deserter", "cost": { "gold": 2 }, "effects": [{ "low": 1, "at": "military" }, { "arms": 1 }], "slot": { "at": "military" }, "copies": 1 },
-    { "id": "o-runner", "name": "Runner", "cost": { "gold": 1 }, "effects": [{ "move": 1 }], "slot": { "at": "underground", "convert": { "secret": 1 } }, "copies": 1 },
-    { "id": "o-printers-devil", "name": "Printer's Devil", "cost": { "gold": 1 }, "effects": [{ "secret": 1 }], "slot": { "at": "printer" }, "copies": 1 },
-    { "id": "o-street-preacher", "name": "Street Preacher", "cost": {}, "effects": [{ "low": 1, "at": "workers" }], "slot": { "at": "workers" }, "copies": 1 },
-    { "id": "o-saboteur", "name": "Saboteur", "cost": { "secret": 1 }, "effects": [{ "low": 1, "at": "governor" }], "slot": { "at": "governor" }, "copies": 1 },
-    { "id": "o-ringleader", "name": "Ringleader", "cost": { "secret": 1 }, "effects": [{ "pay": { "gold": 1 }, "get": { "low": 2 } }], "slot": null, "copies": 1 },
-    { "id": "o-arms-cache", "name": "Arms Cache", "cost": { "gold": 1 }, "effects": [{ "arms": 1 }], "slot": null, "copies": 1 }
+    { "id": "o-smuggler", "name": "Smuggler", "cost": { "gold": 2 }, "effects": [{ "gold": 2 }], "slot": { "at": "military" }, "copies": 2 },
+    { "id": "o-informant", "name": "Informant", "cost": { "gold": 2 }, "effects": [{ "secret": 1 }], "slot": null, "copies": 1 },
+    { "id": "o-insurrection", "name": "Insurrection", "cost": { "gold": 2 }, "effects": [{ "pay": { "arms": 2, "secret": 1 }, "get": [{ "low": 3 }, { "high": 1 }] }], "slot": { "at": "workers" }, "copies": 1, "power": true },
+    { "id": "o-agitator", "name": "Agitator", "cost": { "gold": 1 }, "effects": [{ "gold": 1 }, { "pay": { "gold": 1 }, "get": { "low": 1 } }], "slot": null, "copies": 2 },
+    { "id": "o-thug", "name": "Thug", "cost": { "gold": 1 }, "effects": [{ "low": 1, "at": "military" }], "slot": { "at": "military" }, "copies": 2 },
+    { "id": "o-fence", "name": "Fence", "cost": { "gold": 1 }, "effects": [{ "gold": 2 }], "slot": null, "copies": 1 },
+    { "id": "o-gang-boss", "name": "Gang Boss", "cost": { "gold": 3 }, "effects": [{ "low": 2, "at": "underground" }], "slot": { "at": "underground" }, "copies": 1 },
+    { "id": "o-pickpocket", "name": "Pickpocket", "cost": { "gold": 1, "arms": 1 }, "effects": [{ "secret": 1 }, { "gold": 1 }], "slot": null, "copies": 1 },
+    { "id": "o-dockhand", "name": "Dockhand", "cost": { "gold": 2 }, "effects": [{ "low": 1, "at": "guild" }], "slot": { "at": "guild" }, "copies": 2 },
+    { "id": "o-deserter", "name": "Deserter", "cost": { "gold": 3 }, "effects": [{ "low": 1, "at": "military" }, { "arms": 1 }], "slot": { "at": "military" }, "copies": 1 },
+    { "id": "o-mob", "name": "Mob", "cost": { "gold": 1 }, "effects": [{ "pay": { "gold": 2 }, "get": { "low": 3 } }], "slot": null, "copies": 1, "power": true },
+    { "id": "o-printers-devil", "name": "Printer's Devil", "cost": { "gold": 2 }, "effects": [{ "secret": 1 }], "slot": { "at": "printer" }, "copies": 1 },
+    { "id": "o-street-preacher", "name": "Street Preacher", "cost": { "gold": 1 }, "effects": [{ "low": 1, "at": "workers" }], "slot": { "at": "workers" }, "copies": 1 },
+    { "id": "o-saboteur", "name": "Saboteur", "cost": { "gold": 1, "secret": 1 }, "effects": [{ "low": 1, "at": "governor" }], "slot": { "at": "governor" }, "copies": 1 },
+    { "id": "o-ringleader", "name": "Ringleader", "cost": { "gold": 1, "secret": 1 }, "effects": [{ "pay": { "gold": 1 }, "get": { "low": 2 } }], "slot": null, "copies": 1 },
+    { "id": "o-firebomb", "name": "Firebomb", "cost": { "gold": 2 }, "effects": [{ "arms": 1 }, { "pay": { "arms": 2 }, "get": { "remove": 2 } }], "slot": { "at": "underground", "convert": { "secret": 1 } }, "copies": 1, "power": true }
   ],
 
   "secrets": [

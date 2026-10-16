@@ -11,7 +11,7 @@ const COLORS = ["#e06c5a", "#5aa0e0", "#e0c25a", "#7cc46f"];
 const ALL_LOCS = [
   { id: "governor", name: "Governor", vp: 3, reward: "draw a Secret" },
   { id: "military", name: "Military", vp: 3, reward: "+1 arm" },
-  { id: "guild", name: "Guild", vp: 3, reward: "+2 gold" },
+  { id: "guild", name: "Guild", vp: 3, reward: "+3 gold" },
   { id: "underground", name: "Underground", vp: 3, reward: "Outcast line holds 3 cards" },
   { id: "printer", name: "Printer", vp: 1, reward: "draw 2 Secrets, discard 1" },
   { id: "workers", name: "Workers", vp: 1, reward: "place 1 agent" },
@@ -26,6 +26,9 @@ const CONFIG = {
   upkeep: true, // end of round: each controller sends 1 Low agent there back to reserve
   emptyMove: true, // empty reserve: a placement moves one of your agents instead
   arming: "one", // end-of-round arming: "one" | "escalate" | "tax" (see armingPhase)
+  lowCap: 3, // max Low agents per player per location (0 = no cap)
+  highCap: 0, // max High agents per player per location (0 = no cap)
+  strength: "sum", // 1 High agent needed, then "sum": High + Low + arms + cells | "low": Low + arms + cells | "product": High × (Low + arms + cells)
 };
 const ABORT = Symbol("abort");
 
@@ -57,6 +60,8 @@ function log(text, cls) {
 }
 
 function fx(e) {
+  if (Array.isArray(e)) return e.map(fx).join(", ");
+  if (e.remove) return `remove ${plural(e.remove, "opponent agent")}${e.at ? ` (${LOC[e.at].name})` : ""}`;
   if (e.pay) return `pay ${costText(e.pay)} → ${fx(e.get)}`;
   if (e.choice) return e.choice.map(fx).join(" or ");
   if (e.ifNoArms) return `${fx({ ...e, ifNoArms: false })} if you have none`;
@@ -65,7 +70,7 @@ function fx(e) {
   if (e.arms) return `+${plural(e.arms, "arm")}`;
   if (e.secret) return `draw ${plural(e.secret, "Secret")}`;
   if (e.high) return `${plural(e.high, "agent")} → High${at}`;
-  if (e.low) return `${plural(e.low, "agent")} → Low${at}`;
+  if (e.low) return `${plural(e.low, "agent")} → Low${at}${e.where === "noLow" ? " where you have none" : ""}`;
   if (e.move) return `move ${plural(e.move, "agent")}`;
   return "?";
 }
@@ -140,12 +145,14 @@ const ic = (name) => `<span class="ic" title="${TITLES[name]}">${SVG[name]}</spa
 const cubeIc = (color) => `<span class="ic">${cubeSvg(color)}</span>`;
 
 function fxHtml(e) {
+  if (Array.isArray(e)) return e.map(fxHtml).join(" ");
+  if (e.remove) return `<span class="remove">✕${e.remove}${ic("agent")}</span>`;
   if (e.pay) return `${costHtml(e.pay)} → ${fxHtml(e.get)}`;
   if (e.choice) return e.choice.map(fxHtml).join(" or ");
   if (e.ifNoArms) return `${fxHtml({ ...e, ifNoArms: false })} if 0`;
   const at = e.at ? ` ${LOC[e.at].name}` : "";
   for (const k of ["gold", "arms", "secret"]) if (e[k]) return `+${e[k]}${ic(k)}`;
-  for (const k of ["high", "low"]) if (e[k]) return `${e[k]}${ic(k)}${at}`;
+  for (const k of ["high", "low"]) if (e[k]) return `${e[k]}${ic(k)}${at}${e.where === "noLow" ? " new spot" : ""}`;
   if (e.move) return `${ic("move")}${e.move}${ic("agent")}`;
   return "?";
 }
@@ -159,10 +166,35 @@ const vpHtml = (v) => (v.per === "seat" ? `${v.n}${ic("vp")} per seat of power` 
 const REWARD_HTML = {
   governor: fxHtml({ secret: 1 }),
   military: fxHtml({ arms: 1 }),
-  guild: fxHtml({ gold: 2 }),
+  guild: fxHtml({ gold: 3 }),
   printer: `+2${ic("secret")}, discard 1`,
   workers: `+1${ic("high")}/${ic("low")}`,
 };
+
+// ---------- value model ----------
+// Exchange rates in gold (cards.json _schema.values): what a resource or an effect is worth.
+
+let VALUES = null;
+
+const costValue = (c) => (c.gold || 0) * VALUES.gold + (c.arms || 0) * VALUES.arms + (c.secret || 0) * VALUES.secret;
+
+// Gold-equivalent of one effect, each time it fires. Optional effects never go below 0.
+function value(e) {
+  if (Array.isArray(e)) return sum(e.map(value));
+  if (e.pay) return Math.max(0, value(e.get) - costValue(e.pay));
+  if (e.choice) return Math.max(...e.choice.map(value));
+  if (e.ifNoArms) return value({ ...e, ifNoArms: false }) / 3;
+  const agents = (e.high || 0) + (e.low || 0);
+  return (
+    (e.gold || 0) * VALUES.gold +
+    (e.arms || 0) * VALUES.arms +
+    (e.secret || 0) * VALUES.secret +
+    agents * (e.at ? VALUES.agentFixed : VALUES.agent) +
+    (e.move || 0) * VALUES.move +
+    (e.remove || 0) * VALUES.remove
+  );
+}
+const defValue = (def) => sum(def.effects.map(value));
 
 // ---------- setup ----------
 
@@ -199,7 +231,7 @@ function newGame(n, { allBots = false, delay = 500, config = {} } = {}) {
       name: allBots ? `Bot ${i + 1}` : i === 0 ? "You" : `Bot ${i}`,
       bot: allBots || i !== 0,
       color: COLORS[i],
-      gold: 2,
+      gold: 4,
       arms: 1,
       reserve: RESERVE,
       secrets: [],
@@ -223,6 +255,8 @@ function newGame(n, { allBots = false, delay = 500, config = {} } = {}) {
     current: null,
     ugHolder: null,
     revolution: 0,
+    flips: 0,
+    prevCtrl: null,
     uid: 0,
     log: [],
     pending: null,
@@ -294,10 +328,15 @@ function cellsOf(p) {
   return cells;
 }
 const cellsAt = (p, loc) => cellsOf(p).filter((c) => c.at === loc).length;
-const strength = (p, loc) => G.board[loc].low[p.id] + armsAt(p, loc) + cellsAt(p, loc);
+const force = (p, loc) => G.board[loc].low[p.id] + armsAt(p, loc) + cellsAt(p, loc);
+function strength(p, loc) {
+  const high = G.board[loc].high[p.id];
+  if (G.cfg.strength === "product") return high * force(p, loc);
+  return (G.cfg.strength === "sum" ? high : 0) + force(p, loc);
+}
 const onBoard = (p) => sum(LOCS.map((l) => G.board[l.id].high[p.id] + G.board[l.id].low[p.id]));
 
-// Control: highest Low strength among players with 1+ High agent there. Tie: nobody.
+// Control: highest strength (see CONFIG.strength) among players with 1+ High agent there. Tie: nobody.
 function control(loc) {
   let best = 0;
   let who = null;
@@ -338,23 +377,36 @@ function choose(p, kind, text, options, ctx = {}) {
   });
 }
 
-const locOptions = (half, except) =>
-  LOCS.filter((l) => l.id !== except).map((l) => ({ label: l.name, value: l.id, key: `loc:${l.id}:${half}` }));
+// Can p add an agent to this half? (Low cap; "noLow": only where p has no Low agent.)
+function room(p, loc, half, where) {
+  const low = G.board[loc].low[p.id];
+  if (half === "low" && G.cfg.lowCap && low >= G.cfg.lowCap) return false;
+  if (half === "high" && G.cfg.highCap && G.board[loc].high[p.id] >= G.cfg.highCap) return false;
+  return !(where === "noLow" && low);
+}
 
-async function chooseLoc(p, half, text, except) {
-  return choose(p, `loc-${half}`, text, locOptions(half, except), { half });
+const locOptions = (half, except, p, where) =>
+  LOCS.filter((l) => l.id !== except && (!p || room(p, l.id, half, where))).map((l) => ({ label: l.name, value: l.id, key: `loc:${l.id}:${half}` }));
+
+async function chooseLoc(p, half, text, except, where) {
+  return choose(p, `loc-${half}`, text, locOptions(half, except, p, where), { half });
 }
 
 // ---------- effects ----------
 
-async function placeAgent(p, half, at) {
+async function placeAgent(p, half, at, where) {
   if (p.reserve <= 0) {
     stat(p, "reserve-empty");
     if (!G.cfg.emptyMove) return log(`${p.name} has no agent left in reserve.`);
     log(`${p.name} has no agent left in reserve: moves one instead.`);
     return moveAgent(p, half, at);
   }
-  const loc = at || (await chooseLoc(p, half, `Place 1 agent in ${cap(half)}: choose a location`));
+  if (at && !room(p, at, half, where)) {
+    stat(p, "capped");
+    return log(`${p.name} is already at the cap in ${LOC[at].name} ${cap(half)}.`);
+  }
+  const loc = at || (await chooseLoc(p, half, `Place 1 agent in ${cap(half)}: choose a location`, null, where));
+  if (!loc) return;
   G.board[loc][half][p.id]++;
   p.reserve--;
   stat(p, `agent:${half}`);
@@ -376,7 +428,10 @@ async function moveAgent(p, half, to) {
   opts.push({ label: "Don't move", value: null });
   const src = await choose(p, "move-src", "Move: choose one of your agents", opts);
   if (!src) return;
-  const dst = to && to !== src.loc ? to : await choose(p, "move-dst", `Move to which location (${cap(src.half)})?`, locOptions(src.half, src.loc), src);
+  const dst =
+    to && to !== src.loc && room(p, to, src.half)
+      ? to
+      : await choose(p, "move-dst", `Move to which location (${cap(src.half)})?`, locOptions(src.half, src.loc, p), src);
   if (!dst) return;
   G.board[src.loc][src.half][p.id]--;
   G.board[dst][src.half][p.id]++;
@@ -385,18 +440,25 @@ async function moveAgent(p, half, to) {
 
 async function applyEffect(p, e) {
   if (e.pay) {
-    if (!canAfford(p, e.pay)) return;
+    if (!canAfford(p, e.pay)) {
+      stat(p, "pay:unaffordable");
+      return log(`${p.name} cannot pay ${costText(e.pay)} for "${fx(e.get)}": skipped.`);
+    }
     const yes = await choose(p, "pay", `Pay ${costText(e.pay)} → ${fx(e.get)}?`, [
       { label: `Pay ${costText(e.pay)}`, value: true },
       { label: "No", value: false },
     ], e);
     if (!yes) return;
-    p.gold -= e.pay.gold || 0;
-    p.arms -= e.pay.arms || 0;
-    stat(p, "spent:gold", e.pay.gold || 0);
+    await payCost(p, e.pay, `Pay for ${fx(e.get)}`);
     stat(p, "pay");
+    if ((e.pay.gold || 0) + (e.pay.arms || 0) + (e.pay.secret || 0) >= 2) stat(p, "pay:power");
     log(`${p.name} pays ${costText(e.pay)}.`);
-    return applyEffect(p, e.get);
+    for (const g of [].concat(e.get)) await applyEffect(p, g);
+    return;
+  }
+  if (e.remove) {
+    for (let k = 0; k < e.remove; k++) await removeAny(p, e.at);
+    return;
   }
   if (e.choice) {
     const pick = await choose(p, "effect-choice", "Choose one effect", e.choice.map((x) => ({ label: fx(x), value: x })));
@@ -409,15 +471,17 @@ async function applyEffect(p, e) {
   if (e.arms) stat(p, "arms+", e.arms);
   if (e.gold || e.arms) log(`${p.name}: ${fx(e)}.`);
   if (e.secret) await drawSecrets(p, e.secret);
-  for (const half of ["high", "low"]) for (let i = 0; i < (e[half] || 0); i++) await placeAgent(p, half, e.at);
+  for (const half of ["high", "low"]) for (let i = 0; i < (e[half] || 0); i++) await placeAgent(p, half, e.at, e.where);
   for (let i = 0; i < (e.move || 0); i++) await moveAgent(p);
 }
 
 async function activate(p, side) {
   const s = p[side];
   log(`${p.name} activates the ${side === "cit" ? "Citizen" : "Outcast"} line.`);
-  for (const e of s.char.effects) await applyEffect(p, e);
-  for (const c of [...s.line]) for (const e of c.def.effects) await applyEffect(p, e);
+  const effects = [...s.char.effects, ...s.line.flatMap((c) => c.def.effects)];
+  // Gains first, then "pay → get" effects, so what the line produces can pay for them.
+  for (const e of effects.filter((x) => !x.pay)) await applyEffect(p, e);
+  for (const e of effects.filter((x) => x.pay)) await applyEffect(p, e);
 }
 
 async function armCard(p, inst) {
@@ -471,20 +535,25 @@ function takeFromMarket(side, i) {
   return def;
 }
 
-async function buy(p, side, i) {
-  const def = side === "basic" ? G.basics[i] : G.market[side][i];
-  const c = def.cost;
+// Pay a cost in gold, arms and Secrets (Secrets: the payer picks which to discard).
+async function payCost(p, c, why) {
   p.gold -= c.gold || 0;
   p.arms -= c.arms || 0;
   for (let k = 0; k < (c.secret || 0); k++) {
-    const s = await choose(p, "discard-secret", `Pay ${def.name}: discard a Secret`, secretOptions(p, "Discard"));
+    const s = await choose(p, "discard-secret", `${why}: discard a Secret`, secretOptions(p, "Discard"));
     discardSecret(p, s);
   }
-  log(`${p.name} buys ${def.name} (${costText(c)}).`);
-  stat(p, `buy:${def.name}`);
   stat(p, "spent:gold", c.gold || 0);
   stat(p, "spent:arms", c.arms || 0);
   stat(p, "spent:secret", c.secret || 0);
+}
+
+async function buy(p, side, i) {
+  const def = side === "basic" ? G.basics[i] : G.market[side][i];
+  const c = def.cost;
+  await payCost(p, c, `Pay ${def.name}`);
+  log(`${p.name} buys ${def.name} (${costText(c)}).`);
+  stat(p, `buy:${def.name}`);
   takeFromMarket(side, i);
   await addToLine(p, def);
 }
@@ -516,6 +585,20 @@ function removeOptions(p, loc) {
       for (const h of ["high", "low"])
         if (G.board[loc][h][q.id]) opts.push({ label: `${q.name}'s ${cap(h)} agent`, value: { pid: q.id, half: h } });
   return opts;
+}
+
+// Remove 1 opponent agent (any half) at a location (any, if at is not given).
+async function removeAny(p, at) {
+  const opts = [];
+  for (const l of LOCS)
+    if (!at || l.id === at)
+      for (const o of removeOptions(p, l.id)) opts.push({ ...o, label: `${LOC[l.id].name}: ${o.label}`, value: { ...o.value, loc: l.id } });
+  if (!opts.length) return log(`${p.name} finds no opponent agent to remove.`);
+  const pick = await choose(p, "remove-any", "Remove an opponent agent", opts);
+  G.board[pick.loc][pick.half][pick.pid]--;
+  G.players[pick.pid].reserve++;
+  stat(p, "removed");
+  log(`${p.name} removes ${G.players[pick.pid].name}'s ${cap(pick.half)} agent at ${LOC[pick.loc].name}.`);
 }
 
 async function removeAgent(p, s) {
@@ -638,10 +721,10 @@ async function reward(p, loc) {
   log(`${p.name} controls ${LOC[loc].name}: ${LOC[loc].reward}.`);
   stat(p, `reward:${loc}`);
   if (loc === "military") stat(p, "arms+", 1);
-  if (loc === "guild") stat(p, "gold+", 2);
+  if (loc === "guild") stat(p, "gold+", 3);
   if (loc === "governor") await drawSecrets(p, 1);
   if (loc === "military") p.arms += 1;
-  if (loc === "guild") p.gold += 2;
+  if (loc === "guild") p.gold += 3;
   if (loc === "printer") {
     const got = await drawSecrets(p, 2, { limit: false });
     if (got.length === 2) {
@@ -652,13 +735,19 @@ async function reward(p, loc) {
   }
   if (loc === "workers") {
     const opts = ["high", "low"].flatMap((h) =>
-      LOCS.map((l) => ({ label: `${l.name} ${cap(h)}`, value: { loc: l.id, half: h }, key: `loc:${l.id}:${h}` }))
+      LOCS.filter((l) => room(p, l.id, h)).map((l) => ({ label: `${l.name} ${cap(h)}`, value: { loc: l.id, half: h }, key: `loc:${l.id}:${h}` }))
     );
     if (p.reserve > 0) {
       const a = await choose(p, "workers", "Workers: place 1 agent (High or Low)", opts);
       await placeAgent(p, a.half, a.loc);
     }
   }
+}
+
+// Count control changes between consecutive control checks (a stat for the simulator).
+function trackFlips(ctrl) {
+  if (G.prevCtrl) for (const l of LOCS) if (ctrl[l.id] !== G.prevCtrl[l.id]) G.flips++;
+  G.prevCtrl = ctrl;
 }
 
 async function endOfRound() {
@@ -671,6 +760,7 @@ async function endOfRound() {
   if (G.round === ROUNDS) return revolution();
   const ctrl = Object.fromEntries(LOCS.map((l) => [l.id, control(l.id)]));
   const rows = LOCS.map((l) => controlRow(l.id, ctrl[l.id]));
+  trackFlips(ctrl);
   log(`Control after round ${G.round}: ${rows.map(rowText).join("; ")}.`, "round");
   const before = G.players.map(snapshot);
   for (const l of LOCS) if (ctrl[l.id] !== null) await reward(G.players[ctrl[l.id]], l.id);
@@ -700,7 +790,7 @@ function controlRow(loc, who) {
   const why =
     who !== null ? ""
     : !withHigh.length ? "nobody has a High agent"
-    : !withHigh.some((p) => strength(p, loc)) ? "no Low strength (needs Low agents or arms)"
+    : !withHigh.some((p) => strength(p, loc)) ? "no strength"
     : "tie";
   return {
     loc,
@@ -755,7 +845,7 @@ function showRoundSummary(rows, before) {
   const playerRows = G.players.map((p, i) => `<tr><td>${name(p)}</td><td>${gainsHtml(before[i], p)}</td></tr>`).join("");
   const dlg = $("round-modal");
   dlg.innerHTML = `<h2>End of round ${G.round}</h2>
-    <p class="muted">Control: highest Low strength (Low agents + arms + cells) among players with a High agent. Then arms on cards are discarded and each controller sends 1 Low agent there back to reserve (upkeep).</p>
+    <p class="muted">Control: highest strength (${{ product: "High agents × (Low agents + arms + cells)", sum: "High + Low agents + arms + cells", low: "Low agents + arms + cells" }[G.cfg.strength]}), with at least 1 High agent. Then arms on cards are discarded and each controller sends 1 Low agent there back to reserve (upkeep).</p>
     <table class="summary"><tr><th>Location</th><th>Presence → strength</th><th>Control</th><th>Reward</th></tr>${locRows}</table>
     <h3>Rewards received</h3>
     <table class="summary">${playerRows}</table>
@@ -778,6 +868,7 @@ async function revolution() {
       for (const e of s.prepared) await applyEffect(p, e);
     }
   const ctrl = Object.fromEntries(LOCS.map((l) => [l.id, control(l.id)]));
+  trackFlips(ctrl);
   log(`Revolution control: ${LOCS.map((l) => rowText(controlRow(l.id, ctrl[l.id]))).join("; ")}.`, "round");
   for (const p of G.players) {
     const locs = LOCS.filter((l) => ctrl[l.id] === p.id);
@@ -832,9 +923,10 @@ const turnsLeft = () => Math.max(0, (ROUNDS - G.round) * TURNS + (TURNS - G.turn
 // Chance-like estimate that p controls loc at the next control check.
 function controlChance(p, loc) {
   const b = G.board[loc];
-  const mine = strength(p, loc);
-  // Rivals without a High agent can still add one: count them at a discount.
-  const best = Math.max(0, ...G.players.filter((q) => q !== p).map((q) => strength(q, loc) * (b.high[q.id] ? 1 : 0.6)));
+  // Without a High agent, strength is latent: count it as if one High were added, at a discount.
+  const latent = (q) => (b.high[q.id] ? strength(q, loc) : force(q, loc) * 0.6);
+  const mine = latent(p);
+  const best = Math.max(0, ...G.players.filter((q) => q !== p).map(latent));
   if (!b.high[p.id]) return mine > best ? 0.25 : mine ? 0.1 : 0;
   if (!mine) return best ? 0.05 : 0.15;
   const margin = mine - best;
@@ -843,12 +935,9 @@ function controlChance(p, loc) {
   return Math.max(0.03, 0.25 + 0.08 * margin);
 }
 
-function effWorth(e) {
-  if (e.pay) return Math.max(0, effWorth(e.get) - 0.45 * (e.pay.gold || 0));
-  if (e.choice) return Math.max(...e.choice.map(effWorth));
-  if (e.ifNoArms) return 0.25;
-  return (e.gold || 0) * 0.45 + (e.arms || 0) * 0.5 + (e.secret || 0) * 0.9 + ((e.high || 0) + (e.low || 0)) * 0.7 + (e.move || 0) * 0.3;
-}
+// Bots score in their own unit: 1 gold = GOLD_W points.
+const GOLD_W = 0.45;
+const effWorth = (e) => value(e) * GOLD_W;
 const defWorth = (def) => sum(def.effects.map(effWorth));
 
 // A Prepared agent lands at the Revolution, when nobody can answer it: worth more
@@ -887,7 +976,7 @@ function evaluate(p) {
   const ownTurns = turnsLeft() / G.n;
   const usable = (n, cap) => Math.min(n, cap) + Math.max(0, n - cap) * 0.2;
   score += usable(p.gold, Math.ceil(ownTurns) * 2) * 0.45 * Math.min(1, ownTurns / 2);
-  score += usable(p.arms, left + 1 + Math.ceil(ownTurns / 2)) * 0.5;
+  score += usable(p.arms, left + 1 + Math.ceil(ownTurns / 2)) * GOLD_W * VALUES.arms;
   score += Math.min(p.reserve, 4) * 0.05;
   score += sum(p.secrets.map((s) => secretWorth(p, s)));
   // A line fires again on about half of the remaining own turns.
@@ -1034,7 +1123,7 @@ function botChoose(p, kind, options, ctx) {
       });
     case "pay":
       // Pay when the gain beats the gold, keeping 1 gold for later when poor.
-      return effWorth(ctx.get) > 0.45 * (ctx.pay.gold || 0) && p.gold > (G.round < ROUNDS ? 0 : -1);
+      return effWorth(ctx) > 0;
     case "effect-choice":
       return best((o) => (o.value.secret ? drawWorth(p) * o.value.secret : effWorth(o.value)));
     case "arm-on-add":
@@ -1054,6 +1143,11 @@ function botChoose(p, kind, options, ctx) {
     case "discard-secret":
     case "printer":
       return best((o) => -secretWorth(p, o.value));
+    case "remove-any":
+      return best((o) => {
+        const row = b[o.value.loc][o.value.half];
+        return tryEval(p, () => row[o.value.pid]--, () => row[o.value.pid]++);
+      });
     case "remove":
       return best((o) => {
         const q = G.players[o.value.pid];
@@ -1204,6 +1298,7 @@ function onClick(ev) {
 function boot(data) {
   DATA = data;
   PERS_LOC = data._schema.personalities;
+  VALUES = data._schema.values;
 }
 
 if (typeof document !== "undefined") {
@@ -1233,5 +1328,5 @@ if (typeof document !== "undefined") {
       $("status").textContent = "Could not load cards.json. Serve this folder over http (e.g. python3 -m http.server).";
     });
 } else {
-  module.exports = { boot, newGame, get G() { return G; }, get LOCS() { return LOCS; }, ROUNDS };
+  module.exports = { boot, newGame, get G() { return G; }, get LOCS() { return LOCS; }, ROUNDS, value, defValue, costValue, fx };
 }

@@ -1,4 +1,6 @@
-# Aeropolis — Core Prototype
+# Aeropolis — Core Prototype ("Coup")
+
+**Status: parked (2026-10-11).** Playable (play.html, vs bots) and simulated (sim.js), but less fun than the reference (../index.html). See Post-mortem at the end.
 
 New prototype in a series. The reference version is ../index.html.
 This directory explores a quite different version of the game.
@@ -31,8 +33,9 @@ The Outcast brings force, the Citizen brings legitimacy. Neither controls a loca
 - **Control**: see Locations.
 - **Line**: the cards to the right of a character. Max 2 cards; adding a 3rd discards the oldest.
 - **Arms slot**: on about 50% of cards, with a location affinity (see Arms).
-- **Cell**: a Citizen card and an Outcast card in the same column whose arms slots name the same location: +1 Low strength there while both stay.
-- **Pay → get**: an optional effect, resolved each time it fires (e.g. pay 1 gold → 1 agent). Agent placement at a location of your choice always costs 1 gold; agents at a fixed location are free.
+- **Cell**: a Citizen card and an Outcast card in the same column whose arms slots name the same location: +1 strength there while both stay.
+- **Pay → get**: an optional effect, resolved each time it fires (e.g. pay 1 gold → 1 agent), after the line's other effects. Agent placement at a location of your choice costs 1 gold (or 1 arm); agents at a fixed location are free.
+- **Power cards**: 10–20% of market cards carry an expensive pay → get (2–3 resources, mixed gold/arms/Secrets) for a strong effect, e.g. several agents or removing opponent agents.
 - **Personality**: a token tied to a location, target of leverage (see Secrets).
 - **Resources**: gold, arms. Both pay card costs. Some cards also cost a Secret (discard it unrevealed): a design space to explore.
 
@@ -45,11 +48,14 @@ The Outcast brings force, the Citizen brings legitimacy. Neither controls a loca
 
 Each side needs what the other produces.
 
+**Market rates** (cards.json `_schema.values`): 1 arm ≈ 1.5 gold, 1 Secret ≈ 2 gold, 1 agent ≈ 1.5 gold (anywhere) or 1 gold (fixed location).
+Baseline only: the stack cards trade at market rate; a market card or character earns its place with one preferential conversion (a better deal in one direction). `node sim.js audit` shows each card's premium.
+
 ---
 
 ## Setup
 
-- Each player: 2 gold, 1 arm, 12 agents in reserve (shared by Citizen and Outcast). No agents on the board.
+- Each player: 4 gold, 1 arm, 12 agents in reserve (shared by Citizen and Outcast). No agents on the board.
 - Market: 2 Citizen + 2 Outcast cards, each refilled from its own deck, plus 3 free stacks always available: **Stipend** (Citizen, +1 gold), **Retainer** (Citizen, pay 1 gold → 1 High agent), **Hired Muscle** (Outcast, pay 1 gold → 1 Low agent).
 - Revolution track at 0.
 - First player: random; passes left each round.
@@ -80,15 +86,16 @@ Secrets are used for free, at any time (see Secrets).
 
 Each location has a High half and a Low half.
 
-**Control**: the player with the highest Low strength, among players with at least 1 agent in High.
-Low strength = your agents in Low + your arms on cards with that location's affinity + your cells there.
+**Control**: the player with the highest strength, among players with at least 1 agent in High.
+Strength = your agents in High + your agents in Low + your arms on cards with that location's affinity + your cells there.
+Cap: at most 3 of your Low agents per location (a placement beyond it does nothing).
 Tie: nobody.
 
 | Location    | Personality | Reward             | Revolution VP |
 |-------------|-------------|--------------------|---------------|
 | Governor    | Governor    | draw a Secret      | 3             |
 | Military    | General     | 1 arm              | 3             |
-| Guild       | Guildmaster | 2 gold             | 3             |
+| Guild       | Guildmaster | 3 gold             | 3             |
 | Underground | Kingpin     | your Outcast line holds 3 cards until the next control (losing it: discard the oldest) | 3 |
 | Printer     | —           | draw 2 Secrets, discard 1 | 1 |
 | Workers     | —           | place 1 agent (High or Low) | 1 |
@@ -175,3 +182,22 @@ Later: a Revolution catalyst players benefit from triggering.
 - Does the Citizen/Outcast duality feel real?
 - Does the High/Low control rule make the two characters work together?
 - Does the theme (intrigue, secrets, blackmail) match the mechanics?
+
+---
+
+## Post-mortem
+
+**What did not work** (playtest vs the reference):
+- 2 lines, one per character, are a weaker puzzle than the reference's 4 lanes (tuck above / below).
+- Stack cards were a crutch for the missing action economy; they made turns samey.
+- Location control needed patch after patch (Low cap, upkeep, empty-reserve move, tie-break, cells, pay costs): the core loop was not carrying the game.
+- No round climax: end of round is bookkeeping; the reference's Uprising is something to aspire to.
+- Secrets were hidden but not interactive; in practice a free bonus effect. Blackmail created little tension.
+
+**Worth keeping:**
+- Fewer resource types: gold, arms and Secrets (vs Papers, Secrets, Stims and Arms in the reference). Easier to read and to price, and every card conversion is legible.
+- Tooling: search bot with logged reasoning, simulator (play / compare / balance / audit), value model (market rates).
+- Market rates as a design baseline; cards earn their place with one preferential conversion.
+- Power cards: 10–20% of the deck, an expensive mixed-resource pay → get.
+- "A coup needs both sides": possibly as an Uprising condition in the reference rather than a whole game.
+

@@ -1,0 +1,122 @@
+# Aeropolis — Banners (draft 1)
+
+New prototype in a series. Reference: ../index.html. Previous attempt: ../coup (parked, see its post-mortem).
+Read ../self-assessment.md
+
+3–5 players.
+
+## Concept
+
+A city on the brink of revolution, torn between 5 factions.
+Each player drafts 2 characters: a **Citizen** (High City) and an **Outcast** (Low City).
+Each character flies a public **banner** (faction); each player also holds a hidden **allegiance**.
+Players spread influence, flip the city's banners, and time the Revolution.
+
+---
+
+## Terms
+
+- **Faction**: Crown, Church, Guilds, Commune, Underworld.
+- **Banner**: the faction shown on a character or a location.
+- **Allegiance**: a player's hidden faction card.
+- **Influence**: a player's cube on a location.
+- **Spire**: the shared track, heights 1–20. It is both the clock and the score.
+- **Control**: most influence at a location. Tie: nobody.
+
+Resources: gold and arms only.
+
+---
+
+## Components
+
+- Board: the Spire (1–20) and the city: 4 High City locations above 4 Low City locations.
+- 5 banner tokens per faction (location banners).
+- 10 characters: 5 Citizens, 5 Outcasts, each with a banner and a unique ability.
+- 5 allegiance cards (one per faction).
+- Per player: 2 pawns (Citizen, Outcast), influence cubes.
+
+---
+
+## Setup
+
+- Draft characters: each player ends with 1 Citizen and 1 Outcast with different banners.
+- Deal 1 allegiance card face down to each player (any faction, possibly one of their banners).
+- Each location gets a random banner.
+- Citizen pawns at height 20, Outcast pawns at height 1.
+
+---
+
+## The Spire (clock and score)
+
+- Every action costs **time**: 1–3 steps. Acting with the Citizen moves it **down**; acting with the Outcast moves it **up**.
+- **Turn order**: the player whose two pawns are furthest apart plays next (they have spent the least time). Tie: the one who acted least recently.
+- **Score**: the heights of your two pawns, added. The Outcast climbing gains points; the Citizen descending loses them. So Citizen actions must be stronger per step: they are the expensive, powerful ones.
+- **Payout lines** at heights 5, 10 and 15: when any pawn crosses one, every location pays its controller (once per line per pawn type).
+
+---
+
+## Turn
+
+Choose one of your characters:
+
+1. Move it to a location in its own city (High for the Citizen, Low for the Outcast). One character per location.
+2. Place 1 influence there and take the location's action.
+3. Move it on the Spire by the action's time cost.
+
+**In tandem**: if your other character is directly above or below, also take the bonus printed between the two locations.
+
+---
+
+## Locations
+
+Each location: an action (with its time cost), a control reward (at payout lines), a banner.
+Examples (to be designed):
+
+| High City  | Low City   | Tandem bonus  |
+|------------|------------|---------------|
+| Palace     | Sewers     | flip a banner |
+| Cathedral  | Catacombs  | +1 influence  |
+| Exchange   | Docks      | +2 gold       |
+| Barracks   | Slums      | +1 arm        |
+
+**Flip a banner** (expensive): an action at a location you control, costing 3 time and 2 gold: replace its banner with one of your factions (banner or allegiance).
+
+---
+
+## Revolution
+
+Triggered when any player's Citizen and Outcast **meet** on the Spire.
+
+1. Every location resolves an uprising: its controller scores bonus points if one of their factions (banners or allegiance) matches the location's banner.
+2. The rules change for the rest of the game (to choose, see Open questions), e.g. the High/Low barrier falls (characters go anywhere), or banners lock.
+3. Play continues until a second pair meets, or all pawns pass the meeting point.
+
+---
+
+## End and scoring
+
+- Spire heights of both pawns.
+- Banner scoring: each location pays its influence holders whose factions match its banner: 1 point per influence for a public banner, 2 for your allegiance.
+- Allegiance guess: each player names one opponent's allegiance; a correct guess steals 3 points.
+
+---
+
+## Open questions
+
+- Spire: is "furthest apart plays next" the right turn order, or should the pawn that moved least act next?
+- Revolution: which rule change? Barrier falls, banners lock, or the time costs invert?
+- End: how long after the Revolution? A second meeting, or a fixed number of turns?
+- Allegiance: may it duplicate a public banner (a readable all-in bet), or must it differ?
+    Duplicate
+- Scoring weight: Spire heights vs banners — which should dominate?
+    Let's start 50/50% weight
+- Arms: what are they for? (Uprising strength at the Revolution is the obvious candidate.)
+    We do have the time track, so maybe we can try to not have this resource yet
+
+---
+
+## Prototype goal
+
+- Does the Spire as clock + score create real timing decisions?
+- Do public banners + hidden allegiance make players read each other?
+- Does the Revolution feel like a turning point, not just the end?

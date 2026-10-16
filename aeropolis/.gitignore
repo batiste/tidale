@@ -1,3 +1,3 @@
 export/
-# Simulator output (regenerate with: node new/sim.js)
+# Simulator output (regenerate with: node coup/sim.js)
 sim-logs/
