@@ -1,4 +1,4 @@
-/* Aeropolis icon chips, drawn by icon() in aeropolis-data.js. Shared by index.html and aeropolis-play.html. */
+/* Aeropolis icon chips, drawn by icon() in aeropolis-data.js. Shared by aeropolis.html and aeropolis-play.html. */
 
 .gx { display: inline-flex; align-items: center; gap: 2px; vertical-align: middle; white-space: nowrap; } /* middle: chips with and without a number line up */
 .gx b { font-weight: 800; }

@@ -1,8 +1,8 @@
 # Aeropolis — Core Prototype ("Coup")
 
-**Status: parked (2026-10-11).** Playable (play.html, vs bots) and simulated (sim.js), but less fun than the reference (../index.html). See Post-mortem at the end.
+**Status: parked (2026-10-11).** Playable (play.html, vs bots) and simulated (sim.js), but less fun than the reference (../aeropolis.html). See Post-mortem at the end.
 
-New prototype in a series. The reference version is ../index.html.
+New prototype in a series. The reference version is ../aeropolis.html.
 This directory explores a quite different version of the game.
 
 2–4 players. Card draft: cards.json (20 Citizen, 20 Outcast, 20 Secrets, 10 characters, 3 stack cards).
@@ -72,7 +72,7 @@ On a turn, take 1 action:
 
 **Build connection**: take 1 card from the market, pay its cost (gold, arms or free).
 Add it to the line of its own character (C cards to C, O cards to O).
-Activate that line: resolve every effect on it, character included (as in ../index.html).
+Activate that line: resolve every effect on it, character included (as in ../aeropolis.html).
 Refill the market. Stack cards take a line slot like any other.
 
 Agents are placed only by effects (cards, Secrets, Workers); with an empty reserve, a placement moves one of your agents (same half) instead.

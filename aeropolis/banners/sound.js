@@ -72,7 +72,7 @@ const SFX = (() => {
     ["flip", (m) => /→ .*(Crown|Church|Guilds|Commune|Underworld)$/.test(m)],
     ["hit", (m) => / −\d influence| becomes /.test(m)],
     ["tandem", (m) => /^ {2}(Coup|Last Rites|Smuggling|Blackmail):/.test(m)],
-    ["place", (m) => /^ {2}(Sermon|Recruit):/.test(m)],
+    ["place", (m) => /^ {2}(Sermon|Recruit|Place)/.test(m)],
     ["move", (m) => /^Turn /.test(m)],
   ];
 

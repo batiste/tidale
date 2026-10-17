@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Banners: Simple — Rules</title>
+    <link rel="stylesheet" href="../../common.css" />
+    <link rel="stylesheet" href="../../rules.css" />
+    <link rel="stylesheet" href="../banners.css?v=2" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="page-head">
+        <div>
+          <h1>Banners: Simple</h1>
+          <p class="tagline">Aeropolis, a stripped-down Banners. Two characters, two banners, one score: your weaker banner. 3–5 players.</p>
+          <div class="hang" id="hang"></div>
+        </div>
+      </header>
+
+      <p class="callout">
+        Your Citizen descends the Spire, your Outcast climbs it, and each flies a banner. Spread influence, take control,
+        raise your banners. You score only your <strong>weaker</strong> banner: neglect one character and you lose.
+      </p>
+
+      <section>
+        <h2>Components</h2>
+        <ul class="steps">
+          <li><strong>Board:</strong> the Spire (heights 1 to <span data-cfg="spire"></span>) and the city: 4 High City locations above 4 Low City locations, in 4 columns.</li>
+          <li><strong>Banners</strong> of the 5 factions, enough to hang one at every location.</li>
+          <li><strong>Per player:</strong> 2 pawns (Citizen, Outcast), <span data-cfg="influence"></span> influence cubes.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Setup</h2>
+        <ol class="steps">
+          <li>Deal each player two different factions: their Citizen's banner and their Outcast's banner. No two players may share both.</li>
+          <li>Hang a random banner at each location.</li>
+          <li>Citizens on Spire <span data-cfg="spire"></span>, Outcasts on 1. Pawns start off the city.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Turn</h2>
+        <p>The player who has spent the least time plays (time = how far your Citizen has sunk + how far your Outcast has risen; tie: whoever acted least recently).</p>
+        <ol class="steps">
+          <li><strong>Move</strong> one character to another location of its city: the Citizen in the High City, the Outcast in the Low City. Pawns may share a location.</li>
+          <li><strong>Act</strong> there, one of:
+            <ul>
+              <li><strong>Place</strong> influence: the Citizen places <span data-cfg="place.cit"></span>, the Outcast <span data-cfg="place.out"></span>.</li>
+              <li><strong>Raise</strong> one of your banners, if you <strong>control</strong> the location (most influence; tie: nobody).</li>
+            </ul>
+          </li>
+          <li><strong>Tandem:</strong> if your other character stands in the same column, it may act at its location too.</li>
+          <li><strong>Spend time:</strong> the Citizen sinks <span data-cfg="cost.cit"></span>, the Outcast rises <span data-cfg="cost.out"></span>.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>City</h2>
+        <div class="city" id="city"></div>
+      </section>
+
+      <section>
+        <h2>End and score</h2>
+        <ul class="steps">
+          <li>When your Outcast is level with or above your Citizen, they <strong>meet</strong>: you score now and are out. The game ends when every player is out.</li>
+          <li><strong>Score:</strong> each of your banners totals, over the locations flying it, 1 per influence you have there, +<span data-cfg="control"></span> where you have control. Your score is your <strong>lower</strong> total. Tie: the higher other total, then most influence in the city.</li>
+        </ul>
+      </section>
+    </div>
+
+    <a class="nav-link play" href="play.html">▶ Play hot-seat</a>
+
+    <script src="../banners-data.js"></script>
+    <script src="data.js"></script>
+    <script>
+      const set = (id, v) => (document.getElementById(id).innerHTML = v);
+      document.querySelectorAll("[data-cfg]").forEach((el) => (el.textContent = el.dataset.cfg.split(".").reduce((o, k) => o[k], SB)));
+      set("hang", FACTIONS.map((f) => banner(f.id, "bn-xl")).join(""));
+      const loc = (l, city) => `<div class="loc loc-${city}"><span class="bn bn-lg bn-slot"><span>?</span></span><div><h3>${l.name}</h3></div></div>`;
+      set("city", `<div class="city-label">High City · Citizens</div>` + COLUMNS.map((c) => loc(c.high, "high")).join("")
+        + `<div class="city-label">Low City · Outcasts</div>` + COLUMNS.map((c) => loc(c.low, "low")).join(""));
+    </script>
+  </body>
+</html>

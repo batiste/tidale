@@ -1,5 +1,5 @@
 
-About: index.html
+About: aeropolis.html
 
 Idée : Une cité au bord de la révolution. Tu contrôles un habitant de la haute ville (Citoyen) et un de la basse ville (Exilé), qui ont des capacités différentes (5 de chaque, donc 25 paires possibles).
 

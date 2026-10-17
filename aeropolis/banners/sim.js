@@ -20,12 +20,16 @@ const PLAYERS = +process.argv[3] || (LOG ? 3 : 4);
 const RANDOM_SEAT = process.argv[4] === "random";
 
 const box = vm.createContext({ console });
-for (const f of ["banners-data.js", "engine.js", "bots.js"]) vm.runInContext(fs.readFileSync(path.join(__dirname, f), "utf8"), box, { filename: f });
+// GAME=simple node sim.js …: play Banners: Simple (simple/) instead, with the same bots and report.
+const FILES = process.env.GAME === "simple" ? ["banners-data.js", "simple/data.js", "simple/engine.js", "bots.js"] : ["banners-data.js", "engine.js", "bots.js"];
+for (const f of FILES) vm.runInContext(fs.readFileSync(path.join(__dirname, f), "utf8"), box, { filename: f });
 // END='{"rule":"lastTurn"}' node sim.js …: try another end rule (merged into BN_CONFIG.end).
 if (process.env.END) vm.runInContext(`Object.assign(BN_CONFIG.end, ${process.env.END})`, box);
 // SCORE='{"control":2}' node sim.js …: try other scoring values (merged into BN_CONFIG.score).
 if (process.env.SCORE) vm.runInContext(`Object.assign(BN_CONFIG.score, ${process.env.SCORE})`, box);
-const G = vm.runInContext("({ newGame, choose, botChoose, CHAR_BY_ID, FACTION, STYLES })", box); // top-level consts are not properties of the context
+const G = vm.runInContext("({ newGame, choose, botChoose, FACTION, STYLES, CHAR_BY_ID: typeof CHAR_BY_ID === 'undefined' ? null : CHAR_BY_ID })", box);
+// What a player plays: characters (full game) or factions (simple), as names.
+const roles = (P) => (P.chars ? P.chars.map((id) => `${G.CHAR_BY_ID[id].name} (${G.FACTION[G.CHAR_BY_ID[id].faction].name})`) : P.factions.map((f) => G.FACTION[f].name)); // top-level consts are not properties of the context
 
 // Seeded random, so runs are repeatable.
 function mulberry(a) {
@@ -55,7 +59,7 @@ for (let g = 0; g < GAMES; g++) {
   while (S.pending) G.choose(S, RANDOM_SEAT && S.pending.player === 0 ? Math.floor(rnd() * S.pending.options.length) : G.botChoose(S));
   if (LOG) {
     console.log(`\n===== Game ${g + 1} =====`);
-    S.players.forEach((P) => console.log(`${P.name} [${G.STYLES[P.style].name}]: ${P.chars.map((id) => `${G.CHAR_BY_ID[id].name} (${G.FACTION[G.CHAR_BY_ID[id].faction].name})`).join(", ")} → ${P.score}`));
+    S.players.forEach((P) => console.log(`${P.name} [${G.STYLES[P.style].name}]: ${roles(P).join(", ")} → ${P.score}`));
     console.log(S.log.join("\n"));
   }
   const sc = S.players.map((P) => P.score);
@@ -69,7 +73,7 @@ for (let g = 0; g < GAMES; g++) {
   if (S.players.every((P) => P.last <= S.players[S.winner].last)) triggerWins++; // the winner took the last turn
   if (S.winner === S.firstOut) firstOutWins++;
   S.players.forEach((P, p) => { const k = `style ${G.STYLES[P.style].name}`; byChar[k] = byChar[k] || [0, 0]; byChar[k][0] += p === S.winner; byChar[k][1]++; });
-  S.players.forEach((P, p) => P.chars.forEach((c) => { byChar[c] = byChar[c] || [0, 0]; byChar[c][0] += p === S.winner; byChar[c][1]++; }));
+  S.players.forEach((P, p) => (P.chars || P.factions).forEach((c) => { byChar[c] = byChar[c] || [0, 0]; byChar[c][0] += p === S.winner; byChar[c][1]++; }));
   for (const k in S.stats.actions) add(actions, k, S.stats.actions[k]);
   for (const k in S.stats.tandems) add(tandems, k, S.stats.tandems[k]);
   flips += S.stats.flips;
@@ -85,7 +89,7 @@ out.push(`  turns per player ${f1(mean(turns))}; Spire steps: Citizen ${pct(citT
 out.push(`  banner changes per game ${f1(flips / GAMES)}`);
 out.push(`  the player with the last turn wins ${pct(triggerWins / GAMES)}; the first player out wins ${pct(firstOutWins / GAMES)}`);
 const lowTurns = ["Slip", "Relic", "Recruit", "Riot"].reduce((t, k) => t + (actions[k] || 0), 0);
-out.push(`  Outcast turns: ${pct(lowTurns / Object.values(actions).reduce((a, b) => a + b, 0))}`);
+if (lowTurns) out.push(`  Outcast turns: ${pct(lowTurns / Object.values(actions).reduce((a, b) => a + b, 0))}`);
 out.push("", "Actions (share of turns)");
 const nAct = Object.values(actions).reduce((a, b) => a + b, 0);
 Object.entries(actions).sort((a, b) => b[1] - a[1]).forEach(([k, n]) => out.push(`  ${k.padEnd(9)} ${pct(n / nAct)}`));

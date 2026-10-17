@@ -14,7 +14,7 @@ const styleOf = (S, p) => STYLES[(pl(S, p).style ??= Math.floor(Math.random() * 
 
 // q's position: points held now, plus influence that could become points, minus the time spent.
 function estimate(S, q, st) {
-  if (pl(S, q).out_ && BN_CONFIG.end.freeze) return pl(S, q).score - st.time * spent(S, q); // scored when they went out
+  if (pl(S, q).out_ && pl(S, q).parts) return pl(S, q).score - st.time * spent(S, q); // scored when they went out
   const mine = factionsOf(S, q);
   let v = points(S, q) - st.time * spent(S, q);
   ALL_LOCS.forEach((l) => (v += mine.includes(S.banner[l]) ? 0 : S.inf[l][q] * st.stray));

@@ -1,4 +1,4 @@
-// Aeropolis — data shared by index.html (rules) and aeropolis-play.html (hot-seat game).
+// Aeropolis — data shared by aeropolis.html (rules) and aeropolis-play.html (hot-seat game).
 
 const TF_CONFIG = {
   spire: 13, // Spire heights 1 (base) to 13 (top). Outcast starts on 1.

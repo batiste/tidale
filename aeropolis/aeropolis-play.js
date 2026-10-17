@@ -1,6 +1,6 @@
 "use strict";
 
-// Hot-seat engine for Aeropolis. Rules: index.html. Data: aeropolis-data.js.
+// Hot-seat engine for Aeropolis. Rules: aeropolis.html. Data: aeropolis-data.js.
 // Same pattern as spire-play.js: each turn runs as an async coroutine that awaits picks;
 // Undo restores the snapshot taken before the current (or last) turn and aborts any pending pick.
 

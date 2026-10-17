@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Aeropolis — Rules</title>
+    <link rel="stylesheet" href="common.css" />
+    <link rel="stylesheet" href="aeropolis-icons.css" />
+    <link rel="stylesheet" href="rules.css" />
+    <style>
+      /* "Play online": a gold button that stays in the corner while reading. */
+      .play-cta { position: fixed; right: 24px; bottom: 24px; z-index: 10; display: inline-flex; gap: 10px; align-items: center; padding: 14px 24px; border-radius: 999px; background: var(--gold); color: #1b2126; font-family: var(--font-display); font-size: 18px; font-weight: 600; letter-spacing: 0.12em; text-decoration: none; text-transform: uppercase; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), 0 0 0 3px rgba(233, 196, 119, 0.25); transition: transform 0.15s, box-shadow 0.15s; }
+      .play-cta:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(0, 0, 0, 0.55), 0 0 0 5px rgba(233, 196, 119, 0.35); }
+      .play-cta:focus-visible { outline: 3px solid #f3ede0; outline-offset: 3px; }
+      /* Cover: centred under the title, a thin brass frame with a little breathing room. */
+      .page-head > div { flex: 1; }
+      .cover { display: block; width: min(100%, 460px); height: auto; margin: 28px auto 4px; padding: 5px; border: 1px solid rgba(233, 196, 119, 0.35); border-radius: 12px; background: rgba(255, 255, 255, 0.03); box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45); }
+      @media (max-width: 600px) { .play-cta { right: 16px; bottom: 16px; left: 16px; justify-content: center; } }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="page-head">
+        <div>
+          <h1>Aeropolis</h1>
+          <p class="tagline">One city on the edge of revolution, two characters per player, 2–4 players.</p>
+          <img class="cover" src="Aero.jpeg" alt="Two characters, one at the top of a spire, one at its base, looking down on a city in flames." />
+        </div>
+      </header>
+
+      <p class="callout">
+        You play both sides: a Citizen at the top of the Spire, an Outcast at its base. Each turn, take a card and tuck it
+        above or below one of your characters: that side activates, every card in it. Send troops into the city, win its
+        Uprisings and hold its key locations: that is how your Outcast climbs. When your two characters meet, the game ends
+        after that round. You score the heights of <strong>both</strong> added together.
+      </p>
+
+      <section>
+        <h2>Components</h2>
+        <ul class="steps">
+          <li><strong>Board:</strong> the Spire (heights 1 to <span data-cfg="spire"></span>) and the five city locations.</li>
+          <li><strong>Cards:</strong> <span id="n-cit"></span> Citizen cards, <span id="n-out"></span> Outcast cards, <span id="n-chars"></span> characters, <span id="n-upr"></span> Uprisings. Schemes are cards from the decks, kept face down.</li>
+          <li><strong>Per player</strong> (4 colours): 2 pawns (Citizen, Outcast), <span data-cfg="troops"></span> troops, <span data-cfg="goodsCap"></span> Arms (single tokens, so they can be committed in a closed fist), and 3 tokens for each of Papers, Secrets and Stims (1 on one face, 2 on the other: 0 to 6).</li>
+          <li>A first-player marker.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Setup</h2>
+        <ol class="steps">
+          <li>Choose a first player.</li>
+          <li>Deal each player 1 Citizen and 1 Outcast character at random; place them side by side. <strong>Advanced:</strong> snake draft instead. Lay out all characters face up. In turn order, each player takes one; then in reverse order (the last player takes twice in a row), each takes one of the other kind.</li>
+          <li>Each player: Citizen pawn on Spire <span id="cit-start"></span> (marked on the board), Outcast pawn on 1; <span id="start"></span>; <span data-cfg="troops"></span> troops in supply. Then apply your characters' setup (see Characters).</li>
+          <li>Shuffle the Citizen and Outcast decks. Reveal <span data-cfg="row"></span> cards from each: the <strong>row</strong>.</li>
+          <li>Shuffle the Uprising deck and draw <span data-cfg="rounds"></span>: the game lasts at most that many rounds. Reveal the first.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Round</h2>
+        <ol class="steps">
+          <li>Starting with the first player, each player takes 1 turn, twice around the table.</li>
+          <li>Resolve the Uprising, then Control, then Catch-up (see Uprising and City).</li>
+          <li>The first player passes left. Reveal the next Uprising.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Turn</h2>
+        <ul class="steps">
+          <li><strong>Recruit:</strong> take 1 card from the row and pay its cost in goods; for each good you lack, Sink your Citizen 1 instead. Refill the row from the same deck. Tuck the card above or below its own character (Citizen cards go to the Citizen, Outcast cards to the Outcast), then <strong>activate</strong> that side.</li>
+          <li>If you cannot afford any card in the row, take 1 good of your choice instead.</li>
+        </ul>
+        <p>Empty deck: shuffle its discards into it.</p>
+      </section>
+
+      <section>
+        <h2>Sides</h2>
+        <p>
+          Each character has 2 sides: cards tucked above it and cards tucked below it. A card tucked above shows only its top strip;
+          below, only its bottom strip. A side holds <span data-cfg="sideCap"></span> strips: tucking another discards its oldest.
+        </p>
+        <p><strong>Activate:</strong> resolve every effect shown on the side, on its strips and on the character, once each, in the order you choose. An effect with "→" is optional: pay the left part to get the right part.</p>
+      </section>
+
+      <section>
+        <h2>Street Run</h2>
+        <p>
+          The Outcast's top strip (Street) runs the street. Your <strong>heat limit</strong> is the number on that strip, plus every 🔥 strip
+          resolved before it in the same activation. Choose the Citizen or the Outcast deck, then draw from it one card at a time.
+          Each card gives the goods of its cost and adds its printed <strong>heat</strong>; free cards give nothing and run hot.
+        </p>
+        <ul class="steps">
+          <li>Stop whenever you like and take the goods.</li>
+          <li>If your total heat goes over your limit, you are <strong>caught</strong>: you gain nothing.</li>
+          <li>After drawing a card, you may spend a Stim to discard it; you must then draw again.</li>
+          <li>Either way, discard the drawn cards. Citizen cards give mostly Secrets and Papers; Outcast cards mostly Stims, Papers and Arms.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>City</h2>
+        <p>
+          Five locations, in the lower city, the upper city, or both (the Cable Lift). A troop icon says where the troop goes: any
+          location of that city. Troops stay until they are lost or moved; "Move" goes to any location, and you may move fewer.
+          With an empty supply, a troop effect does nothing.
+        </p>
+        <p><strong>Control:</strong> after each Uprising, the player with the most troops at a location takes its reward. Tie: nobody. At the Forum and the Cable Lift, the controller then loses 1 troop there (upkeep).</p>
+        <p><strong>Catch-up:</strong> then the player with the lowest score (all of them, if tied) sends 1 free troop to the lower city, from their supply.</p>
+        <table class="revolution-table">
+          <thead><tr><th>Location</th><th>City</th><th>Control</th><th>Upkeep</th></tr></thead>
+          <tbody id="locations"></tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Uprising</h2>
+        <p><strong>Scheme</strong> (a Council strip effect, and the Archives reward): look at the top card of each deck. Place 1 face down in front of you, the other at the bottom of its deck. Its Scheme value (+2, +3 or ×2) stays hidden until an Uprising.</p>
+        <ol class="steps">
+          <li>Each Uprising is fought at its location(s). Only players with troops there take part.</li>
+          <li>Each fighter secretly commits any number of their Arms. Then all fighters reveal them, together with <strong>all</strong> their Schemes (not optional).</li>
+          <li><strong>Strength</strong> = (your troops there + Arms committed), doubled for each ×2 Scheme, + your +N Schemes. Strongest gets the first reward, next gets the second. Tie: the end-of-game tie-break (Arms left after committing, then Stims, Secrets, Papers), then turn order.</li>
+          <li>Every fighter, winner included, loses 1 troop at each of the Uprising's locations where they have one (back to supply). Fighters discard their Schemes and committed Arms; the others keep their Schemes.</li>
+        </ol>
+        <table class="revolution-table">
+          <thead><tr><th>Uprising</th><th>At</th><th>First</th><th>Second</th></tr></thead>
+          <tbody id="uprisings"></tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Spire</h2>
+        <ul class="steps">
+          <li>Heights go from 1 to <span data-cfg="spire"></span>: a rise above the top is lost; you cannot pay a cost that would sink your Citizen below 1.</li>
+          <li>When your Outcast is level with or above your Citizen, they <strong>meet</strong>.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>End</h2>
+        <ul class="steps">
+          <li>When any player's characters meet, the round is still played to its end: the remaining turns, the Uprising, Control and Catch-up. Then the game ends. Otherwise it ends after round <span data-cfg="rounds"></span>.</li>
+          <li>Score: the heights of your Citizen and Outcast added together. Tie: most Arms, then Stims, then Secrets, then Papers.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Characters</h2>
+        <p>
+          A character's own strips are the base of both its sides. The Councillor and the Hustler are the plain ones;
+          the others trade something for a specialty.
+        </p>
+        <table class="revolution-table">
+          <thead><tr><th>Character</th><th>Is a</th><th>▲ Top strip</th><th>▼ Bottom strip</th><th>Setup</th></tr></thead>
+          <tbody id="characters"></tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Icons</h2>
+        <p>Goods are public. Every good also pays card costs. You hold at most <span data-cfg="goodsCap"></span> of each good: any extra is lost.</p>
+        <ul class="steps" id="glossary"></ul>
+      </section>
+
+      <section>
+        <h2>Cards</h2>
+        <table class="revolution-table">
+          <thead><tr><th>Card</th><th>Deck</th><th>Cost</th><th>Heat</th><th>Scheme</th><th>Copies</th><th>Top strip</th><th>Bottom strip</th></tr></thead>
+          <tbody id="cards"></tbody>
+        </table>
+      </section>
+    </div>
+
+    <a class="play-cta" href="aeropolis-play.html">▶ Play online</a>
+
+    <script src="aeropolis-data.js"></script>
+    <script>
+      const row = (cells) => `<tr>${cells.map((x) => `<td>${x}</td>`).join("")}</tr>`;
+      const set = (id, v) => (document.getElementById(id).innerHTML = v);
+      document.querySelectorAll("[data-cfg]").forEach((el) => (el.textContent = TF_CONFIG[el.dataset.cfg]));
+      const deckSize = (k) => TF_CARDS.filter((c) => c.char === k).reduce((t, c) => t + c.copies, 0);
+      set("n-cit", deckSize("cit"));
+      set("n-out", deckSize("out"));
+      set("n-chars", `${CHARACTERS.length} (${CHARACTERS.filter((c) => c.char === "cit").length} Citizens, ${CHARACTERS.filter((c) => c.char === "out").length} Outcasts)`);
+      set("n-upr", TF_UPRISINGS.length);
+      set("cit-start", Object.entries(citStarts()).sort((a, b) => b[0] - a[0]).map(([h, ns]) => `${h} with ${ns} players`).join(", "));
+      set("start",Object.entries(TF_CONFIG.start).filter(([, n]) => n).map(([g, n]) => fxText({ gain: g, n })).join(", "));
+      set("characters", CHARACTERS.map((c) => row([`<strong>${c.name}</strong>`, SIDES[c.char].name, `${SIDES[c.char].up.name}: ${fxList(c.up)}`, `${SIDES[c.char].down.name}: ${fxList(c.down)}`, charSetupText(c)])).join(""));
+      set("glossary", glossaryHtml());
+      set("locations", LOCATIONS.map((l) => row([`<strong>${l.name}</strong>`, [l.low && "lower", l.high && "upper"].filter(Boolean).join(" + "), fxList(l.control), l.upkeep ? `−${l.upkeep} troop` : "—"])).join(""));
+      set("uprisings", TF_UPRISINGS.map((u) => row([`<strong>${u.name}</strong>`, locNames(u.at), fxList(u.first), fxList(u.second)])).join(""));
+      set("cards", TF_CARDS.map((c) => row([`<strong>${c.name}</strong>`, SIDES[c.char].name, costHtml(c) || "free", icon("heat", heatOf(c)), strText(c.str), c.copies, fxList(c.up), fxList(c.down)])).join(""));
+    </script>
+  </body>
+</html>
