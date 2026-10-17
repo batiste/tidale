@@ -1,0 +1,109 @@
+# Aeropolis — Bribes & Grievances (draft 1)
+
+Superseded by plan-2.txt (the Spire as a multiplier). Kept for history.
+
+New prototype in the series. Overview of all versions: ../index.html.
+Aim: Knizia-simple. One mechanism (an auction), one track (the Spire), few components.
+
+3–5 players. 20–30 minutes.
+
+## Concept
+
+The city's districts are being sold off. Each player has a Citizen high on the Spire and an Outcast at its base.
+You buy districts with your Citizen's standing: it sinks. When you lose an auction, your Outcast's grievance grows: it rises.
+Every auction pushes everyone toward the meeting point. When any player's two characters meet, the revolution breaks out
+and the game ends.
+
+The Spire is the money, the score and the clock at the same time.
+
+---
+
+## Components
+
+- Spire track: heights 1–15.
+- Per player: 2 pawns (Citizen, Outcast).
+- 30 district cards: 5 factions (Crown, Church, Guilds, Commune, Underworld) × 6, values −1, 0, 1, 1, 2, 2.
+- 4 special cards (see Specials).
+- Auctioneer token.
+
+---
+
+## Setup
+
+- Citizens on 15, Outcasts on 1.
+- Shuffle districts and specials into one deck.
+- Random first auctioneer.
+
+---
+
+## Auction (one per turn)
+
+1. The auctioneer reveals the top card.
+2. Once around, starting left of the auctioneer and ending with the auctioneer: each player passes or bids higher
+   than the current bid. One bid each.
+3. The highest bidder takes the card face up and sinks their Citizen by the bid.
+4. Every player who bid and lost: Outcast rises 1 (grievance). Passing earns nothing.
+5. Nobody bids: the district burns. Every Outcast rises 1.
+6. The auctioneer token passes left.
+
+You may bid an amount that makes your characters meet.
+
+---
+
+## End
+
+- After an auction, if any player's Outcast is level with or above their Citizen, the revolution breaks out.
+  The current round is finished (auctions continue until the first auctioneer would start again), then the game ends.
+  So nobody can end the game with one bid or one pass: everyone gets an answer.
+- Deck empty: the game ends.
+
+## Score
+
+- Your Citizen's height + your Outcast's height.
+- + the value of your districts.
+- + 3 for each faction where you hold the most cards. Tie: nobody.
+
+Highest total wins. Tie: highest Citizen.
+
+So a bid costs points, a lost bid pays 1 point, and every move on the Spire brings the end closer.
+
+---
+
+## Specials (4 cards, to test one at a time)
+
+- Riot: no auction. Every Outcast rises 1.
+- Double: reveal 2 more cards; they are auctioned together.
+- Closed fist: everyone bids at once, in secret. Highest wins; tie: nobody, the district burns.
+- Amnesty: auctioned like a district; the winner may move their Outcast down 2 (delay the end).
+
+---
+
+## Numbers (to check with the sim)
+
+- Gap between a player's characters at the start: 14.
+- With 4 players and bids around 3, each auction moves the Spire about 6 steps in total, so 1.5 per player.
+- First meeting after about 9–10 auctions: a third of the deck is never seen, so every game differs.
+
+---
+
+## Open questions
+
+- Bidding: once around (above), or open free-for-all bidding (Modern Art)? Once around is faster and favours the auctioneer.
+- Grievance: settled for now on "only those who bid and lost". With +1 for every loser, passing was free income:
+  the Spire made up 70% of every score and buying rarely beat passing.
+- Majority bonus: flat 3, or the number of cards of that faction sold in the game (values change during play)?
+- Should the player who triggers the revolution gain or lose something (e.g. lose their majority bonuses)?
+- Outcast height in the score: keeps losing auctions worthwhile; does it make passing too comfortable?
+
+---
+
+## Prototype goals
+
+- Does bidding with your own standing create the hard choices of Lost Cities / Modern Art?
+- Is timing the revolution a real decision (bid big to end while ahead)?
+- Do the two characters feel tied together, with one side paying and the other side growing?
+
+## Build
+
+play.html: cheap hot-seat prototype with simple bots (no specials yet). Next, if the concept holds: engine, simulator,
+rules page, same tooling as banners/.

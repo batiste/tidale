@@ -1,0 +1,86 @@
+# Aeropolis — Bribes & Grievances (draft 2)
+
+**Status: parked (2026-10-17).** Playable (play.html, vs bots), but the Spire never found a natural role. See Post-mortem at the end.
+
+Replaces plan-1.txt (kept for history). Prototype: play.html.
+
+Why draft 2: with the Spire heights as points and districts worth −1..2, a purchase never paid back more than it cost:
+the best play was to buy rarely, and the Spire was "points spent to buy points". Now the Spire is the purse, the clock
+and the multiplier: what you own pays according to where your pawns end.
+
+3–5 players.
+
+## Components
+
+- Spire track 1–20, in 3 tiers: 1–7 ×1, 8–14 ×2, 15–20 ×3.
+- Per player: 2 pawns (Citizen, Outcast), betting cards 1, 2, 3.
+- 30 districts: 15 High City (7 × 2 shares, 5 × 3, 3 × 4), 15 Low City (7 × 1, 5 × 2, 3 × 3).
+  High City is worth more: its multiplier (your Citizen) only goes down.
+
+## Setup
+
+Citizens on 20, Outcasts on 1. Shuffle the districts. Random first auctioneer.
+
+## Auction (one per turn)
+
+1. The auctioneer reveals a district.
+2. Everyone plays one betting card face down, or passes. Reveal together.
+3. The highest card wins. Between equal cards, the player closest to the auctioneer's left wins
+   (ties used to cancel: half the districts burned).
+4. Winner: takes the district; their Citizen sinks by their card.
+5. Every player who bid and lost: Outcast rises 1.
+6. Nobody bids: the district burns, every Outcast rises 1.
+7. Every played card goes to its owner's discard. Empty hand: take your discard back.
+   (A betting deck of 0, 4, 5 and Veto, drawn by losers, was cut: a drawn 4 or 5 simply won, at a known high price.)
+8. The auctioneer token passes left.
+
+## End
+
+- A player's Outcast reaches their Citizen: revolution. The current round is finished, then the game ends.
+- Deck empty: the game ends.
+
+## Score
+
+High City shares × your Citizen's tier + Low City shares × your Outcast's tier. Tie: highest Citizen.
+
+So every bid is a bet on where your pawns end: winning sinks your Citizen (your High City is worth less), losing raises
+your Outcast (your Low City is worth more). A Low City district bought early pays for every auction you lose after.
+
+## Open questions
+
+- Tiers: 3 bands of 7, or a finer scale? A single step across a band can double a portfolio.
+- Losing bids: back to your hand instead of the discard? Then bidding your lowest card is a free rise.
+- Does the revolution still need a counterweight for the player who triggers it?
+
+## Build
+
+play.html: cheap hot-seat prototype with simple bots (profiles: Establishment, Revolutionary, Balanced, Closer).
+
+---
+
+## Post-mortem
+
+**What did not work:**
+- The Spire was shoehorned in. It went through three jobs, none of them natural:
+  points spent to buy points (draft 1: a purchase never paid back), then purse + clock + multiplier (draft 2),
+  with the Outcast's rise justified only as a consolation for losing. "My Citizen lost a bribe, so my Outcast
+  gains support" has no story.
+- Money = points with small, known district values: buying rarely beat passing; the best play was to avoid auctions.
+- Every fix added a patch: majority bonus, betting deck, Veto, 0, tie rules, tiers, uneven shares. The core loop was
+  not carrying the game (the same warning as Coup).
+- Extra betting cards (0, 4, 5, Veto) made bids obvious: a drawn 4 or 5 simply won, at a known high price.
+- Ties that cancel burned half the districts; a hand that only refreshes when empty caused stalls of all-pass auctions.
+- The player whose spending ends the game controls the end (rush to the revolution before others build).
+
+**Worth keeping:**
+- Secret simultaneous bids with a tiny hand (1, 2, 3, every played card discarded, refresh when empty):
+  readable, Knizia-simple, a little card counting. Ties to the player closest to the auctioneer's left.
+- The moment that felt right: losing on purpose to lift a multiplier just before the end ("betting now, collecting
+  later"). Worth finding a theme where that is natural.
+- Two portfolios scored by two different measures (High City by one character, Low City by the other).
+- "Revolution finishes the round" as an end condition: nobody ends the game with one bid or one pass.
+- Process: a cheap one-file prototype plus a headless harness was enough to see each problem in minutes.
+
+**Lesson for the series:** start from a mechanism that has a story, then see whether the Spire fits it; do not
+start from the Spire. If the two characters and the track keep needing justification, the track may belong to
+another game.

@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bribes &amp; Grievances — Playtest</title>
+    <link rel="stylesheet" href="../common.css" />
+    <link rel="stylesheet" href="../double-life/double-life-play.css" />
+    <link rel="stylesheet" href="../banners/banners.css" />
+    <style>
+      body { font-size: 15px; }
+      .table { grid-template-columns: 150px minmax(0, 1fr) 340px; }
+      @media (max-width: 1100px) { .table { grid-template-columns: 1fr; } }
+      .spire-track { width: 140px; }
+      .sp-row { height: 26px; }
+      .sp-row b { font-size: 11.5px; }
+      .pawn { display: inline-flex; width: 14px; height: 14px; border: 1px solid rgba(0, 0, 0, 0.7); }
+      .pawn.cit { border-radius: 50%; }
+      .pawn.out { transform: rotate(45deg) scale(0.85); }
+
+      /* The card on auction. */
+      .stage { display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap; }
+      .district { display: flex; flex-direction: column; align-items: center; justify-content: space-between; width: 200px; height: 270px; padding: 16px; border: 3px solid var(--g); border-radius: 12px; background: radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.14), transparent 60%), var(--f); color: var(--g); box-shadow: 0 14px 30px rgba(0, 0, 0, 0.5); text-align: center; }
+      .district.high { --f: #f1e6cc; --g: #8a6420; }
+      .district.low { --f: #1e2a29; --g: #6fc1b6; }
+      .district .shares { font-size: 44px; letter-spacing: 6px; }
+      .district h3 { margin: 0; font-size: 22px; letter-spacing: 0.16em; color: inherit; }
+      .district .value { font-family: var(--font-display); font-size: 54px; line-height: 1; }
+      .district small { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.8; }
+      .district.empty { --f: #232a30; --g: #6f7a82; }
+      .auction { flex: 1; min-width: 260px; }
+      .auction h2 { color: var(--gold); margin-bottom: 8px; }
+      .bids { margin: 0; padding: 0; list-style: none; }
+      .bids li { display: flex; gap: 8px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--line); }
+      .bids li.now { color: var(--gold); font-weight: 700; }
+      .bids li em { margin-left: auto; color: var(--muted); font-style: normal; }
+      .who { display: inline-block; width: 12px; height: 12px; border-radius: 3px; }
+      .revolution { margin: 10px 0; padding: 10px 14px; border-left: 3px solid #e0604a; background: rgba(224, 96, 74, 0.12); color: #f0b8a8; font-weight: 700; }
+      .deck { margin-top: 10px; color: var(--muted); }
+
+      .player .row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+      .chip { display: inline-flex; gap: 4px; align-items: center; padding: 2px 6px; border-radius: 5px; background: rgba(255, 255, 255, 0.06); font-weight: 700; }
+      .chip .bn { font-size: 16px; }
+      .chip.maj { box-shadow: 0 0 0 2px var(--gold); }
+      .meta { margin-top: 6px; color: var(--muted); font-size: 13px; }
+      .meta b { color: var(--text); }
+
+      .rules { margin-top: 18px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 8px; color: #c3ccd2; font-size: 13.5px; line-height: 1.55; }
+      .rules h3 { color: var(--gold); font-size: 13px; margin-bottom: 6px; }
+      .rules ul { margin: 0; padding-left: 18px; }
+      .log { max-height: 320px; padding: 0; font-size: 13.5px; white-space: pre-wrap; }
+      .log .bn { font-size: 13px; }
+      .log .auction { margin-top: 6px; color: #f0e8d8; font-weight: 700; }
+      .log .win { color: var(--gold); }
+      .log .lose { color: #d99a8c; }
+      .log .scores { color: var(--muted); font-size: 12px; }
+      .log .event { margin: 4px 0; color: #f0b8a8; font-weight: 700; }
+      .prompt .msg { flex-basis: 100%; font-size: 16px; }
+      .btn.meet { border-color: #e0604a; color: #f0b8a8; }
+      .bets { display: flex; gap: 4px; }
+      .portfolio { display: flex; flex-direction: column; gap: 4px; margin-top: 6px; }
+      .pf { padding: 3px 8px; border-radius: 5px; font-size: 13.5px; }
+      .pf.high { background: rgba(176, 129, 47, 0.18); color: #e9cf96; }
+      .pf.low { background: rgba(47, 125, 116, 0.22); color: #9fd8cf; }
+      .c-high { color: #e9cf96; }
+      .c-low { color: #9fd8cf; }
+      .sp-row i { margin-left: auto; color: var(--muted); font-style: normal; font-size: 11px; }
+      .sp-row.tier3 { background: rgba(176, 129, 47, 0.08); }
+      .sp-row.tier1 { background: rgba(47, 125, 116, 0.08); }
+      .sp-row.edge { border-bottom: 2px solid rgba(233, 196, 119, 0.4); }
+      .btn small { display: inline; color: var(--muted); font-weight: 400; }
+      .bet { display: inline-flex; align-items: center; justify-content: center; min-width: 24px; height: 30px; padding: 0 5px; border: 1px solid var(--gold); border-radius: 4px; background: rgba(233, 196, 119, 0.12); color: var(--gold); font-style: normal; font-weight: 800; font-size: 13px; }
+      .bet.used { opacity: 0.35; border-style: dashed; }
+      .results td, .results th { font-size: 14px; }
+    </style>
+  </head>
+  <body>
+    <header class="page-head">
+      <h1>Bribes &amp; Grievances <span class="sub">Playtest · hot-seat</span></h1>
+      <nav>
+        <a class="nav-link" href="plan-2.txt">Plan</a>
+        <label class="nav-link">Bots <select id="speed" style="background:transparent;color:inherit;border:0;font:inherit"><option value="1200">slow</option><option value="600" selected>normal</option><option value="0">instant</option></select></label>
+        <button class="nav-link" id="new-game" type="button">New game</button>
+      </nav>
+    </header>
+
+    <div class="status" id="status"></div>
+
+    <main class="table">
+      <section>
+        <p class="mini-label">Spire</p>
+        <div class="spire-track" id="spire"></div>
+      </section>
+      <section>
+        <div class="stage">
+          <div id="card"></div>
+          <div class="auction" id="auction"></div>
+        </div>
+        <div class="rules">
+          <h3>Rules in short</h3>
+          <ul>
+            <li><strong>Districts</strong> are High City (2–4 shares ◆) or Low City (1–3 shares).</li>
+            <li><strong>Betting cards:</strong> everyone holds 1, 2, 3. Every played card goes to your discard; when your hand is empty, take all your cards back.</li>
+            <li>Each turn, one district is auctioned. Everyone plays a betting card face down (or passes), then all reveal. The highest card wins; between equal cards, the player closest to the auctioneer's left wins.</li>
+            <li><strong>Winner:</strong> takes the district, their Citizen sinks by their card. <strong>Players who bid and lost:</strong> Outcast rises 1. Nobody bids: the district burns, every Outcast rises 1.</li>
+            <li><strong>Revolution:</strong> when a player's Outcast reaches their Citizen, the current round is finished, then the game ends. Also ends when the deck runs out.</li>
+            <li><strong>Score:</strong> High City shares × your Citizen's tier + Low City shares × your Outcast's tier. Tiers: heights 1–7 ×1, 8–14 ×2, 15–20 ×3. Bidding sinks your Citizen (your High City is worth less); losing raises your Outcast (your Low City is worth more).</li>
+          </ul>
+        </div>
+        <p class="mini-label" style="margin-top:16px">Log <button class="btn small" id="copy-log" type="button">Copy log</button></p>
+        <div class="log" id="log"></div>
+      </section>
+      <section>
+        <p class="mini-label">Players</p>
+        <div id="players"></div>
+      </section>
+    </main>
+
+    <div class="prompt" id="prompt"></div>
+
+    <dialog id="setup">
+      <form method="dialog">
+        <h2>New game</h2>
+        <label class="count">Players
+          <select id="setup-count"><option selected>3</option><option>4</option><option>5</option></select>
+        </label>
+        <div id="setup-players" class="setup-players"></div>
+        <menu>
+          <button class="btn" value="cancel">Cancel</button>
+          <button class="btn primary" value="start">Start</button>
+        </menu>
+      </form>
+    </dialog>
+
+    <dialog id="victory">
+      <form method="dialog">
+        <div id="victory-body"></div>
+        <menu>
+          <button class="btn" value="close">Close</button>
+          <button class="btn primary" value="new">New game</button>
+        </menu>
+      </form>
+    </dialog>
+
+    <script src="../banners/banners-data.js"></script>
+    <script src="play.js"></script>
+  </body>
+</html>
