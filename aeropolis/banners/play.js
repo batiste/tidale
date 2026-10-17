@@ -9,6 +9,7 @@ const pawnHtml = (p, ch) => `<span class="pawn ${ch}" style="background:${color(
 let S = null;
 let botTimer = null;
 let openGroup = null; // two-step choices: the group the human opened
+let heard = 0; // log lines already turned into sound
 
 // ---------- drawing ----------
 
@@ -22,6 +23,8 @@ function render() {
   renderCity();
   $("reserve").innerHTML = FACTIONS.map((f) => `<span>${banner(f.id)} ×${S.reserve[f.id]}</span>`).join("");
   renderPlayers();
+  SFX.fromLog(S.log.slice(heard));
+  heard = S.log.length;
   const logEl = $("log");
   logEl.innerHTML = S.log.map((m) => `<div class="${m.startsWith("Turn") ? "turn" : m.startsWith("—") ? "event" : ""}">${esc(m)}</div>`).join("");
   logEl.scrollTop = logEl.scrollHeight;
@@ -43,9 +46,10 @@ function site(l) {
   const pawns = S.players.flatMap((P, p) => ["cit", "out"].filter((ch) => P.pos[ch] === l).map((ch) => pawnHtml(p, ch)));
   const cubes = S.inf[l].map((n, p) => (n ? `<span class="cube" style="background:${color(p)}" title="${esc(nm(S, p))}">${n}</span>` : "")).join("");
   return `<div class="site ${isHigh(l) ? "high" : "low"} ${c >= 0 ? "ctrl" : ""}" style="--ctrl:${c >= 0 ? color(c) : "transparent"}">
-    <div class="site-head">${banner(S.banner[l])}<div><b>${L.name} ${time(L.cost)}</b><small><strong>${L.action}:</strong> ${L.text}</small></div></div>
+    <div class="site-head">${banner(S.banner[l])}<b>${L.name} ${time(L.cost)}</b></div>
+    <small class="site-text"><strong>${L.action}:</strong> ${L.text}</small>
     <div class="pawns">${pawns.join("")}</div>
-    <div class="cubes">${cubes}${c >= 0 ? `<span class="ctrl-tag">controlled by ${esc(nm(S, c))}</span>` : ""}</div>
+    <div class="cubes">${cubes}${c >= 0 ? `<span class="ctrl-tag" title="Control">⚑ ${esc(nm(S, c))}</span>` : ""}</div>
   </div>`;
 }
 
@@ -160,9 +164,13 @@ $("setup").addEventListener("close", () => {
   const players = [...document.querySelectorAll(".setup-player")].map((r) => ({ name: r.querySelector("input").value.trim() || "Player", bot: r.querySelector("select").value === "bot" }));
   clearTimeout(botTimer);
   S = newGame(players);
+  heard = S.log.length;
   render();
 });
 $("new-game").onclick = openSetup;
+const soundLabel = () => ($("sound").textContent = SFX.muted ? "Sound off" : "Sound on");
+$("sound").onclick = () => { SFX.toggle(); soundLabel(); };
+soundLabel();
 $("victory").addEventListener("close", () => $("victory").returnValue === "new" && openSetup());
 // The log in reading order, as plain text (for pasting into an analysis).
 $("copy-log").onclick = async () => {

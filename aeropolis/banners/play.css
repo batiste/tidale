@@ -4,12 +4,12 @@
 
 .city-wrap { flex: 1; min-width: 640px; }
 .bcity { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
-.site { position: relative; display: flex; flex-direction: column; gap: 6px; min-height: 150px; padding: 8px 10px 10px; border: 2px solid var(--line); border-radius: 8px; background: var(--surface); }
+.site { position: relative; display: flex; flex-direction: column; gap: 6px; min-height: 150px; padding: 8px 10px 10px; margin-top: 10px; border: 2px solid var(--line); border-radius: 8px; background: var(--surface); }
 .site.high { border-top: 4px solid var(--brass); }
 .site.low { border-top: 4px solid var(--verdigris); }
 .site.ctrl { border-color: var(--ctrl); }
 .site-head { display: flex; gap: 8px; align-items: flex-start; }
-.site-head .bn { font-size: 26px; flex: none; }
+.site-head .bn { font-size: 30px; flex: none; margin-top: -22px; filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.45)); } /* +15%, hung from above the box */
 .site-head b { display: block; color: #f3ede0; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; }
 .site-head small { color: var(--muted); font-size: 11px; line-height: 1.3; }
 .pawns { display: flex; gap: 6px; min-height: 22px; }
@@ -63,3 +63,32 @@
 .victory-head h2 { margin: 0 0 4px; font-size: 26px; }
 .victory-head p { margin: 0; color: var(--muted); }
 .results .bn { font-size: 16px; }
+
+/* Larger type (~+15%) over the shared play stylesheet and the sizes above. */
+body { font-size: 15px; }
+.status { font-size: 16px; }
+.mini-label { font-size: 12px; }
+.page-head .nav-link { font-size: 12.5px; }
+.site-head b { font-size: 15px; }
+.site-head small { font-size: 12.5px; }
+.cube { font-size: 13px; min-width: 27px; height: 23px; line-height: 23px; }
+.ctrl-tag { font-size: 11.5px; }
+.bcity .tandem p { font-size: 13px; }
+.reserve span { font-size: 14px; }
+.player h3 { font-size: 17px; }
+.player .chars em { font-size: 12.5px; }
+.player .meta { font-size: 13px; }
+.log { font-size: 13.5px; }
+.prompt .msg { font-size: 16px; }
+.btn { font-size: 14.5px; }
+.opt-group > em { font-size: 12.5px; }
+.sp-row b { font-size: 11.5px; }
+.results th, .results td { font-size: 14.5px; }
+
+/* Location: banner and name on one row, the action text below at full width. Narrower right column. */
+.table { grid-template-columns: minmax(0, 1fr) 320px; }
+.site-head { align-items: center; }
+.site-head b { margin-top: -10px; }
+.site-text { color: var(--muted); font-size: 12.5px; line-height: 1.4; }
+.player .chars span { flex-wrap: wrap; row-gap: 0; }
+.player .chars em { flex-basis: 100%; padding-left: 24px; line-height: 1.35; }
