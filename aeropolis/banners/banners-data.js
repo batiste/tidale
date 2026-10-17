@@ -4,7 +4,7 @@ const BN_CONFIG = {
   spire: 20, // Spire heights 1 (base) to 20 (top). Citizens start on 20, Outcasts on 1.
   influence: 20, // influence cubes per player
   end: { rule: "out", squeeze: 2, freeze: true }, // how the game ends: see endTurn in engine.js (the rules page describes "out" + freeze)
-  score: { backed: 1, control: 2 }, // points per influence under one of your banners (control: where you have control)
+  score: { influence: 1, control: 3 }, // per influence under one of your banners; per location you control (any banner)
   bannerCopies: 3, // banner tokens per faction: 8 hang in the city, the rest form the reserve
 };
 

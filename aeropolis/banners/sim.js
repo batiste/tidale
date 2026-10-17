@@ -23,6 +23,8 @@ const box = vm.createContext({ console });
 for (const f of ["banners-data.js", "engine.js", "bots.js"]) vm.runInContext(fs.readFileSync(path.join(__dirname, f), "utf8"), box, { filename: f });
 // END='{"rule":"lastTurn"}' node sim.js …: try another end rule (merged into BN_CONFIG.end).
 if (process.env.END) vm.runInContext(`Object.assign(BN_CONFIG.end, ${process.env.END})`, box);
+// SCORE='{"control":2}' node sim.js …: try other scoring values (merged into BN_CONFIG.score).
+if (process.env.SCORE) vm.runInContext(`Object.assign(BN_CONFIG.score, ${process.env.SCORE})`, box);
 const G = vm.runInContext("({ newGame, choose, botChoose, CHAR_BY_ID, FACTION, STYLES })", box); // top-level consts are not properties of the context
 
 // Seeded random, so runs are repeatable.
@@ -42,7 +44,7 @@ const add = (o, k, n = 1) => (o[k] = (o[k] || 0) + n);
 
 const scores = [], winScores = [], margins = [], turns = [], actions = {}, tandems = {}, byChar = {};
 const seatWins = Array(PLAYERS).fill(0);
-let firstOutWins = 0, triggerWins = 0, ties = 0, citTime = 0, outTime = 0;
+let flips = 0, firstOutWins = 0, triggerWins = 0, ties = 0, citTime = 0, outTime = 0;
 const t0 = Date.now();
 
 for (let g = 0; g < GAMES; g++) {
@@ -70,6 +72,7 @@ for (let g = 0; g < GAMES; g++) {
   S.players.forEach((P, p) => P.chars.forEach((c) => { byChar[c] = byChar[c] || [0, 0]; byChar[c][0] += p === S.winner; byChar[c][1]++; }));
   for (const k in S.stats.actions) add(actions, k, S.stats.actions[k]);
   for (const k in S.stats.tandems) add(tandems, k, S.stats.tandems[k]);
+  flips += S.stats.flips;
   citTime += S.stats.time.cit; outTime += S.stats.time.out;
 }
 
@@ -79,6 +82,7 @@ out.push("", "Scores");
 out.push(`  mean ${f1(mean(scores))}, winner ${f1(mean(winScores))}, margin over second ${f1(mean(margins))}, tied on points ${pct(ties / GAMES)}`);
 out.push("", "Length");
 out.push(`  turns per player ${f1(mean(turns))}; Spire steps: Citizen ${pct(citTime / (citTime + outTime))}, Outcast ${pct(outTime / (citTime + outTime))}`);
+out.push(`  banner changes per game ${f1(flips / GAMES)}`);
 out.push(`  the player with the last turn wins ${pct(triggerWins / GAMES)}; the first player out wins ${pct(firstOutWins / GAMES)}`);
 const lowTurns = ["Slip", "Relic", "Recruit", "Riot"].reduce((t, k) => t + (actions[k] || 0), 0);
 out.push(`  Outcast turns: ${pct(lowTurns / Object.values(actions).reduce((a, b) => a + b, 0))}`);

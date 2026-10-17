@@ -41,7 +41,10 @@ function controller(S, l) {
 }
 // Points p holds right now: each of their influence under one of their banners, more where they have control.
 // scoreParts: [[location, points]] for the locations that score.
-const scoreParts = (S, p) => ALL_LOCS.map((l) => [l, factionsOf(S, p).includes(S.banner[l]) ? S.inf[l][p] * (controller(S, l) === p ? BN_CONFIG.score.control : BN_CONFIG.score.backed) : 0]).filter(([, n]) => n);
+// Each influence under one of your banners scores score.influence; each location you control, score.control (any banner).
+const scoreParts = (S, p) => ALL_LOCS.map((l) => [l,
+  (factionsOf(S, p).includes(S.banner[l]) ? S.inf[l][p] * BN_CONFIG.score.influence : 0) + (controller(S, l) === p ? BN_CONFIG.score.control : 0),
+]).filter(([, n]) => n);
 const points = (S, p) => scoreParts(S, p).reduce((t, [, n]) => t + n, 0);
 const protectedAt = (S, q, l) => (has(S, q, "abbess") && S.banner[l] === "church") || (has(S, q, "mendicant") && !isHigh(l));
 const cost = (S, p, l) => (l === LOC_IDS.palace && has(S, p, "regent") ? 2 : locOf(l).cost);
@@ -98,6 +101,7 @@ function remove(S, q, l) {
   pl(S, q).supply++;
 }
 function setBanner(S, l, f) {
+  S.stats.flips++;
   S.reserve[S.banner[l]]++;
   S.reserve[f]--;
   S.banner[l] = f;
@@ -376,7 +380,7 @@ function newGame(players, rnd = Math.random) {
     inf: ALL_LOCS.map(() => Array(n).fill(0)),
     queue: [{ t: "next" }],
     log: [],
-    stats: { time: { cit: 0, out: 0 }, actions: {}, tandems: {} },
+    stats: { time: { cit: 0, out: 0 }, actions: {}, tandems: {}, flips: 0 },
   };
   banners.slice(N_LOCS).forEach((f) => S.reserve[f]++);
   log(S, `— New game. ${S.players.map((P) => `${P.name}: ${P.chars.map((id) => `${CHAR_BY_ID[id].name} ${flagLabel(CHAR_BY_ID[id].faction)}`).join(" + ")}`).join(" · ")} —`);
