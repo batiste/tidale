@@ -1,0 +1,53 @@
+/* Card mockups: characters (Citizen, Outcast) and factions, at poker ratio (63 × 88). */
+.cards { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 16px; }
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 252px;
+  aspect-ratio: 63 / 88;
+  padding: 14px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.5);
+}
+
+/* Citizen: bright paper and brass. Outcast: soot and verdigris. */
+.card-cit { background: linear-gradient(180deg, #f6efe0, var(--paper) 60%, var(--paper-edge)); color: var(--ink); border: 3px solid var(--brass); }
+.card-out { background: linear-gradient(180deg, #26302f, #1b2322); color: #dfe6ea; border: 3px solid var(--verdigris); }
+
+.card-head { display: flex; gap: 10px; align-items: flex-start; margin: -14px 0 0; }
+.card-head .bn { font-size: 30px; }
+.card-title { padding-top: 12px; }
+.card-title h3 { margin: 0; font-size: 20px; letter-spacing: 0.1em; color: inherit; }
+.card-role { font-size: 10.5px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; }
+.card-cit .card-role { color: var(--brass); }
+.card-out .card-role { color: #6fc1b6; }
+
+.card-art { flex: 1; margin: 10px 0; border-radius: 6px; overflow: hidden; }
+.card-art svg { display: block; width: 100%; height: 100%; }
+.card-cit .card-art { background: linear-gradient(180deg, #cfdde3, #f1e4c8); }
+.card-out .card-art { background: linear-gradient(180deg, #0f1414, #2a3634); }
+
+.card-text { padding: 10px 11px; border-radius: 6px; font-size: 13px; line-height: 1.45; }
+.card-cit .card-text { background: rgba(176, 129, 47, 0.12); border: 1px solid rgba(176, 129, 47, 0.4); }
+.card-out .card-text { background: rgba(47, 125, 116, 0.16); border: 1px solid rgba(47, 125, 116, 0.5); color: #cfe0dc; }
+
+.card-foot { display: flex; justify-content: space-between; margin-top: 9px; font-size: 10.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.75; }
+
+/* Faction: the faction's own colours, a sealed order. */
+.card-fac { align-items: center; justify-content: space-between; text-align: center; background: radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.12), transparent 60%), var(--f); color: var(--g); border: 3px solid var(--g); }
+.card-fac::before { content: ""; position: absolute; inset: 7px; border: 1px solid var(--g); border-radius: 7px; opacity: 0.45; pointer-events: none; }
+.fac-label { margin-top: 8px; font-size: 10.5px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; opacity: 0.8; }
+.fac-seal { display: grid; place-items: center; width: 118px; height: 118px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.25), transparent 55%), var(--g); color: var(--f); font-size: 64px; line-height: 1; box-shadow: 0 0 0 6px color-mix(in srgb, var(--g) 35%, transparent), 0 8px 18px rgba(0, 0, 0, 0.4); font-family: "Apple Symbols", "Segoe UI Symbol", "Noto Sans Symbols", serif; }
+.card-fac h3 { margin: 0; font-size: 24px; letter-spacing: 0.18em; color: inherit; }
+.fac-motto { margin: 2px 0 0; font-size: 13px; font-style: italic; color: inherit; opacity: 0.85; }
+.fac-rule { margin: 0 4px 6px; padding-top: 8px; border-top: 1px solid color-mix(in srgb, var(--g) 40%, transparent); font-size: 12px; line-height: 1.4; color: inherit; }
+
+/* Card back: identical for every card. */
+.card-back { align-items: center; justify-content: center; background: repeating-linear-gradient(45deg, #1d2329 0 10px, #222a31 10px 20px); border: 3px solid var(--gold); color: var(--gold); }
+.card-back .fac-seal { --f: #1d2329; --g: var(--gold); }
+.card-back .fac-label { margin-top: 18px; }
+
+@media (max-width: 600px) { .card { width: min(100%, 252px); } }

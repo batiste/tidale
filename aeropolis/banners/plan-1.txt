@@ -1,5 +1,7 @@
 # Aeropolis — Banners (draft 1)
 
+Superseded: the current rules are in index.html (data in banners-data.js). This file keeps the original notes.
+
 New prototype in a series. Reference: ../index.html. Previous attempt: ../coup (parked, see its post-mortem).
 Read ../self-assessment.md
 

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Aeropolis: Banners — Cards</title>
+    <link rel="stylesheet" href="../common.css" />
+    <link rel="stylesheet" href="../rules.css" />
+    <link rel="stylesheet" href="banners.css?v=2" />
+    <link rel="stylesheet" href="cards.css?v=2" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="page-head">
+        <div>
+          <h1>Banners — Cards</h1>
+          <p class="tagline">Card mockups. Rules: <a class="time" href="index.html">index.html</a>.</p>
+        </div>
+      </header>
+
+      <section>
+        <h2>Characters</h2>
+        <div class="cards" id="characters"></div>
+      </section>
+
+      <section>
+        <h2>Factions</h2>
+        <div class="cards" id="factions"></div>
+      </section>
+    </div>
+
+    <script src="banners-data.js"></script>
+    <script>
+      const set = (id, v) => (document.getElementById(id).innerHTML = v);
+      const vars = (f) => `--f:${f.field};--g:${f.ink}`;
+
+      // Art: the Citizen's spires above the clouds, the Outcast's arches under the Spire. The faction banner flies in both.
+      const ART = {
+        cit: `<svg viewBox="0 0 200 140" preserveAspectRatio="xMidYMid slice">
+          <path d="M14 140V74h10v-10h8v10h12v66z" fill="#c4b493"/>
+          <path d="M146 140V84h10l9-16 9 16h10v56z" fill="#b3a27d"/>
+          <path d="M84 140V64l16-46 16 46v76z" fill="#8f7d5c"/>
+          <path d="M100 18v-12" stroke="#5e5240" stroke-width="2"/>
+          <path d="M100 6h22v14l-11-4-11 4z" fill="var(--f)" stroke="var(--g)" stroke-width="1"/>
+          <circle cx="100" cy="92" r="6" fill="#e9c477"/>
+          <ellipse cx="40" cy="138" rx="70" ry="16" fill="#fff" opacity="0.8"/>
+          <ellipse cx="160" cy="140" rx="70" ry="14" fill="#fff" opacity="0.7"/>
+        </svg>`,
+        out: `<svg viewBox="0 0 200 140" preserveAspectRatio="xMidYMid slice">
+          <path d="M92 0h16l-2 70h-12z" fill="#33403e"/>
+          <circle cx="40" cy="58" r="14" fill="#3b4846" opacity="0.6"/><circle cx="54" cy="44" r="10" fill="#3b4846" opacity="0.5"/>
+          <path d="M0 140V92h200v48z" fill="#2f3b39"/>
+          <path d="M14 140v-22a16 16 0 0 1 32 0v22zM84 140v-22a16 16 0 0 1 32 0v22zM154 140v-22a16 16 0 0 1 32 0v22z" fill="#121817"/>
+          <path d="M60 92V62h6v30zM134 92V54h5v38z" fill="#46524f"/>
+          <circle cx="100" cy="122" r="3" fill="#e9a35a"/><circle cx="170" cy="124" r="2.5" fill="#e9a35a"/>
+          <path d="M136 54l2-20" stroke="#6b7774" stroke-width="2"/>
+          <path d="M138 34l24 3-4 7 3 6-25-3z" fill="var(--f)" stroke="var(--g)" stroke-width="1"/>
+        </svg>`,
+      };
+      const ROLE = { cit: "Citizen · High City", out: "Outcast · Low City" };
+      const FOOT = { cit: [`▲ Starts ${BN_CONFIG.spire}`, "Sinks ⧗"], out: ["▼ Starts 1", "Rises ⧗"] };
+
+      const charCard = (c) => {
+        const f = FACTION[c.faction];
+        return `<div class="card card-${c.char}" style="${vars(f)}">
+          <div class="card-head">${banner(f.id)}<div class="card-title"><h3>${c.name}</h3><div class="card-role">${ROLE[c.char]}</div></div></div>
+          <div class="card-art">${ART[c.char]}</div>
+          <div class="card-text">${c.text}</div>
+          <div class="card-foot"><span>${FOOT[c.char][0]}</span><span>${FOOT[c.char][1]}</span></div>
+        </div>`;
+      };
+      // Faction reference: who flies the banner.
+      const factionCard = (f) => `<div class="card card-fac" style="${vars(f)}">
+          <div class="fac-label">Faction</div>
+          <div class="fac-seal">${f.glyph}</div>
+          <div><h3>${f.name}</h3><p class="fac-motto">“${f.motto}”</p></div>
+          <p class="fac-rule">Flown by the ${CHARACTERS.filter((c) => c.faction === f.id).map((c) => c.name).join(" and the ")}.</p>
+        </div>`;
+      const back = `<div class="card card-back"><div class="fac-seal">?</div><div class="fac-label">Banners</div></div>`;
+
+      // Every character, then every faction and the shared back.
+      set("characters", CHARACTERS.map(charCard).join(""));
+      set("factions", FACTIONS.map(factionCard).join("") + back);
+    </script>
+  </body>
+</html>

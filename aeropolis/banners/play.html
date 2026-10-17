@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Aeropolis: Banners — Playtest</title>
+    <link rel="stylesheet" href="../common.css" />
+    <link rel="stylesheet" href="../double-life/double-life-play.css" />
+    <link rel="stylesheet" href="banners.css?v=2" />
+    <link rel="stylesheet" href="play.css?v=6" />
+  </head>
+  <body>
+    <header class="page-head">
+      <h1>Banners <span class="sub">Playtest · hot-seat</span></h1>
+      <nav>
+        <a class="nav-link" href="index.html">Rules</a>
+        <a class="nav-link" href="cards.html">Cards</a>
+        <label class="nav-link speed">Bots <select id="speed"><option value="900">slow</option><option value="350" selected>normal</option><option value="0">instant</option></select></label>
+        <button class="nav-link" id="new-game" type="button">New game</button>
+      </nav>
+    </header>
+
+    <div class="status" id="status"></div>
+
+    <main class="table">
+      <section>
+        <div class="board-wrap">
+          <div>
+            <p class="mini-label">Spire</p>
+            <div class="spire-track" id="spire"></div>
+          </div>
+          <div class="city-wrap">
+            <p class="mini-label">City · <span id="phase"></span></p>
+            <div class="bcity" id="city"></div>
+            <p class="mini-label">Reserve</p>
+            <div class="reserve" id="reserve"></div>
+          </div>
+        </div>
+      </section>
+      <section>
+        <p class="mini-label">Players</p>
+        <div id="players"></div>
+        <p class="mini-label">Log <button class="btn small" id="copy-log" type="button">Copy log</button></p>
+        <div class="log" id="log"></div>
+      </section>
+    </main>
+
+    <div class="prompt" id="prompt"></div>
+
+    <dialog id="setup">
+      <form method="dialog">
+        <h2>New game</h2>
+        <label class="count">Players
+          <select id="setup-count"><option selected>3</option><option>4</option><option>5</option></select>
+        </label>
+        <div id="setup-players" class="setup-players"></div>
+        <menu>
+          <button class="btn" value="cancel">Cancel</button>
+          <button class="btn primary" value="start">Start</button>
+        </menu>
+      </form>
+    </dialog>
+
+    <dialog id="victory">
+      <form method="dialog">
+        <div id="victory-body"></div>
+        <menu>
+          <button class="btn" value="close">Close</button>
+          <button class="btn primary" value="new">New game</button>
+        </menu>
+      </form>
+    </dialog>
+
+    <script src="banners-data.js"></script>
+    <script src="engine.js"></script>
+    <script src="bots.js"></script>
+    <script src="play.js"></script>
+  </body>
+</html>

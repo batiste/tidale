@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Aeropolis: Banners — Rules</title>
+    <link rel="stylesheet" href="../common.css" />
+    <link rel="stylesheet" href="../rules.css" />
+    <link rel="stylesheet" href="banners.css?v=2" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="page-head">
+        <div>
+          <h1>Banners</h1>
+          <p class="tagline">Aeropolis, draft 1. Five factions, two characters per player, 3–5 players. Cards: <a class="time" href="cards.html">cards.html</a>.</p>
+          <div class="hang" id="hang"></div>
+        </div>
+      </header>
+
+      <p class="callout">
+        You play a Citizen descending from the top of the Spire and an Outcast climbing from its base. Every action costs time:
+        it moves the pawn that acted. Each character flies a banner. Spread influence and hang your banners over it.
+        When a player's two characters meet, the Revolution ends the game.
+      </p>
+
+      <section>
+        <h2>Factions</h2>
+        <div class="factions" id="factions"></div>
+      </section>
+
+      <section>
+        <h2>Components</h2>
+        <ul class="steps">
+          <li><strong>Board:</strong> the Spire (heights 1 to <span data-cfg="spire"></span>) and the city: 4 High City locations above 4 Low City locations.</li>
+          <li><strong>Banners:</strong> <span data-cfg="bannerCopies"></span> per faction.</li>
+          <li><strong>Characters:</strong> 5 Citizens and 5 Outcasts, one of each per faction.</li>
+          <li><strong>Per player:</strong> 2 pawns (Citizen, Outcast), <span data-cfg="influence"></span> influence cubes.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Setup</h2>
+        <ol class="steps">
+          <li>Deal each player 1 Citizen and 1 Outcast. Redeal if a player's two banners match, or if two players share both. <strong>Your banners</strong> are your two characters' factions.</li>
+          <li>Shuffle the banners and hang 1 at each location. The rest form the <strong>reserve</strong>, face up.</li>
+          <li>Citizen pawns on Spire <span data-cfg="spire"></span>, Outcast pawns on 1. Character pawns start off the city.</li>
+          <li>Choose a first player.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Spire</h2>
+        <ul class="steps">
+          <li><strong>Time:</strong> every action has a cost (⧗). The pawn that acted moves that many heights: the Citizen <strong>sinks</strong>, the Outcast <strong>rises</strong>. You cannot take an action that would move a pawn off the Spire.</li>
+          <li><strong>Turn order:</strong> the player who has spent the least time plays next. Time spent = how far your Citizen has sunk + how far your Outcast has risen. Tie: whoever acted least recently; at the start, seating order from the first player.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Turn</h2>
+        <ol class="steps">
+          <li>Choose one of your characters. Move it to another location of its own city (several pawns may share a location).</li>
+          <li>Place 1 influence there. Then you may take the location's action.</li>
+          <li><strong>Tandem:</strong> if your other character stands in the same column, you may also take that column's tandem bonus.</li>
+          <li>Move the pawn on the Spire by the action's cost, even if you skipped the action.</li>
+        </ol>
+        <p><strong>Control:</strong> most influence at a location. Tie: nobody. Removed influence goes back to its owner. With an empty supply, placing does nothing.</p>
+        <p><strong>Replace a banner:</strong> swap it with any banner from the reserve.</p>
+      </section>
+
+      <section>
+        <h2>City</h2>
+        <div class="city" id="city"></div>
+      </section>
+
+      <section>
+        <h2>Revolution</h2>
+        <ul class="steps">
+          <li>At the end of a turn, if your Outcast is level with or above your Citizen, they <strong>meet</strong>: you <strong>score</strong> now and are out (no more turns, your score is final). When every player is out: the Revolution, and the game ends.</li>
+          <li><strong>Score:</strong> each of your influence under one of your banners scores <span data-cfg="score.backed"></span>, or <span data-cfg="score.control"></span> where you have control. Tie: most influence in the city.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Characters</h2>
+        <table class="revolution-table">
+          <thead><tr><th>Banner</th><th>Citizen</th><th>Outcast</th></tr></thead>
+          <tbody id="characters"></tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Open questions</h2>
+        <ul class="steps draft-note">
+          <li>Intrigue: with no hidden allegiance, what is left to read is the timing of the Revolution.</li>
+          <li>The high/low card mechanism of Aeropolis is not used here.</li>
+        </ul>
+      </section>
+    </div>
+
+    <a class="nav-link play" href="play.html">▶ Play hot-seat</a>
+
+    <script src="banners-data.js"></script>
+    <script>
+      const set = (id, v) => (document.getElementById(id).innerHTML = v);
+      document.querySelectorAll("[data-cfg]").forEach((el) => (el.textContent = el.dataset.cfg.split(".").reduce((o, k) => o[k], BN_CONFIG)));
+      set("hang", FACTIONS.map((f) => banner(f.id, "bn-xl")).join(""));
+      set("factions", FACTIONS.map((f) => `<div class="faction">${banner(f.id, "bn-lg")}<div><h3>${f.name}</h3><p>“${f.motto}”</p></div></div>`).join(""));
+      const loc = (l, city) => `<div class="loc loc-${city}"><span class="bn bn-lg bn-slot"><span>?</span></span><div><h3>${l.name} ${time(l.cost)}</h3><p><strong>${l.action}:</strong> ${l.text}</p></div></div>`;
+      set("city", `<div class="city-label">High City · Citizens</div>`
+        + COLUMNS.map((c) => loc(c.high, "high")).join("")
+        + `<div class="city-label">Tandem</div>`
+        + COLUMNS.map((c) => `<div class="tandem"><span>⇅</span><p><strong>${c.tandem.name}:</strong> ${c.tandem.text}</p></div>`).join("")
+        + `<div class="city-label">Low City · Outcasts</div>`
+        + COLUMNS.map((c) => loc(c.low, "low")).join(""));
+      const cell = (c) => `<strong>${c.name}</strong><br>${c.text}`;
+      set("characters", FACTIONS.map((f) => {
+        const [cit, out] = ["cit", "out"].map((k) => CHARACTERS.find((c) => c.char === k && c.faction === f.id));
+        return `<tr><td>${banner(f.id)} ${f.name}</td><td>${cell(cit)}</td><td>${cell(out)}</td></tr>`;
+      }).join(""));
+    </script>
+  </body>
+</html>

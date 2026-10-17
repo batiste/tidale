@@ -1,0 +1,65 @@
+/* Banners hot-seat. Base layout (header, prompt, players, dialogs, Spire rows) comes from double-life-play.css. */
+
+.speed select { margin-left: 6px; background: transparent; color: inherit; border: 0; font: inherit; }
+
+.city-wrap { flex: 1; min-width: 640px; }
+.bcity { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.site { position: relative; display: flex; flex-direction: column; gap: 6px; min-height: 150px; padding: 8px 10px 10px; border: 2px solid var(--line); border-radius: 8px; background: var(--surface); }
+.site.high { border-top: 4px solid var(--brass); }
+.site.low { border-top: 4px solid var(--verdigris); }
+.site.ctrl { border-color: var(--ctrl); }
+.site-head { display: flex; gap: 8px; align-items: flex-start; }
+.site-head .bn { font-size: 26px; flex: none; }
+.site-head b { display: block; color: #f3ede0; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; }
+.site-head small { color: var(--muted); font-size: 11px; line-height: 1.3; }
+.pawns { display: flex; gap: 6px; min-height: 22px; }
+.pawn { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border: 2px solid rgba(0, 0, 0, 0.6); color: #15191c; font-size: 11px; font-weight: 800; }
+.pawn.cit { border-radius: 50%; }
+.pawn.out { border-radius: 3px; transform: rotate(45deg) scale(0.85); }
+.pawn.out span { transform: rotate(-45deg); }
+.cubes { display: flex; flex-wrap: wrap; gap: 4px; margin-top: auto; }
+.cube { min-width: 24px; height: 20px; padding: 0 5px; border-radius: 3px; color: #15191c; font-size: 11.5px; font-weight: 800; line-height: 20px; text-align: center; }
+.ctrl-tag { margin-left: auto; align-self: center; color: var(--ctrl); font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
+
+/* Tandem row: same boxes as the rules page (banners.css); lit when the deciding player has both characters in the column. */
+.bcity .tandem p { color: var(--muted); font-size: 11.5px; }
+.bcity .tandem.live { border-style: solid; border-color: var(--gold); background: rgba(233, 196, 119, 0.08); }
+.bcity .tandem.live p { color: var(--text); }
+
+.reserve { display: flex; gap: 14px; }
+.reserve span { display: inline-flex; gap: 4px; align-items: center; color: var(--muted); font-weight: 700; }
+.reserve .bn { font-size: 20px; }
+
+.spire-track { width: 150px; }
+.sp-row { height: 24px; }
+.sp-row.meet b { color: var(--gold); }
+.sp-row .pawn { width: 14px; height: 14px; font-size: 0; border-width: 1px; }
+
+.player .chars { display: flex; flex-direction: column; gap: 3px; margin-top: 6px; }
+.player .chars span { display: flex; gap: 6px; align-items: center; }
+.player .chars .bn { font-size: 15px; }
+.player .chars em { color: var(--muted); font-style: normal; font-size: 11px; }
+.player .meta { margin-top: 6px; color: var(--muted); font-size: 11.5px; }
+.player .meta b { color: var(--text); }
+
+.prompt { max-height: 46vh; overflow-y: auto; align-items: flex-start; }
+.prompt .msg { flex-basis: 100%; }
+.opt-group { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 4px 8px; border: 1px solid var(--line); border-radius: 6px; }
+.opt-group > em { color: var(--muted); font-style: normal; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.who { display: inline-block; width: 12px; height: 12px; margin-right: 6px; border-radius: 3px; vertical-align: -1px; }
+
+.results td:first-child { font-weight: 700; }
+/* Log: one line per entry, effects indented under their turn. */
+.log { padding: 0; max-height: 420px; white-space: pre-wrap; font-size: 12px; }
+.log .turn { margin-top: 4px; color: #f0e8d8; font-weight: 700; }
+.log .event { margin: 4px 0; color: var(--gold); font-weight: 700; }
+
+/* Banner choices: coloured banners on the buttons and in the group title. */
+.btn.flag { display: inline-flex; gap: 6px; align-items: center; }
+.btn.flag .bn, .opt-group em .bn { font-size: 18px; }
+
+/* Victory modal. */
+.victory-head { display: flex; gap: 14px; align-items: center; margin-bottom: 14px; }
+.victory-head h2 { margin: 0 0 4px; font-size: 26px; }
+.victory-head p { margin: 0; color: var(--muted); }
+.results .bn { font-size: 16px; }

@@ -1,0 +1,51 @@
+/* Banners: swallowtail pennants hung from a brass rod. --f: field, --g: glyph colour. */
+.bn {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  width: 1.4em;
+  height: 1.9em;
+  padding-top: 0.2em;
+  vertical-align: middle;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.18), transparent 30%, transparent 70%, rgba(0, 0, 0, 0.22)), var(--f);
+  color: var(--g);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 76%, 0 100%);
+  line-height: 1;
+  font-family: "Apple Symbols", "Segoe UI Symbol", "Noto Sans Symbols", serif;
+}
+.bn::before { content: ""; position: absolute; inset: 0 0 auto; height: 0.14em; background: var(--brass); }
+.bn-lg { font-size: 28px; }
+.bn-xl { font-size: 46px; filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.5)); }
+.bn-slot { --f: rgba(255, 255, 255, 0.07); --g: #6f7a82; }
+
+.hang { display: flex; gap: 22px; margin: 26px 0 4px; }
+.hang .bn:nth-child(odd) { transform: rotate(-2deg); }
+.hang .bn:nth-child(even) { transform: rotate(2deg) translateY(6px); }
+
+.factions { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; margin-top: 14px; }
+.faction { display: flex; gap: 12px; align-items: flex-start; }
+.faction h3 { margin: 2px 0 2px; color: #eef3f6; }
+.faction p { margin: 0; font-size: 13px; font-style: italic; color: #a9b3ba; }
+
+.time { color: var(--gold); font-family: var(--font-body); font-weight: 700; letter-spacing: 0; text-transform: none; }
+
+/* City: 4 columns, High City over Low City, tandem bonuses between them. */
+.city { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
+.city-label { grid-column: 1 / -1; margin-top: 4px; color: #8d989f; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
+.loc { display: flex; gap: 10px; padding: 12px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 6px; background: rgba(255, 255, 255, 0.04); }
+.loc-high { border-top: 3px solid var(--brass); }
+.loc-low { border-top: 3px solid var(--verdigris); }
+.loc h3 { margin: 0 0 4px; color: #eef3f6; }
+.loc p, .tandem p { margin: 0; font-size: 13px; line-height: 1.45; }
+.tandem { display: flex; gap: 8px; padding: 8px 10px; border: 1px dashed rgba(233, 196, 119, 0.35); border-radius: 6px; }
+.tandem span { color: var(--gold); font-size: 18px; }
+
+@media (max-width: 700px) {
+  .city { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .city-label { display: none; }
+  .hang { gap: 12px; }
+  .bn-xl { font-size: 34px; }
+}
+
+/* Rules page: hot-seat link, fixed in the corner. */
+.nav-link.play { position: fixed; right: 24px; bottom: 24px; z-index: 10; background: var(--gold); color: #1b2126; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5); }
