@@ -346,6 +346,24 @@ footer a {
     color: var(--muted);
 }
 
+.offer .shipping {
+    border-collapse: collapse;
+    margin-top: 12px;
+    color: var(--muted);
+}
+
+.offer .shipping th,
+.offer .shipping td {
+    padding: 4px 20px 4px 0;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+}
+
+.offer .shipping th {
+    color: var(--ink);
+    font-weight: 600;
+}
+
 .offer ol {
     flex: 1;
     margin: 16px 0 24px 20px;
