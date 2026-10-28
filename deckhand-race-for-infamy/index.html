@@ -27,7 +27,6 @@
             <a href="/"><img src="../tidale-logo.png" alt="Tidale"></a>
             <nav>
                 <a href="#video">How to play</a>
-                <a href="#play">Play online</a>
                 <a href="#order">Order</a>
                 <a href="#credits">Credits</a>
             </nav>
@@ -74,39 +73,6 @@
                 </p>
                 <iframe src="https://www.youtube.com/embed/alWMkzv0U2k?si=Az7oYxm0EYASMEUM"
                     title="DeckHand: Race for Infamy — How to Play" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>
-        </section>
-
-        <section id="play">
-            <div class="wrap">
-                <h2>Try it for free</h2>
-                <p class="muted">
-                    The game is free to play with up to 5 players on <a href="https://time-to-play.games/games/deckhand/info">Time To Play</a>.
-                    Gather some friends, give it a try, and see if it’s your cup of tea. If you enjoy it, <a href="#order">get your own copy</a>.
-                </p>
-
-                <div class="play-grid">
-                    <a href="https://time-to-play.games/games/deckhand/info" class="tile" id="screentop">
-                        <img src="img/screentop.gg.jpg" alt="DeckHand: Race for Infamy on Time To Play">
-                        <div class="tile-body">
-                            <h3>Play on Time To Play</h3>
-                            <p>Free online, in your browser, with up to 5 players.</p>
-                            <p class="link">Start a game →</p>
-                        </div>
-                    </a>
-
-                    <div class="tile">
-                        <iframe data-testid="embed-iframe" title="DeckHand: Race for Infamy playlist on Spotify"
-                            src="https://open.spotify.com/embed/playlist/39bV9UH4x0Pe05iUDChf7N?utm_source=generator"
-                            allowfullscreen=""
-                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                            loading="lazy"></iframe>
-                        <div class="tile-body">
-                            <h3>The soundtrack</h3>
-                            <p>A pirate playlist to set the mood at the table.</p>
-                        </div>
-                    </div>
-                </div>
             </div>
         </section>
 
@@ -238,16 +204,5 @@
     });
   });
 </script>
-
-
-<script>
-    document.getElementById("screentop").addEventListener("click", function () {
-        gtag("event", "button_click", {
-            event_category: "Game Button",
-            event_label: "Screentop.gg",
-        });
-    });
-
-  </script>
 
 </html>
