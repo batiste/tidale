@@ -280,32 +280,63 @@ footer a {
     color: var(--muted);
 }
 
-.offer p,
+.offer p:not(.price),
 .offer ol {
     color: var(--muted);
 }
 
 .offer .shipping {
+    width: 100%;
+    margin-top: 20px;
     border-collapse: collapse;
-    margin-top: 12px;
+    font-size: 15px;
+    font-variant-numeric: tabular-nums;
+}
+
+.offer .shipping caption {
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     color: var(--muted);
+    margin-bottom: 6px;
 }
 
 .offer .shipping th,
 .offer .shipping td {
-    padding: 4px 20px 4px 0;
-    text-align: left;
+    padding: 8px 14px;
+    text-align: right;
     border-bottom: 1px solid var(--line);
 }
 
-.offer .shipping th {
-    color: var(--ink);
+.offer .shipping th:first-child {
+    text-align: left;
+}
+
+.offer .shipping thead th {
+    font-size: 13px;
     font-weight: 600;
+    color: var(--muted);
+    background: var(--soft);
+}
+
+.offer .shipping tbody th {
+    font-weight: 600;
+    color: var(--ink);
+}
+
+.offer .shipping td {
+    color: var(--ink);
+}
+
+.offer .shipping tbody tr:last-child > * {
+    border-bottom: 0;
 }
 
 .offer ol {
     flex: 1;
-    margin: 16px 0 24px 20px;
+    margin: 20px 0 24px 20px;
 }
 
 .offer li + li {
