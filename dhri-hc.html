@@ -7,57 +7,237 @@
     <link rel="icon" href="/favicon.png" type="image/png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <title>DeckHand: Race for Infamy - Quick Rules, Game Phases &amp; How to Play</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="/deckhand-race-for-infamy/style.css" rel="stylesheet">
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #eaddca;
-            color: var(--ink);
-            line-height: 1.6;
-            margin: 0;
-            padding: 12px 12px;
-            /* display: flex;
-            justify-content: center; */
+            background: var(--soft);
         }
-        .controls { display: flex; justify-content: space-between; margin-bottom: 20px; 
-            border-bottom: 2px solid #b99a76; padding-bottom: 10px; }
-        
-        /* Language Buttons */
-        .lang-btn { font-size: 16px;cursor: pointer; border: 1px solid #ccc; background: white; padding: 5px 10px; border-radius: 4px; }
-        .lang-btn.active { background: #007bff; color: white; border-color: #0056b3; }
+
+        .topbar {
+            background: var(--bg);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .topbar .wrap {
+            padding-top: 12px;
+            padding-bottom: 12px;
+        }
+
+        .topbar img {
+            height: 36px;
+        }
+
+        /* Language picker */
+        .langs {
+            display: flex;
+            gap: 4px;
+            padding: 3px;
+            background: var(--soft);
+            border: 1px solid var(--line);
+            border-radius: 999px;
+        }
+
+        .lang-btn {
+            font: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            color: var(--muted);
+            background: none;
+            border: 0;
+            border-radius: 999px;
+            padding: 4px 12px;
+            cursor: pointer;
+        }
+
+        .lang-btn.active {
+            color: var(--ink);
+            background: var(--bg);
+            box-shadow: 0 1px 3px rgba(26, 32, 51, 0.15);
+        }
+
+        /* Heading */
+        .page-head {
+            padding: 28px 0 20px;
+        }
+
+        .eyebrow {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        h1 {
+            font-family: Fraunces, Georgia, serif;
+            font-size: clamp(30px, 6vw, 42px);
+            line-height: 1.15;
+            letter-spacing: -0.01em;
+            margin-top: 4px;
+        }
 
         /* Tabs */
-        .tab-container { display: flex; gap: 5px; }
-        .tab { padding: 5px 10px; cursor: pointer; background: #f4f4f4; border-radius: 8px 8px 0 0; border: 1px solid #ddd; border-bottom: none; }
-        .tab.active { background: white; font-weight: bold; border-bottom: 2px solid white; }
-
-        /* Content Area */
-        .content-section { min-height: 200px; }
-        .hidden { display: none; }
-        .placeholder-img { text-align: left; }
-
-        .responsive-img { width:100%; max-width: 900px; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-
-        @media screen  and (min-width: 1000px)   {
-            .responsive-img { max-width: 500px; float: left; }
-        }
-        @media screen  and (max-width: 700px)   {
-            .tab-container { font-size: 13px ;}
+        .tab-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
         }
 
-        .video-container iframe {
+        .tab {
+            flex: none;
+            font: inherit;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--muted);
+            background: var(--bg);
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+
+        .tab:hover {
+            color: var(--ink);
+        }
+
+        .tab.active {
+            color: #2b1a04;
+            background: var(--gold);
+            border-color: var(--gold);
+            font-weight: 600;
+        }
+
+        /* Content */
+        .content-section {
+            padding: 20px 0 48px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .sheets {
+            display: grid;
+            gap: 20px;
+            justify-items: center;
+        }
+
+        .sheet {
+            width: 100%;
+            max-width: 520px;
+        }
+
+        .sheet img {
+            display: block;
             width: 100%;
             height: auto;
+            background: var(--bg);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            box-shadow: 0 18px 40px -20px rgba(26, 32, 51, 0.25);
+        }
+
+        .print-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--ink);
+            background: var(--bg);
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            padding: 6px 14px;
+        }
+
+        .print-link:hover {
+            border-color: var(--gold);
+        }
+
+        .print-link img {
+            width: 16px;
+        }
+
+        .embed {
+            display: block;
+            width: 100%;
+            border: 0;
+            border-radius: 14px;
+            box-shadow: 0 18px 40px -20px rgba(26, 32, 51, 0.25);
+        }
+
+        .embed.video {
             aspect-ratio: 16 / 9;
+            height: auto;
         }
 
-        .spotify-container {
-            width: 100%;
-            max-width: 720px; /* Optional: Sets a limit on desktop */
+        .embed.music {
+            max-width: 720px;
+            height: 352px;
         }
 
-        .spotify-container iframe {
-            width: 100%;
-            height: 352px; /* Standard Spotify embed height */
+        /* Variants */
+        .variants {
+            border-top: 1px solid var(--line);
+            padding: 36px 0 48px;
+        }
+
+        .variants h2 {
+            font-size: 24px;
+        }
+
+        .variant-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .variant {
+            display: block;
+            background: var(--bg);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 18px 20px;
+            text-decoration: none;
+            color: var(--ink);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .variant:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(26, 32, 51, 0.1);
+        }
+
+        .variant h3 {
+            font-size: 19px;
+        }
+
+        .variant p {
+            font-size: 15px;
+            color: var(--muted);
+        }
+
+        footer {
+            background: var(--bg);
+        }
+
+        @media (min-width: 900px) {
+            #phases .sheets {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .variant-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
     <!-- Google tag (gtag.js) -->
@@ -70,66 +250,89 @@
     </script>
 </head>
 <body>
-
-    <div class="controls">
-        <div id="language-picker">
-            <button class="lang-btn" data-lang="en" title="English">🇬🇧</button>
-            <button class="lang-btn" data-lang="de" title="Deutsch">🇩🇪</button>
-            <button class="lang-btn" data-lang="fr" title="Français">🇫🇷</button>
-            | Variants: 
-            <a href="deckhand-race-for-infamy/automata.html">Warden Solo</a>
-            | <a href="deckhand-race-for-infamy/draft-variant.html">Dockside Draft</a>
-        </div>
-    </div>
-
-    <div class="tab-container">
-        <div class="tab active" data-target="quick" data-en="Quick Reference" data-de="Kurz&shy;referenz" data-fr="Référence Rapide">Quick Reference</div>
-        <div class="tab" data-target="phases" data-en="Game Phases" data-de="Spiel&shy;phasen" data-fr="Phases de jeu">Game Phases</div>
-        <div class="tab" data-target="how-to-play" data-en="How to Play ▶" data-de="Spielan&shy;leitung ▶" data-fr="Comment jouer">How to Play ▶</div>
-        <div class="tab" data-target="music" data-en="Music Playlist 🎵" data-de="Musik Playlist 🎵" data-fr="Playlist musicale 🎵">Music Playlist 🎵</div>
-    </div>
-
-    <div id="quick" class="content-section">
-        <div class="placeholder-img" style="display: flex;">
-            <div style="position: relative;display: flex;">
-                                    
-                <a href="deckhand-race-for-infamy/help/quick-ref-en.pdf" style="position: absolute; right:5px; top:5px;" 
-        data-base="quick-ref"><img width="20px" src="print-icon.png" alt="Print"></a>
-                <img src="/deckhand-race-for-infamy/help/quick-en.jpg" class="responsive-img" data-base="quick" alt="Reference Image">
+    <header class="topbar">
+        <div class="wrap">
+            <a href="/deckhand-race-for-infamy/"><img src="/tidale-logo.png" alt="Tidale"></a>
+            <div class="langs" id="language-picker">
+                <button class="lang-btn" data-lang="en" title="English">EN</button>
+                <button class="lang-btn" data-lang="de" title="Deutsch">DE</button>
+                <button class="lang-btn" data-lang="fr" title="Français">FR</button>
             </div>
         </div>
-    </div>
+    </header>
 
-    <div id="phases" class="content-section hidden">
-        <div class="placeholder-img">
-            <img src="/deckhand-race-for-infamy/help/phases-en.jpg" class="responsive-img" data-base="phases" alt="Reference Image">
+    <main class="wrap">
+        <div class="page-head">
+            <span class="eyebrow">DeckHand: Race for Infamy</span>
+            <h1 data-en="Rules at the table" data-de="Regeln am Spieltisch" data-fr="Aide de jeu">Rules at the table</h1>
         </div>
-        <div class="placeholder-img">
-            <img src="/deckhand-race-for-infamy/help/phases-2-en.jpg" class="responsive-img" data-base="phases-2" alt="Reference Image">
+
+        <div class="tab-container" role="tablist">
+            <button class="tab active" data-target="quick" data-en="Quick Reference" data-de="Kurzreferenz" data-fr="Référence rapide">Quick Reference</button>
+            <button class="tab" data-target="phases" data-en="Game Phases" data-de="Spielphasen" data-fr="Phases de jeu">Game Phases</button>
+            <button class="tab" data-target="how-to-play" data-en="How to Play" data-de="Spielanleitung" data-fr="Comment jouer">How to Play</button>
+            <button class="tab" data-target="music" data-en="Music" data-de="Musik" data-fr="Musique">Music</button>
         </div>
-    </div>
 
-    <div id="how-to-play" class="content-section hidden video-container">
-        <div>
-            <iframe src="https://www.youtube.com/embed/3T4_mCdZ1YU?si=HsroOEJLidM69Ehd"
-             title="YouTube video player"
-             frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-             referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <div id="quick" class="content-section">
+            <div class="sheets">
+                <div class="sheet">
+                    <a class="print-link" href="/deckhand-race-for-infamy/help/quick-ref-en.pdf">
+                        <img src="/print-icon.png" alt="">
+                        <span data-en="Print (PDF)" data-de="Drucken (PDF)" data-fr="Imprimer (PDF)">Print (PDF)</span>
+                    </a>
+                    <img src="/deckhand-race-for-infamy/help/quick-en.jpg" data-base="quick" alt="Quick reference">
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div id="music" class="content-section hidden spotify-container">
+        <div id="phases" class="content-section hidden">
+            <div class="sheets">
+                <div class="sheet">
+                    <img src="/deckhand-race-for-infamy/help/phases-en.jpg" data-base="phases" alt="Game phases, page 1">
+                </div>
+                <div class="sheet">
+                    <img src="/deckhand-race-for-infamy/help/phases-2-en.jpg" data-base="phases-2" alt="Game phases, page 2">
+                </div>
+            </div>
+        </div>
 
-        <iframe data-testid="embed-iframe" style="border-radius:12px" 
-            src="https://open.spotify.com/embed/playlist/39bV9UH4x0Pe05iUDChf7N?utm_source=generator" 
-            frameBorder="0" allowfullscreen=""
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            loading="lazy"></iframe>
-    </div>
+        <div id="how-to-play" class="content-section hidden">
+            <iframe class="embed video" src="https://www.youtube.com/embed/3T4_mCdZ1YU?si=HsroOEJLidM69Ehd"
+                title="DeckHand: Race for Infamy — How to Play"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
 
-    <hr style="margin-top: 20px; margin-bottom: 20px; break-before: always; width: 100%; border-color: #b99a76;" />
-    <a href="https://tidale.org/deckhand-race-for-infamy/">Main website</a>
-    
+        <div id="music" class="content-section hidden">
+            <iframe class="embed music" data-testid="embed-iframe" title="DeckHand: Race for Infamy playlist on Spotify"
+                src="https://open.spotify.com/embed/playlist/39bV9UH4x0Pe05iUDChf7N?utm_source=generator"
+                allowfullscreen=""
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"></iframe>
+        </div>
+
+        <section class="variants">
+            <h2 data-en="Variants" data-de="Varianten" data-fr="Variantes">Variants</h2>
+            <div class="variant-grid">
+                <a class="variant" href="/deckhand-race-for-infamy/automata.html">
+                    <h3>Warden Solo</h3>
+                    <p data-en="Play alone against the Warden automata." data-de="Spiele allein gegen den Warden-Automaten." data-fr="Jouez seul contre l’automate Warden.">Play alone against the Warden automata.</p>
+                </a>
+                <a class="variant" href="/deckhand-race-for-infamy/draft-variant.html">
+                    <h3>Dockside Draft</h3>
+                    <p data-en="Draft from an open, shared Supply, one card each in turn." data-de="Draftet aus einem offenen, gemeinsamen Vorrat, reihum je eine Karte." data-fr="Draftez depuis une réserve commune et visible, une carte chacun à tour de rôle.">Draft from an open, shared Supply, one card each in turn.</p>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="wrap">
+            <span>&copy; 2026 Tidale. All rights reserved.</span>
+            <a href="/deckhand-race-for-infamy/">DeckHand: Race for Infamy website</a>
+        </div>
+    </footer>
 
     <script>
         const tabs = document.querySelectorAll('.tab');
@@ -142,7 +345,7 @@
             tab.addEventListener('click', () => {
                 tabs.forEach(t => t.classList.remove('active'));
                 sections.forEach(s => s.classList.add('hidden'));
-                
+
                 tab.classList.add('active');
                 document.getElementById(tab.dataset.target).classList.remove('hidden');
             });
@@ -151,6 +354,7 @@
         function setLanguage(lang) {
             // 1. Update active button styles
             langBtns.forEach(btn => btn.classList.toggle('active', btn.dataset.lang === lang));
+            document.documentElement.lang = lang;
 
             // 2. Update all text elements
             translatable.forEach(el => {
@@ -161,7 +365,6 @@
             const images = document.querySelectorAll('img[data-base]');
             images.forEach(img => {
                 const baseName = img.getAttribute('data-base');
-                // This constructs the string: "quick" + "-" + "fr" + ".png"
                 img.src = `/deckhand-race-for-infamy/help/${baseName}-${lang}.jpg`;
             });
 
@@ -171,7 +374,7 @@
                 link.href = `/deckhand-race-for-infamy/help/quick-ref-${lang}.pdf`;
             });
 
-            localStorage.setItem('preferredLang', lang);
+            try { localStorage.setItem('preferredLang', lang); } catch (e) {}
         }
 
         langBtns.forEach(btn => {
@@ -180,12 +383,13 @@
 
         // --- Initialization ---
         // Check local storage OR browser language, default to English
-        const savedLang = localStorage.getItem('preferredLang');
+        let savedLang = null;
+        try { savedLang = localStorage.getItem('preferredLang'); } catch (e) {}
         const browserLang = navigator.language.split('-')[0];
         const supported = ['en', 'de', 'fr'];
-        
-        const finalLang = savedLang || (supported.includes(browserLang) ? browserLang : 'en');
-        
+
+        const finalLang = supported.includes(savedLang) ? savedLang : (supported.includes(browserLang) ? browserLang : 'en');
+
         setLanguage(finalLang);
     </script>
 </body>

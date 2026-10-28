@@ -4,125 +4,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dockside Draft Mode</title>
-    <style>
-        :root {
-            --parchment: #fdf5e6;
-            --ink: #2c3e50;
-            --accent: #8b4513;
-            --border: #d2b48c;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #eaddca;
-            color: var(--ink);
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .container {
-            max-width: 800px;
-            background-color: var(--parchment);
-            padding: 40px;
-            border: 1px solid var(--border);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border-radius: 8px;
-        }
-
-        h1 {
-            color: var(--accent);
-            text-align: center;
-            padding-bottom: 10px;
-            letter-spacing: 2px;
-        }
-
-        h2 {
-            color: var(--accent);
-            margin-top: 30px;
-        }
-
-        .highlight {
-            font-weight: bold;
-            color: #a0522d;
-        }
-
-        .card-box {
-            background: rgba(139, 69, 19, 0.05);
-            padding: 15px;
-            border-radius: 4px;
-            border-left: 3px solid var(--accent);
-            margin: 15px 0;
-        }
-
-        .footer {
-            margin-top: 40px;
-            text-align: center;
-            font-style: italic;
-            color: #777;
-            font-size: 0.9em;
-        }
-
-        ul {
-            list-style-type: square;
-        }
-
-        li {
-            margin-bottom: 10px;
-        }
-    </style>
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
 </head>
-<body>
-
-<div class="container">
-    <h1>Dockside Draft</h1>
-    <img src="dockside.jpg" alt="Dockside Draft" style="display: block; margin: 20px auto; max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
-    <p style="font-style: italic; color: #555; margin-bottom: 20px;">
-        This mode replaces the standard Drafting Hand setup with an open, shared Supply that every player draws from in turn.
-    </p>
-    <p>Set up the game as usual, except where the following rules override standard behavior.</p>
-
-    <section>
-        <h2>Setup</h2>
-        <p>Give the <strong>Starting Player</strong> token to a random player (use a coin or any convenient marker if needed).</p>
-    </section>
-
-    <section>
-        <h2>Draft Loop</h2>
-        <p>During the Draft phase, reveal <strong>6 Supply cards</strong> face up on the table.</p>
-
-        <div class="card-box">
-            <ul>
-                <li>Starting with the player holding the Starting Player token and proceeding <strong>clockwise</strong>, each player selects 1 card from the Supply.</li>
-                <li>After each selection, <strong>replenish the Supply back to 6 cards</strong>, unless at least one player already has 5 cards in their Drafting Hand.</li>
-            </ul>
+<body class="rules-page">
+    <header class="topbar">
+        <div class="wrap">
+            <a href="./"><img src="../tidale-logo.png" alt="Tidale"></a>
+            <nav>
+                <a href="../dhri-hc.html">← Quick Reference</a>
+            </nav>
         </div>
+    </header>
 
-        <p>Continue until every player has 5 cards. Discard any remaining Supply cards, then pass the Starting Player token to the player on the left.</p>
-    </section>
+    <main class="wrap">
+        <article class="rules">
+            <span class="eyebrow">DeckHand: Race for Infamy · Variant</span>
+            <h1>Dockside Draft</h1>
+            <img class="art" src="dockside.jpg" alt="Dockside Draft">
+            <p class="lead">
+                This mode replaces the standard Drafting Hand setup with an open, shared Supply that every player draws from in turn.
+            </p>
+            <p>Set up the game as usual, except where the following rules override standard behavior.</p>
 
-    <section>
-        <h2>Special Abilities</h2>
-        <h3>Compass</h3>
-        <p>If at least one player has a Compass, only players with 1 or more Compasses may select the <strong>first Draft card</strong> (the top-left card).</p>
-        <p>When you build your second or later Compass, draw a number of cards equal to the number of Compasses you have, choose 1, and discard the rest.</p>
+            <section>
+                <h2>Setup</h2>
+                <p>Give the <strong>Starting Player</strong> token to a random player (use a coin or any convenient marker if needed).</p>
+            </section>
 
-        <h3>Hooks</h3>
-        <p>The player who adds a <strong>Hook</strong> to their crew may immediately seize the Starting Player token. This effect is in addition to the Hook's existing effect.</p>
-    </section>
+            <section>
+                <h2>Draft Loop</h2>
+                <p>During the Draft phase, reveal <strong>6 Supply cards</strong> face up on the table.</p>
 
-    <section>
-        <h2>Conflict Resolution</h2>
-        <p>Whenever a rule calls for randomly selecting a player to resolve a conflict, select the player holding the <strong>Starting Player</strong> token instead.</p>
-    </section>
+                <div class="callout">
+                    <ul>
+                        <li>Starting with the player holding the Starting Player token and proceeding <strong>clockwise</strong>, each player selects 1 card from the Supply.</li>
+                        <li>After each selection, <strong>replenish the Supply back to 6 cards</strong>, unless at least one player already has 5 cards in their Drafting Hand.</li>
+                    </ul>
+                </div>
 
-    <div class="footer">
-        <a href="../dhri-hc.html">Back to Quick Reference</a>
-    </div>
+                <p>Continue until every player has 5 cards. Discard any remaining Supply cards, then pass the Starting Player token to the player on the left.</p>
+            </section>
 
-</div>
+            <section>
+                <h2>Special Abilities</h2>
+                <h3>Compass</h3>
+                <p>If at least one player has a Compass, only players with 1 or more Compasses may select the <strong>first Draft card</strong> (the top-left card).</p>
+                <p>When you build your second or later Compass, draw a number of cards equal to the number of Compasses you have, choose 1, and discard the rest.</p>
 
+                <h3>Hooks</h3>
+                <p>The player who adds a <strong>Hook</strong> to their crew may immediately seize the Starting Player token. This effect is in addition to the Hook's existing effect.</p>
+            </section>
+
+            <section>
+                <h2>Conflict Resolution</h2>
+                <p>Whenever a rule calls for randomly selecting a player to resolve a conflict, select the player holding the <strong>Starting Player</strong> token instead.</p>
+            </section>
+        </article>
+    </main>
+
+    <footer>
+        <div class="wrap">
+            <a href="../dhri-hc.html">Back to Quick Reference</a>
+            <a href="./">DeckHand: Race for Infamy website</a>
+        </div>
+    </footer>
 </body>
 </html>

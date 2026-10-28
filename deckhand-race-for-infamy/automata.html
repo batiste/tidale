@@ -4,192 +4,140 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solo Mode — Warden Automata</title>
-    <style>
-        :root {
-            --parchment: #fdf5e6;
-            --ink: #2c3e50;
-            --accent: #8b4513;
-            --border: #d2b48c;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #eaddca;
-            color: var(--ink);
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .container {
-            max-width: 800px;
-            background-color: var(--parchment);
-            padding: 40px;
-            border: 1px solid var(--border);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border-radius: 8px;
-        }
-
-        h1 {
-            color: var(--accent);
-            text-align: center;
-            padding-bottom: 10px;
-            letter-spacing: 2px;
-        }
-
-        h2 {
-            color: var(--accent);
-            margin-top: 30px;
-        }
-
-        .highlight {
-            font-weight: bold;
-            color: #a0522d;
-        }
-
-        .card-box {
-            background: rgba(139, 69, 19, 0.05);
-            padding: 15px;
-            border-radius: 4px;
-            border-left: 3px solid var(--accent);
-            margin: 15px 0;
-        }
-
-        .footer {
-            margin-top: 40px;
-            text-align: center;
-            font-style: italic;
-            color: #777;
-            font-size: 0.9em;
-        }
-
-        ul {
-            list-style-type: square;
-        }
-
-        li {
-            margin-bottom: 10px;
-        }
-    </style>
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
 </head>
-<body>
-
-<div class="container">
-    <h1>Solo Mode — Warden Automata</h1>
-    <img src="warden.jpg" alt="Warden Automata" style="display: block; margin: 20px auto; max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
-    <p style="font-style: italic; color: #555; margin-bottom: 20px;">
-        This supplemental solo mode offers a unique challenge, distinct from the 
-        standard solo rules which are closer to a traditional two-player game.
-    </p>
-    <p>You will face the Warden automata in this race for treasure and glory! Set up the game for a single player and play as usual, except where the following rules override standard behavior.</p>
-
-    <section>
-        <h2>Draft Setup</h2>
-        <p>Lay <strong>2 lines of 4 Supply cards</strong>: the first line face up, the second line face down.</p>
-    </section>
-
-    <section>
-        <h2>Draft Loop</h2>
-        <p>Pick 1 card from the first line. Replace it from the Supply deck immediately. Check the cost of the replacement card to determine what the Warden takes:</p>
-        
-        <div class="card-box">
-            <ul>
-                <li><strong>Cost ≤ 3:</strong> Discard the <span class="highlight">leftmost</span> card on the same line.</li>
-                <li><strong>Cost ≥ 4:</strong> Discard the <span class="highlight">rightmost</span> card on the same line.</li>
-            </ul>
+<body class="rules-page">
+    <header class="topbar">
+        <div class="wrap">
+            <a href="./"><img src="../tidale-logo.png" alt="Tidale"></a>
+            <nav>
+                <a href="../dhri-hc.html">← Quick Reference</a>
+            </nav>
         </div>
-        
-        <p>Discarded cards in the draft form the <strong>Warden’s deck</strong> and are placed on top of it.</p>
-        <p>After finishing a line, reveal the second line. Swap line roles and repeat until you have 5 cards.</p>
-            
-        <p>Once the draft is complete, discard all remaining cards to the common discard pile.</p>
-    </section>
+    </header>
 
-    <section>
-        <h2>Special Abilities</h2>
-        <h3>Compass</h3>
-        <p>Once per draft, when replacing a card: Look at the <strong>top 2 Supply cards</strong> instead. Choose one to place on the board and put the other on the top of the Warden’s deck.</p>
-        
-        <h3>Hooks</h3>
-        <ul>
-            <li><strong>Your Hook:</strong> Steal from the top of the Warden's deck. The card you give back goes there as well.</li>
-            <li><strong>Warden Hook:</strong> If the Warden plays a Hook, swap the top of their deck with a card from your hand. You must choose from among your cards with the <strong>highest cost</strong>.</li>
-        </ul>
+    <main class="wrap">
+        <article class="rules">
+            <span class="eyebrow">DeckHand: Race for Infamy · Variant</span>
+            <h1>Solo Mode — Warden Automata</h1>
+            <img class="art" src="warden.jpg" alt="Warden Automata">
+            <p class="lead">
+                This supplemental solo mode offers a unique challenge, distinct from the
+                standard solo rules which are closer to a traditional two-player game.
+            </p>
+            <p>You will face the Warden automata in this race for treasure and glory! Set up the game for a single player and play as usual, except where the following rules override standard behavior.</p>
 
-        <h3>Draw</h3>
-        <p>When the Warden draws a card, ignore the effect.</p>
-    </section>
+            <section>
+                <h2>Draft Setup</h2>
+                <p>Lay <strong>2 lines of 4 Supply cards</strong>: the first line face up, the second line face down.</p>
+            </section>
 
-    <section>
-        <h2>Phase Rules</h2>
+            <section>
+                <h2>Draft Loop</h2>
+                <p>Pick 1 card from the first line. Replace it from the Supply deck immediately. Check the cost of the replacement card to determine what the Warden takes:</p>
 
-        <h3>Build Phase</h3>
-        <p>Every time <strong>you</strong> build:</p>
-        <ul>
-            <li>The Warden builds the top card of his deck for free.</li>
-            <li>Resolve all its effects immediately.</li>
-            <li>Claim <strong>Infamy</strong> for the Warden if they are eligible.</li>
-        </ul>
-        <p><em>Note: If you do not build, the Warden builds at least 1 card per round regardless.</em></p>
-    </section>
+                <div class="callout">
+                    <ul>
+                        <li><strong>Cost ≤ 3:</strong> Discard the <span class="highlight">leftmost</span> card on the same line.</li>
+                        <li><strong>Cost ≥ 4:</strong> Discard the <span class="highlight">rightmost</span> card on the same line.</li>
+                    </ul>
+                </div>
 
-    <!-- <section>
-        <h2>Victory</h2>
-        <p>At the end of the game, compare your score to the Warden’s. The greater the gap in your favor, the greater your victory!</p>
-    </section> -->
+                <p>Discarded cards in the draft form the <strong>Warden’s deck</strong> and are placed on top of it.</p>
+                <p>After finishing a line, reveal the second line. Swap line roles and repeat until you have 5 cards.</p>
+                <p>Once the draft is complete, discard all remaining cards to the common discard pile.</p>
+            </section>
 
-<section>
-    <h2>Victory Ranks</h2>
-    <p>Compare your final score to the Warden’s. Find your rank based on the point difference in your favor:</p>
-    
-    <table style="width: 100%; border-collapse: collapse; margin-top: 20px; text-align: left;">
-        <thead>
-            <tr style="background-color: var(--accent); color: white;">
-                <th style="padding: 10px; border: 1px solid var(--border);">Point Lead</th>
-                <th style="padding: 10px; border: 1px solid var(--border);">Rank Title</th>
-                <th style="padding: 10px; border: 1px solid var(--border);">Evaluation</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td style="padding: 10px; border: 1px solid var(--border);">0 – 10</td>
-                <td style="padding: 10px; border: 1px solid var(--border);"><strong>Stowaway</strong></td>
-                <td style="padding: 10px; border: 1px solid var(--border);">A narrow escape. The Warden is still breathing down your neck.</td>
-            </tr>
-            <tr style="background-color: rgba(139, 69, 19, 0.05);">
-                <td style="padding: 10px; border: 1px solid var(--border);">11 – 20</td>
-                <td style="padding: 10px; border: 1px solid var(--border);"><strong>Deckhand</strong></td>
-                <td style="padding: 10px; border: 1px solid var(--border);">A solid performance. You’ve earned your share of the loot.</td>
-            </tr>
-            <tr>
-                <td style="padding: 10px; border: 1px solid var(--border);">21 – 30</td>
-                <td style="padding: 10px; border: 1px solid var(--border);"><strong>Quartermaster</strong></td>
-                <td style="padding: 10px; border: 1px solid var(--border);">Highly skilled. The Warden’s influence is fading.</td>
-            </tr>
-            <tr style="background-color: rgba(139, 69, 19, 0.05);">
-                <td style="padding: 10px; border: 1px solid var(--border);">31 – 40</td>
-                <td style="padding: 10px; border: 1px solid var(--border);"><strong>Dread Captain</strong></td>
-                <td style="padding: 10px; border: 1px solid var(--border);">A master of the draft. Stories will be told of this race.</td>
-            </tr>
-            <tr>
-                <td style="padding: 10px; border: 1px solid var(--border);">41 – 50+</td>
-                <td style="padding: 10px; border: 1px solid var(--border);"><strong>Legend of the Seas</strong></td>
-                <td style="padding: 10px; border: 1px solid var(--border);">Complete domination. The Warden is but a memory.</td>
-            </tr>
-        </tbody>
-    </table>
+            <section>
+                <h2>Special Abilities</h2>
+                <h3>Compass</h3>
+                <p>Once per draft, when replacing a card: Look at the <strong>top 2 Supply cards</strong> instead. Choose one to place on the board and put the other on the top of the Warden’s deck.</p>
 
+                <h3>Hooks</h3>
+                <ul>
+                    <li><strong>Your Hook:</strong> Steal from the top of the Warden's deck. The card you give back goes there as well.</li>
+                    <li><strong>Warden Hook:</strong> If the Warden plays a Hook, swap the top of their deck with a card from your hand. You must choose from among your cards with the <strong>highest cost</strong>.</li>
+                </ul>
 
-</section>
+                <h3>Draw</h3>
+                <p>When the Warden draws a card, ignore the effect.</p>
+            </section>
 
-    <div class="footer">
-        <a href="../dhri-hc.html">Back to Quick Reference</a><br>
-        Be quiet. The Warden is listening.
-    </div>
+            <section>
+                <h2>Phase Rules</h2>
 
-</div>
+                <h3>Build Phase</h3>
+                <p>Every time <strong>you</strong> build:</p>
+                <ul>
+                    <li>The Warden builds the top card of his deck for free.</li>
+                    <li>Resolve all its effects immediately.</li>
+                    <li>Claim <strong>Infamy</strong> for the Warden if they are eligible.</li>
+                </ul>
+                <p class="note"><em>Note: If you do not build, the Warden builds at least 1 card per round regardless.</em></p>
+            </section>
 
+            <!-- <section>
+                <h2>Victory</h2>
+                <p>At the end of the game, compare your score to the Warden’s. The greater the gap in your favor, the greater your victory!</p>
+            </section> -->
+
+            <section>
+                <h2>Victory Ranks</h2>
+                <p>Compare your final score to the Warden’s. Find your rank based on the point difference in your favor:</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Point Lead</th>
+                            <th scope="col">Rank Title</th>
+                            <th scope="col">Evaluation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>0 – 10</td>
+                            <td><strong>Stowaway</strong></td>
+                            <td>A narrow escape. The Warden is still breathing down your neck.</td>
+                        </tr>
+                        <tr>
+                            <td>11 – 20</td>
+                            <td><strong>Deckhand</strong></td>
+                            <td>A solid performance. You’ve earned your share of the loot.</td>
+                        </tr>
+                        <tr>
+                            <td>21 – 30</td>
+                            <td><strong>Quartermaster</strong></td>
+                            <td>Highly skilled. The Warden’s influence is fading.</td>
+                        </tr>
+                        <tr>
+                            <td>31 – 40</td>
+                            <td><strong>Dread Captain</strong></td>
+                            <td>A master of the draft. Stories will be told of this race.</td>
+                        </tr>
+                        <tr>
+                            <td>41 – 50+</td>
+                            <td><strong>Legend of the Seas</strong></td>
+                            <td>Complete domination. The Warden is but a memory.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <p class="signoff">Be quiet. The Warden is listening.</p>
+        </article>
+    </main>
+
+    <footer>
+        <div class="wrap">
+            <a href="../dhri-hc.html">Back to Quick Reference</a>
+            <a href="./">DeckHand: Race for Infamy website</a>
+        </div>
+    </footer>
 </body>
 </html>
