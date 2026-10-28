@@ -171,6 +171,19 @@ section {
     box-shadow: 0 18px 40px rgba(26, 32, 51, 0.15);
 }
 
+.video-more {
+    margin-top: 20px;
+    font-size: 15px;
+}
+
+.video-more a {
+    color: var(--muted);
+}
+
+.video-more a:hover {
+    color: var(--accent);
+}
+
 /* Credits */
 .credits {
     border-top: 1px solid var(--line);
