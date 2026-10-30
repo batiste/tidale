@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="How Tidale uses AI in the making of its card games.">
+    <title>Our use of AI · Tidale Game Company</title>
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f7f4ee;
+            --surface: #ffffff;
+            --ink: #1a2033;
+            --muted: #5b6275;
+            --line: #e4dfd4;
+            --accent: #3759b9;
+            --accent-dark: #263f87;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--ink);
+            font-family: Inter, system-ui, -apple-system, sans-serif;
+            font-size: 17px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        .wrap {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header .wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .brand img {
+            display: block;
+            height: 56px;
+        }
+
+        nav {
+            display: flex;
+            gap: 28px;
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--muted);
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        h1 {
+            font-family: Fraunces, Georgia, serif;
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -0.01em;
+            font-size: clamp(30px, 4vw, 40px);
+            margin-bottom: 24px;
+        }
+
+        /* Content */
+        .page {
+            padding-top: 56px;
+            padding-bottom: 72px;
+        }
+
+        .page > * {
+            max-width: 720px;
+        }
+
+        .page p {
+            color: var(--muted);
+        }
+
+        .page p + p {
+            margin-top: 1em;
+        }
+
+        .page figure {
+            margin: 32px 0;
+        }
+
+        .page figure img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 14px;
+        }
+
+        .page figcaption {
+            margin-top: 10px;
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--line);
+            padding: 28px 0;
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        footer .wrap {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 720px) {
+            nav {
+                display: none;
+            }
+
+            .page {
+                padding-top: 32px;
+            }
+
+            .wrap {
+                padding: 0 16px;
+            }
+        }
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FXJ69Z763R"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-FXJ69Z763R');
+    </script>
+</head>
+<body>
+    <header>
+        <div class="wrap">
+            <a class="brand" href="/"><img src="tidale-logo.png" alt="Tidale"></a>
+            <nav>
+                <a href="/#games">Games</a>
+                <a href="/#about">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="wrap page">
+            <h1>Our use of AI</h1>
+            <p>
+                Every Tidale game is designed, playtested and balanced by people. The rules,
+                the mechanics and, above all, the fun come from countless hours around the
+                table with real players. Fun is not something a machine understands.
+            </p>
+            <p>
+                We occasionally use AI tools to assist with writing and translation. This
+                content is always reviewed and checked by a human proofreader before publication.
+            </p>
+            <p>
+                For illustrations and graphic design, we prefer working with
+                artists and designers. As an independent publisher with limited budgets,
+                we have occasionally used AI-generated assets when commissioning professional work
+                was not possible. These are never published as-is: we rework and correct them
+                extensively by hand. Whenever we work with independent artists, their credited artwork
+                is original work, created by them.
+            </p>
+            <figure>
+                <img src="artists.webp" width="3065" height="4624" loading="lazy"
+                    alt="Three cards shown at each stage of the process: first idea, artist's sketch, and final card.">
+                <figcaption>From first idea to sketch to final card: our typical process when working with an artist.</figcaption>
+            </figure>
+            <p>
+                We believe in being transparent about how our games are made, and we aim to rely
+                on human creativity and craftsmanship because it's what we love doing and
+                we think it leads to better games.
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="wrap">
+            <span>&copy; 2026 Tidale. All rights reserved.</span>
+            <a href="/ai.html">Our use of AI</a>
+        </div>
+    </footer>
+</body>
+
+<!-- Meta Pixel Code -->
+<script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '195495916889807');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=195495916889807&ev=PageView&noscript=1"
+    /></noscript>
+<!-- End Meta Pixel Code -->
+
+</html>
