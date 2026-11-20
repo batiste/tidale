@@ -65,7 +65,7 @@ container.addEventListener('click', () => {
     }, 6000);
 });
 
-const texture = new THREE.TextureLoader().load('box/box.jpg');
+const texture = new THREE.TextureLoader().load('box/box.webp');
 texture.colorSpace = THREE.SRGBColorSpace;
 texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
 

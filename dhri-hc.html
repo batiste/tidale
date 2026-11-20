@@ -281,7 +281,7 @@
                         <img src="/print-icon.png" alt="">
                         <span data-en="Print (PDF)" data-de="Drucken (PDF)" data-fr="Imprimer (PDF)">Print (PDF)</span>
                     </a>
-                    <img src="/deckhand-race-for-infamy/help/quick-en.jpg" data-base="quick" alt="Quick reference">
+                    <img src="/deckhand-race-for-infamy/help/quick-en.webp" data-base="quick" alt="Quick reference">
                 </div>
             </div>
         </div>
@@ -289,10 +289,10 @@
         <div id="phases" class="content-section hidden">
             <div class="sheets">
                 <div class="sheet">
-                    <img src="/deckhand-race-for-infamy/help/phases-en.jpg" data-base="phases" alt="Game phases, page 1">
+                    <img src="/deckhand-race-for-infamy/help/phases-en.webp" data-base="phases" alt="Game phases, page 1">
                 </div>
                 <div class="sheet">
-                    <img src="/deckhand-race-for-infamy/help/phases-2-en.jpg" data-base="phases-2" alt="Game phases, page 2">
+                    <img src="/deckhand-race-for-infamy/help/phases-2-en.webp" data-base="phases-2" alt="Game phases, page 2">
                 </div>
             </div>
         </div>
@@ -365,7 +365,7 @@
             const images = document.querySelectorAll('img[data-base]');
             images.forEach(img => {
                 const baseName = img.getAttribute('data-base');
-                img.src = `/deckhand-race-for-infamy/help/${baseName}-${lang}.jpg`;
+                img.src = `/deckhand-race-for-infamy/help/${baseName}-${lang}.webp`;
             });
 
             // 4. Update PDF links if any
